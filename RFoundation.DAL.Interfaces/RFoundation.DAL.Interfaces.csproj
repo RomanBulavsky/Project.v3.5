@@ -40,20 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\Extension.cs" />
-    <Compile Include="DTO\File.cs" />
-    <Compile Include="DTO\Friend.cs" />
-    <Compile Include="DTO\FriendRequest.cs" />
-    <Compile Include="DTO\Role.cs" />
-    <Compile Include="DTO\SharedFile.cs" />
-    <Compile Include="DTO\User.cs" />
+    <Compile Include="DTO\DalExtension.cs" />
+    <Compile Include="DTO\DalFile.cs" />
+    <Compile Include="DTO\DalFriend.cs" />
+    <Compile Include="DTO\DalFriendRequest.cs" />
+    <Compile Include="DTO\DalRole.cs" />
+    <Compile Include="DTO\DalSharedFile.cs" />
+    <Compile Include="DTO\DalUser.cs" />
+    <Compile Include="IDalEntity.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecificInterface\IRoleRepository.cs" />
+    <Compile Include="SpecificInterface\IFriendRequestRepository.cs" />
+    <Compile Include="SpecificInterface\IFriendRepository.cs" />
+    <Compile Include="SpecificInterface\IFileRepository.cs" />
+    <Compile Include="SpecificInterface\IExtensionRepository.cs" />
+    <Compile Include="SpecificInterface\ISharedFileRepository.cs" />
+    <Compile Include="SpecificInterface\IUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SpecificInterface\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

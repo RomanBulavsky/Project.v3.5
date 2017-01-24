@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RFoundation.DAL.Interfaces.DTO
 {
-    class File
+    public class DalFile : IDalEntity
     {
         public int Id { get; set; }
 
@@ -32,16 +32,16 @@ namespace RFoundation.DAL.Interfaces.DTO
 
         // TODO: Main Navigation
 
-        public Extension Extension { get; set; }
+        public DalExtension Extension { get; set; }
 
-        public ICollection<File> ChildFiles { get; set; }
+        public ICollection<DalFile> ChildFiles { get; set; }
 
-        public File ParentFile { get; set; }
+        public DalFile ParentFile { get; set; }
 
-        public User User { get; set; }
+        public DalUser User { get; set; }
 
-        public ICollection<SharedFile> SharedFiles { get; set; }
+        public ICollection<DalSharedFile> SharedFiles { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<DalUser> Users { get; set; }
     }
 }

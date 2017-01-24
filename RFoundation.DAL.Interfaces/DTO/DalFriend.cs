@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RFoundation.DAL.Interfaces.DTO
 {
-    class Friend
+    public class DalFriend : IDalEntity
     {
         public int Id { get; set; }
 
@@ -14,8 +14,8 @@ namespace RFoundation.DAL.Interfaces.DTO
 
         public int FriendId { get; set; } // == UserId
 
-        public User User { get; set; }
+        public DalUser User { get; set; }
 
-        public User FriendUser { get; set; }
+        public DalUser FriendUser { get; set; }
     }
 }

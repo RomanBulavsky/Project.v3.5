@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RFoundation.DAL.Interfaces.DTO
 {
-    class Extension
+    public class DalRole : IDalEntity
     {
         public int Id { get; set; }
-        
-        public string ExtensionName { get; set; }
 
-        public ICollection<File> Files { get; set; }
+        public string Name { get; set; }
+
+        public ICollection<DalUser> Users { get; set; }
     }
 }

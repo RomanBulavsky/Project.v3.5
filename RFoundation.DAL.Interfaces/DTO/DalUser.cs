@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RFoundation.DAL.Interfaces.DTO
 {
-    class User
+    public class DalUser : IDalEntity
     {
         public int Id { get; set; }
         
@@ -29,22 +29,22 @@ namespace RFoundation.DAL.Interfaces.DTO
 
         //TODO: Main Navigation
         
-        public ICollection<File> Files { get; set; }
+        public ICollection<DalFile> Files { get; set; }
 
-        public File ProfileImageFile { get; set; }
+        public DalFile ProfileImageFile { get; set; }
 
-        public ICollection<FriendRequest> FriendRequests { get; set; }
+        public ICollection<DalFriendRequest> FriendRequests { get; set; }
         
-        public ICollection<FriendRequest> FriendOffers { get; set; }
+        public ICollection<DalFriendRequest> FriendOffers { get; set; }
         
-        public ICollection<Friend> Friends { get; set; }
+        public ICollection<DalFriend> Friends { get; set; }
         
-        public ICollection<Friend> FriendsReserved { get; set; }
+        public ICollection<DalFriend> FriendsReserved { get; set; }
         
-        public ICollection<SharedFile> SharedFiles { get; set; }
+        public ICollection<DalSharedFile> SharedFiles { get; set; }
         
-        public ICollection<SharedFile> ReceivedFiles { get; set; }
+        public ICollection<DalSharedFile> ReceivedFiles { get; set; }
         
-        public ICollection<Role> Roles { get; set; }
+        public ICollection<DalRole> Roles { get; set; }
     }
 }

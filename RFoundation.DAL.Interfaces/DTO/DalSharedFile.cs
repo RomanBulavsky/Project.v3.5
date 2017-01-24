@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RFoundation.DAL.Interfaces.DTO
 {
-    class SharedFile
+    public class DalSharedFile : IDalEntity
     {
         public int OwnerId { get; set; }
         
@@ -14,10 +14,10 @@ namespace RFoundation.DAL.Interfaces.DTO
         
         public int FileId { get; set; }
 
-        public File File { get; set; }
+        public DalFile File { get; set; }
 
-        public User OwnerUser { get; set; }
+        public DalUser OwnerUser { get; set; }
 
-        public User RecipientUser { get; set; }
+        public DalUser RecipientUser { get; set; }
     }
 }
