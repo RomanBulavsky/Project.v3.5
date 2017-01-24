@@ -8,5 +8,10 @@ namespace RFoundation.DAL.Interfaces.DTO
 {
     class Extension
     {
+        public int Id { get; set; }
+        
+        public string ExtensionName { get; set; }
+
+        public ICollection<File> Files { get; set; }
     }
 }

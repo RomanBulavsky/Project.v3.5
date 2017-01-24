@@ -13,6 +13,8 @@ namespace RFoundation.ORM
         {
             using (var db = new FileStorageDatabaseContext())
             {
+                var ff = db.Friends.First(f => f.Id == 1);
+                Console.WriteLine(ff.Id);
                 //ProfileImageAndFolders(db);
                 FriendsRequestsAndSharedFiles(db);
                 //FriendReqOfferTarget(db);

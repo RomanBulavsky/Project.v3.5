@@ -8,7 +8,7 @@ namespace RFoundation.ORM.Database
 
     public partial class Friend
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public int UserId { get; set; }
 

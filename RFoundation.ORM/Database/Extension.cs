@@ -14,7 +14,7 @@ namespace RFoundation.ORM.Database
             Files = new HashSet<File>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(10)]
