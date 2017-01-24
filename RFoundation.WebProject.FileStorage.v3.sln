@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.ORM", "RFoundation.ORM\RFoundation.ORM.csproj", "{87EFE158-4F10-461D-BFC1-9997B3B9177F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.DAL.Interfaces", "RFoundation.DAL.Interfaces\RFoundation.DAL.Interfaces.csproj", "{BEAAA1C5-3D04-4346-B25F-D2481B757233}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{87EFE158-4F10-461D-BFC1-9997B3B9177F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87EFE158-4F10-461D-BFC1-9997B3B9177F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87EFE158-4F10-461D-BFC1-9997B3B9177F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEAAA1C5-3D04-4346-B25F-D2481B757233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEAAA1C5-3D04-4346-B25F-D2481B757233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEAAA1C5-3D04-4346-B25F-D2481B757233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEAAA1C5-3D04-4346-B25F-D2481B757233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
