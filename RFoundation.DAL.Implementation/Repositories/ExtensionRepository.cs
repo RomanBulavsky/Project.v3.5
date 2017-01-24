@@ -1,35 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq.Expressions;
-using RFoundation.DAL.Interfaces;
 using RFoundation.DAL.Interfaces.DTO;
 using RFoundation.DAL.Interfaces.SpecificInterface;
 
-namespace RFoundation.DAL.Implementation.Implementations
+namespace RFoundation.DAL.Implementation.Repositories
 {
-    public class SharedFileRepository : ISharedFileRepository
+    public class ExtensionRepository : IExtensionRepository
     {
-        public IEnumerable<DalSharedFile> GetAll()
+        private DbContext Context { get; set; }
+
+        public ExtensionRepository(DbContext context)
+        {
+            Context = context;
+        }
+
+        public IEnumerable<DalExtension> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public DalSharedFile Get(int id)
+        public DalExtension Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public DalSharedFile GetByPredicate(Expression<Func<DalSharedFile, bool>> f)
+        public DalExtension GetByPredicate(Expression<Func<DalExtension, bool>> f)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(DalSharedFile entity)
+        public void Create(DalExtension entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(DalSharedFile entity)
+        public void Delete(DalExtension entity)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +46,7 @@ namespace RFoundation.DAL.Implementation.Implementations
             throw new NotImplementedException();
         }
 
-        public void Update(DalSharedFile entity)
+        public void Update(DalExtension entity)
         {
             throw new NotImplementedException();
         }

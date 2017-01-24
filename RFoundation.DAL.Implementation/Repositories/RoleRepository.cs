@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq.Expressions;
 using RFoundation.DAL.Interfaces.DTO;
 using RFoundation.DAL.Interfaces.SpecificInterface;
 
-namespace RFoundation.DAL.Implementation.Implementations
+namespace RFoundation.DAL.Implementation.Repositories
 {
     public class RoleRepository : IRoleRepository
     {
+        private DbContext Context { get; set; }
+
+        public RoleRepository(DbContext context)
+        {
+            Context = context;
+        }
+
         public IEnumerable<DalRole> GetAll()
         {
             throw new NotImplementedException();

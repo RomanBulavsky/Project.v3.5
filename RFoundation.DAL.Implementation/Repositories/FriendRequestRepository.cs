@@ -1,35 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq.Expressions;
-using RFoundation.DAL.Interfaces;
 using RFoundation.DAL.Interfaces.DTO;
 using RFoundation.DAL.Interfaces.SpecificInterface;
 
-namespace RFoundation.DAL.Implementation.Implementations
+namespace RFoundation.DAL.Implementation.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class FriendRequestRepository : IFriendRequestRepository
     {
-        public IEnumerable<DalUser> GetAll()
+        private DbContext Context { get; set; }
+
+        public FriendRequestRepository(DbContext context)
+        {
+            Context = context;
+        }
+
+        public IEnumerable<DalFriendRequest> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public DalUser Get(int id)
+        public DalFriendRequest Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
+        public DalFriendRequest GetByPredicate(Expression<Func<DalFriendRequest, bool>> f)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(DalUser entity)
+        public void Create(DalFriendRequest entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(DalUser entity)
+        public void Delete(DalFriendRequest entity)
         {
             throw new NotImplementedException();
         }
@@ -39,7 +46,7 @@ namespace RFoundation.DAL.Implementation.Implementations
             throw new NotImplementedException();
         }
 
-        public void Update(DalUser entity)
+        public void Update(DalFriendRequest entity)
         {
             throw new NotImplementedException();
         }
