@@ -28,13 +28,13 @@ namespace RFoundation.ORM.Database
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<File>()
-                .HasMany(e => e.Files1)
-                .WithOptional(e => e.File1)
+                .HasMany(e => e.ChildFiles)
+                .WithOptional(e => e.ParentFile)
                 .HasForeignKey(e => e.ParentFileFolderId);
 
             modelBuilder.Entity<File>()
                 .HasMany(e => e.Users)
-                .WithOptional(e => e.File)
+                .WithOptional(e => e.ProfileImageFile)
                 .HasForeignKey(e => e.ProfileImageFileId);
 
             modelBuilder.Entity<Role>()

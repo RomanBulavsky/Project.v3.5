@@ -11,7 +11,7 @@ namespace RFoundation.ORM.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public File()
         {
-            Files1 = new HashSet<File>();
+            ChildFiles = new HashSet<File>();
             SharedFiles = new HashSet<SharedFile>();
             Users = new HashSet<User>();
         }
@@ -44,9 +44,9 @@ namespace RFoundation.ORM.Database
         public virtual Extension Extension { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<File> Files1 { get; set; }
+        public virtual ICollection<File> ChildFiles { get; set; }
 
-        public virtual File File1 { get; set; }
+        public virtual File ParentFile { get; set; }
 
         public virtual User User { get; set; }
 

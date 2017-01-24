@@ -61,7 +61,7 @@
     <Compile Include="Database\Role.cs" />
     <Compile Include="Database\SharedFile.cs" />
     <Compile Include="Database\User.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="SimpleConfigTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
