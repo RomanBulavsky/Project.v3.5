@@ -13,8 +13,35 @@ namespace RFoundation.ORM
         {
             using (var db = new FileStorageDatabaseContext())
             {
-                ProfileImageAndFolders(db);
+                //ProfileImageAndFolders(db);
                 FriendsRequestsAndSharedFiles(db);
+                //FriendReqOfferTarget(db);
+            }
+        }
+
+        private static void FriendReqOfferTarget(FileStorageDatabaseContext db)
+        {
+            var user2 = db.Users.Find(2);
+            Console.WriteLine("REQUESTS: \n");
+            var friendReq = user2.FriendRequests.ToList();
+            foreach (var friendRequest in friendReq)
+            {
+                Console.WriteLine(friendRequest.User.Id + " ID");
+                Console.WriteLine(friendRequest.FromUserId + " FromID");
+                Console.WriteLine(friendRequest.ToUserId + " To ID");
+                Console.WriteLine(friendRequest.TargetUser.Id + " TARGET USER: ID");
+            }
+
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("OFFERS: \n");
+            var friendOffers = user2.FriendOffers.ToList();
+
+            foreach (var friendRequest in friendOffers)
+            {
+                Console.WriteLine(friendRequest.User.Id + " ID");
+                Console.WriteLine(friendRequest.FromUserId + " FromID");
+                Console.WriteLine(friendRequest.ToUserId + " To ID");
+                Console.WriteLine(friendRequest.TargetUser.Id + " TARGET USER: ID");
             }
         }
 
@@ -70,13 +97,21 @@ namespace RFoundation.ORM
             var friends = user2.Friends.ToList();
             foreach (var friend in friends)
             {
-                Console.WriteLine(friend.UserId); //friend id == if from friend table
+                
+                Console.WriteLine("friend.USerID: " + friend.UserId);
+                Console.WriteLine("friend.FriendID: " + friend.FriendId);
+                Console.WriteLine("USERID: " + friend.User.Id);
+                Console.WriteLine("friend.FriendUser.Id: " + friend.FriendUser.Id);
+                //Console.WriteLine(friend.UserId); //friend id == if from friend table
             }
             Console.WriteLine($"friendsR{new string(" - ".ToCharArray()[1], 10)}");
             var friends1 = user2.FriendsReserved.ToList();
             foreach (var friend in friends1)
             {
-                Console.WriteLine(friend.UserId);
+                Console.WriteLine("friend.USerID: " + friend.UserId);
+                Console.WriteLine("friend.FriendID: " + friend.FriendId);
+                Console.WriteLine("USERID: " + friend.User.Id);
+                Console.WriteLine("friend.FriendUser.Id: " + friend.FriendUser.Id);
                 //Console.WriteLine("fRIENDID");
                 //Console.WriteLine(friend.FriendId);
             }
@@ -104,6 +139,8 @@ namespace RFoundation.ORM
             var sFiles = user2.SharedFiles.ToList();
             foreach (var sharedFile in sFiles)
             {
+                Console.WriteLine(sharedFile.OwnerUser.Id + " SF OWNER Id!!!");
+                Console.WriteLine(sharedFile.RecipientUser.Id + " SF REcip Id!!!");
                 Console.WriteLine("ownerId");
                 Console.WriteLine(sharedFile.OwnerId);
                 Console.WriteLine("recepientId");
@@ -115,6 +152,9 @@ namespace RFoundation.ORM
             var sFiles1 = user2.ReceivedFiles.ToList();
             foreach (var sharedFile in sFiles1)
             {
+
+                Console.WriteLine(sharedFile.OwnerUser.Id + " SF OWNER Id!!!");
+                Console.WriteLine(sharedFile.RecipientUser.Id + " SF Recipient Id!!!");
                 Console.WriteLine("ownerId");
                 Console.WriteLine(sharedFile.OwnerId);
                 Console.WriteLine("recepientId");

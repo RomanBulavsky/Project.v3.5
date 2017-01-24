@@ -22,6 +22,6 @@ namespace RFoundation.ORM.Database
 
         public virtual User User { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User TargetUser { get; set; } //  == ToUserId
     }
 }

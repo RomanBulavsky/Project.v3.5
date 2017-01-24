@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RFoundation.DAL.Interfaces
 {
-    public class Class1
+    public interface IUnitOfWork
     {
     }
 }

@@ -25,8 +25,8 @@ namespace RFoundation.ORM.Database
 
         public virtual File File { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User OwnerUser { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User RecipientUser { get; set; }
     }
 }

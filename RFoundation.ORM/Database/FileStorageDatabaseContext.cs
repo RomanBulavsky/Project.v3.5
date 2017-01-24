@@ -54,7 +54,7 @@ namespace RFoundation.ORM.Database
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.FriendOffers)
-                .WithRequired(e => e.User1)
+                .WithRequired(e => e.TargetUser)
                 .HasForeignKey(e => e.ToUserId)
                 .WillCascadeOnDelete(false);
 
@@ -66,18 +66,18 @@ namespace RFoundation.ORM.Database
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.FriendsReserved)
-                .WithRequired(e => e.User1)
+                .WithRequired(e => e.FriendUser)
                 .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.SharedFiles)
-                .WithRequired(e => e.User)
+                .WithRequired(e => e.OwnerUser)
                 .HasForeignKey(e => e.OwnerId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.ReceivedFiles)
-                .WithRequired(e => e.User1)
+                .WithRequired(e => e.RecipientUser)
                 .HasForeignKey(e => e.RecipientId)
                 .WillCascadeOnDelete(false);
         }
