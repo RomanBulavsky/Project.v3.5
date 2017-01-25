@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DalFriendRepositoryTest.cs" />
     <Compile Include="DalSharedFileRepositoryTest.cs" />
     <Compile Include="DalFileRepositoryTest.cs" />
     <Compile Include="DalExtensionRepositoryTest.cs" />

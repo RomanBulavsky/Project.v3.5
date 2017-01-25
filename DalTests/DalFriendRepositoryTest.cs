@@ -12,7 +12,7 @@ using RFoundation.ORM.Database;
 namespace DalTests
 {
     [TestFixture]
-    public class DalExtensionRepositoryTest
+    public class DalFriendRepositoryTest
     {
         private IUnitOfWork unitOfWork;
 
