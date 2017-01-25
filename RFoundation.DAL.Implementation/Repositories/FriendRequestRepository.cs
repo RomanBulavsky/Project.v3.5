@@ -26,10 +26,17 @@ namespace RFoundation.DAL.Implementation.Repositories
             return dalFriendRequests;
         }
 
+        //TODO: Delete method like that from Irepo!
         public DalFriendRequest Get(int id)
         {
-            var friendRequest = Context.Set<FriendRequest>()?.Find(id);
-            return friendRequest?.ToDalFriendRequest();
+            throw new NotImplementedException();
+        }
+
+        public DalFriendRequest Get(DalFriendRequest entity)
+        {
+            var friendRequest =
+                GetAll().FirstOrDefault(fr => fr.ToUserId == entity.ToUserId && fr.FromUserId == entity.FromUserId);
+            return friendRequest;
         }
 
         public DalFriendRequest GetByPredicate(Expression<Func<DalFriendRequest, bool>> f)
@@ -46,13 +53,16 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalFriendRequest entity)
         {
-            var ormFriendRequest = entity?.ToOrmFriendRequest();
+            if(entity == null) return;
+            var ormFriendRequest = Context.Set<FriendRequest>()?
+                .FirstOrDefault(fr => fr.FromUserId == entity.FromUserId && fr.ToUserId == entity.ToUserId);
             if (ormFriendRequest == null) return;
             Context.Set<FriendRequest>()?.Remove(ormFriendRequest);
         }
 
         public void Delete(int id)
         {
+            //TODO: notImpl
             var ormFriendRequest = Context.Set<FriendRequest>()?.Find(id);
             if (ormFriendRequest == null) return;
             Context.Set<FriendRequest>().Remove(ormFriendRequest);
