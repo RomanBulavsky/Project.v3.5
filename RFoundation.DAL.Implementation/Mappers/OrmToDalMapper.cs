@@ -89,6 +89,5 @@ namespace RFoundation.DAL.Implementation.Mappers
                 Users = roleEntity.Users.Select(u=>u.ToDalUser()).ToList()
             };
         }
-
     }
 }

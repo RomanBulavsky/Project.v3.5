@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.DAL.Implementation.Mappers;
 using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.DAL.Interfaces.Repositories;
+using RFoundation.ORM.Database;
 
 namespace RFoundation.DAL.Implementation.Repositories
 {
@@ -18,12 +21,15 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalRole> GetAll()
         {
-            throw new NotImplementedException();
+            var roles = Context.Set<Role>()?.ToList();
+            var dalSharedFiles = roles?.Select(r => r.ToDalRole());
+            return dalSharedFiles;
         }
 
         public DalRole Get(int id)
         {
-            throw new NotImplementedException();
+            var role = Context.Set<Role>()?.Find(id);
+            return role?.ToDalRole();
         }
 
         public DalRole GetByPredicate(Expression<Func<DalRole, bool>> f)
@@ -33,22 +39,33 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalRole entity)
         {
-            throw new NotImplementedException();
+            var ormRole = entity?.ToOrmRole();
+            if (ormRole == null) return;
+            Context.Set<Role>()?.Add(ormRole);
         }
 
         public void Delete(DalRole entity)
         {
-            throw new NotImplementedException();
+            var ormRole = entity?.ToOrmRole();
+            if (ormRole == null) return;
+            Context.Set<Role>()?.Remove(ormRole);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var ormRole = Context.Set<Role>()?.Find(id);
+            if (ormRole == null) return;
+            Context.Set<Role>().Remove(ormRole);
         }
 
         public void Update(DalRole entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            var ormRole = Context.Set<Role>()?.FirstOrDefault(r => r.Id == entity.Id);
+            if (ormRole == null) return;
+            ormRole.Id = entity.Id;
+            ormRole.Name = entity.Name;
+            ormRole.Users = entity.Users.Select(r => r.ToOrmUser()).ToList();
         }
 
         public void Update(int id)
