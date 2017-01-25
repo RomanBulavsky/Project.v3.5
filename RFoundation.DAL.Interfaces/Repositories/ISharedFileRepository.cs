@@ -4,5 +4,6 @@ namespace RFoundation.DAL.Interfaces.Repositories
 {
     public interface ISharedFileRepository : IRepository<DalSharedFile>
     {
+        DalSharedFile Get(DalSharedFile entity);
     }
 }

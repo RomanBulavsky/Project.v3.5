@@ -28,7 +28,18 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public DalSharedFile Get(int id)
         {
-            var sharedFile = Context.Set<SharedFile>()?.Find(id);
+            throw new NotImplementedException();
+        }
+
+        public DalSharedFile Get(DalSharedFile entity)
+        {
+            var sharedFile =
+                Context.Set<SharedFile>()?
+                    .FirstOrDefault(
+                        sf =>
+                            sf.FileId == entity.FileId && sf.OwnerId == entity.OwnerId &&
+                            sf.RecipientId == entity.RecipientId);
+            
             return sharedFile?.ToDalSharedFile();
         }
 
@@ -46,26 +57,24 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalSharedFile entity)
         {
-            var ormSharedFile = entity?.ToOrmSharedFile();
+            var ormSharedFile =
+                Context.Set<SharedFile>()?
+                    .FirstOrDefault(
+                        sf =>
+                            sf.FileId == entity.FileId && sf.OwnerId == entity.OwnerId &&
+                            sf.RecipientId == entity.RecipientId);
             if (ormSharedFile == null) return;
             Context.Set<SharedFile>()?.Remove(ormSharedFile);
         }
 
         public void Delete(int id)
         {
-            var sharedFile = Context.Set<File>()?.Find(id);
-            if (sharedFile == null) return;
-            Context.Set<File>().Remove(sharedFile);
+            throw new NotImplementedException();
         }
 
         public void Update(DalSharedFile entity)
         {
-            if (entity == null) return;
-            var ormSharedFile = Context.Set<SharedFile>()?.FirstOrDefault(sf => sf.FileId == entity.FileId);
-            if(ormSharedFile == null) return;
-            ormSharedFile.OwnerId = entity.OwnerId;
-            ormSharedFile.RecipientId = entity.RecipientId;
-            ormSharedFile.FileId = entity.FileId;
+            throw new NotImplementedException();
         }
 
         public void Update(int id)

@@ -22,14 +22,14 @@ namespace DalTests
             => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
 
         [TestCase(1, "21")]
-        public void TakeFileNameById(int fileId, string fileName)
+        public void GetFileNameById(int fileId, string fileName)
         {
             var file = UnitOfWork.FileRepository.Get(fileId);
             Assert.AreEqual(file.Name, fileName);
         }
 
         [TestCase(1, 1)]
-        public void TakeFileDataById(int fileId, byte data)
+        public void GetFileDataById(int fileId, byte data)
         {
             var file = UnitOfWork.FileRepository.Get(fileId);
             var bytes = file.Data[0];
@@ -37,7 +37,7 @@ namespace DalTests
         }
 
         [TestCase(1, 2)]
-        public void TakeOwnerIdById(int fileId, int ownerId)
+        public void GetOwnerIdById(int fileId, int ownerId)
         {
             var file = UnitOfWork.FileRepository.Get(fileId);
             var owner = file.User;//TODO: we don't mapped it.
@@ -45,6 +45,7 @@ namespace DalTests
             Assert.AreEqual(userId, ownerId);
         }
 
+        [Order(1)]
         [TestCase(2,"FileTestName", 1, 20,new byte[]{1,0,1})]
         public void CreateUser(int userId, string fileName, int fileExtensionId, int size, byte[] data)
         {
@@ -56,6 +57,7 @@ namespace DalTests
             Assert.AreEqual(fileFromDb?.Name, fileName);
         }
 
+        [Order(2)]
         [TestCase("FileTestName", "FileTestNameXXX")]
         public void UpdateFile(string oldName, string newName)
         {
@@ -69,6 +71,7 @@ namespace DalTests
             Assert.AreEqual(newFile.Name, newName);
         }
 
+        [Order(3)]
         [TestCase("FileTestNameXXX")]
         public void DeleteFile(string fileName)
         {
@@ -77,8 +80,8 @@ namespace DalTests
             UnitOfWork.FileRepository.Delete(id);
             UnitOfWork.Commit();
 
-            var delFile = UnitOfWork.FileRepository.GetAll().FirstOrDefault(f=>f.Name == fileName);
-            Assert.IsNull(delFile);
+            var dalFile = UnitOfWork.FileRepository.GetAll().FirstOrDefault(f=>f.Name == fileName);
+            Assert.IsNull(dalFile);
         }
 
     }

@@ -20,28 +20,28 @@ namespace DalTests
             => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
 
         [TestCase(2, "2")]
-        public void TakeLoginById(int userId, string login)
+        public void GetLoginById(int userId, string login)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             Assert.AreEqual(user.Login, login);
         }
 
         [TestCase(2, "2@")]
-        public void TakeEmailById(int userId, string email)
+        public void GetEmailById(int userId, string email)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             Assert.AreEqual(user.Email, email);
         }
 
         [TestCase(2, "2")]
-        public void TakePasswordById(int userId, string password)
+        public void GetPasswordById(int userId, string password)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             Assert.AreEqual(user.Password, password);
         }
 
         [TestCase(2, new int[] {4, 6, 8})]
-        public void TakeFriendsById(int userId, int[] list)
+        public void GetFriendsById(int userId, int[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var friendsIDsList = user.Friends.Select(u => u.UserId).ToList();
@@ -50,7 +50,7 @@ namespace DalTests
         }
 
         [TestCase(2, new int[] {1, 2, 3, 4, 5})]
-        public void TakeUserFilesById(int userId, int[] list)
+        public void GetUserFilesById(int userId, int[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.Files.Select(f => f.Id).ToList();
@@ -59,7 +59,7 @@ namespace DalTests
         }
 
         [TestCase(2, new byte[] {1, 1, 1, 1, 1})]
-        public void TakeUserFilesDataById(int userId, byte[] list)
+        public void GetUserFilesDataById(int userId, byte[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.Files.Select(f => f.Data).ToList();
@@ -68,7 +68,7 @@ namespace DalTests
         }
 
         [TestCase(2, new int[] {1, 2, 3})]
-        public void TakeUserSharedFilesById(int userId, int[] list)
+        public void GetUserSharedFilesById(int userId, int[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.SharedFiles.Select(f => f.FileId).ToList();
@@ -77,14 +77,15 @@ namespace DalTests
         }
 
         [TestCase(2, new int[] {8})]
-        public void TakeUserReceivedFilesById(int userId, int[] list)
+        public void GetUserReceivedFilesById(int userId, int[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
 
             Assert.AreEqual(filesIdsList, list.ToList());
         }
-        
+       
+        [Order(1)]
         [TestCase("Test@", "Test", "Test")]
         public void CreateUser(string email, string login, string password)
         {
@@ -98,6 +99,7 @@ namespace DalTests
 
         }
 
+        [Order(2)]
         [TestCase("Test@", "Test@XXX")]
         public void UpdateUser(string oldEmail, string newEmail)
         {
@@ -110,6 +112,8 @@ namespace DalTests
             var newUser = UnitOfWork.UserRepository.Get(id);
             Assert.AreEqual(newUser.Email, newEmail);
         }
+
+        [Order(3)]
         [TestCase("Test@XXX", "Test", "Test")]
         public void DeleteUser(string email, string login, string password)
         {
@@ -124,7 +128,7 @@ namespace DalTests
 
         //TODO: not important
         /*[TestCase(2, new byte[] {1})]
-        public void TakeUserSharedFilesDataById(int userId, byte[] list)
+        public void GetUserSharedFilesDataById(int userId, byte[] list)
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
