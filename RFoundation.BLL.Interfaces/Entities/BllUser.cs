@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RFoundation.DAL.Interfaces.DTO
+namespace RFoundation.BLL.Interfaces.Entities
 {
-    public class DalUser : IDalEntity
+    public class BllUser : IBllEntity
     {
         public int Id { get; set; }
         
@@ -29,22 +29,22 @@ namespace RFoundation.DAL.Interfaces.DTO
 
         //TODO: Main Navigation
         
-        public ICollection<DalFile> Files { get; set; }
+        public ICollection<BllFile> Files { get; set; }
 
-        public DalFile ProfileImageFile { get; set; }
+        public BllFile ProfileImageFile { get; set; }
 
-        public ICollection<DalFriendRequest> FriendRequests { get; set; }
+        public ICollection<BllFriendRequest> FriendRequests { get; set; }
         
-        public ICollection<DalFriendRequest> FriendOffers { get; set; }
+        public ICollection<BllFriendRequest> FriendOffers { get; set; }
         
-        public ICollection<DalFriend> Friends { get; set; }
+        public ICollection<BllFriend> Friends { get; set; }
         
-        public ICollection<DalFriend> FriendsReserved { get; set; }
+        public ICollection<BllFriend> FriendsReserved { get; set; }
         
-        public ICollection<DalSharedFile> SharedFiles { get; set; }
+        public ICollection<BllSharedFile> SharedFiles { get; set; }
         
-        public ICollection<DalSharedFile> ReceivedFiles { get; set; }
+        public ICollection<BllSharedFile> ReceivedFiles { get; set; }
         
-        public ICollection<DalRole> Roles { get; set; }
+        public ICollection<BllRole> Roles { get; set; }
     }
 }

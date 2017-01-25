@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq.Expressions;
-using RFoundation.DAL.Interfaces.DTO;
-using RFoundation.DAL.Interfaces.SpecificInterface;
+using RFoundation.DAL.Interfaces.Entities;
+using RFoundation.DAL.Interfaces.Repositories;
 
 namespace RFoundation.DAL.Implementation.Repositories
 {

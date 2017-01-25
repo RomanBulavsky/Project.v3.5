@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RFoundation.DAL.Implementation.Repositories;
 using RFoundation.DAL.Interfaces;
-using RFoundation.DAL.Interfaces.SpecificInterface;
+using RFoundation.DAL.Interfaces.Repositories;
 
 namespace RFoundation.DAL.Implementation
 {
