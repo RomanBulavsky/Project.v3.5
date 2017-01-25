@@ -19,62 +19,56 @@ namespace DalTests
         private IUnitOfWork UnitOfWork
             => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
 
-        [TestCase(1, "txt")]
-        public void GetById(int extensionId, string extName)
+        [TestCase(1, 4)]
+        public void GetById(int id, int friendId)
         {
-            var extension = UnitOfWork.ExtensionRepository.Get(extensionId);
-            Assert.AreEqual(extension.ExtensionName, extName);
+            var friend = UnitOfWork.FriendRepository.Get(id);
+            Assert.AreEqual(friend.FriendId, friendId);
         }
 
         [Order(1)]
-        [TestCase("ExtT")]
-        public void CreateExtension(string extName)
+        [TestCase(1, 2)]
+        public void CreateFriendship(int userId, int friendId)
         {
-            var extension = new DalExtension() {ExtensionName = extName};
-            UnitOfWork.ExtensionRepository.Create(extension);
+            var friendship = new DalFriend() {FriendId = friendId, UserId = userId};
+            UnitOfWork.FriendRepository.Create(friendship);
             UnitOfWork.Commit();
 
-            var extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(e => e.ExtensionName.Equals(extName));
+            var friendshipFromDb =
+                UnitOfWork.FriendRepository.GetAll()
+                    .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == friendId);
 
-            Assert.AreEqual(extFromDb.ExtensionName, extName);
+            Assert.AreEqual(friendshipFromDb.FriendId, friendId);
         }
 
         [Order(2)]
-        [TestCase("ExtT", "ExtX")]
-        public void UpdateExtension(string oldExt, string newExt)
+        [TestCase(1, 2, 3)]
+        public void UpdateExtension(int userId, int oldfriendId, int newFriendId)
         {
-            var extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(ext => ext.ExtensionName == oldExt);
-            var id = extFromDb.Id;
-            extFromDb.ExtensionName = newExt;
-            UnitOfWork.ExtensionRepository.Update(extFromDb);
+            var friendship =
+                UnitOfWork.FriendRepository.GetAll()
+                    .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == oldfriendId);
+            var id = friendship.Id;
+            friendship.FriendId = newFriendId;
+            UnitOfWork.FriendRepository.Update(friendship);
             UnitOfWork.Commit();
 
-            var newExtensionFromDb = UnitOfWork.ExtensionRepository.Get(id);
-            Assert.AreEqual(newExtensionFromDb.ExtensionName, newExt);
+            var newFriendship = UnitOfWork.FriendRepository.Get(id);
+            Assert.AreEqual(newFriendship.FriendId, newFriendId);
         }
 
         [Order(3)]
-        [TestCase("ExtX")]
-        public void DeleteUser(string extName)
+        [TestCase(1, 3)]
+        public void DeleteUser(int userId, int friendId)
         {
-            var extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(e => e.ExtensionName.Equals(extName));
-            UnitOfWork.ExtensionRepository.Delete(extFromDb.Id);
+            var friendship =
+                UnitOfWork.FriendRepository.GetAll()
+                    .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == friendId);
+            UnitOfWork.FriendRepository.Delete(friendship.Id);
             UnitOfWork.Commit();
 
-            extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(e => e.ExtensionName.Equals(extName));
-            Assert.IsNull(extFromDb);
+            var friendshipFromDb = UnitOfWork.ExtensionRepository.Get(friendship.Id);
+            Assert.IsNull(friendshipFromDb);
         }
-
-        //TODO: not important
-        /*[TestCase(2, new byte[] {1})]
-        public void GetUserSharedFilesDataById(int userId, byte[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
-            var files = UnitOfWork.FileRepository.GetAll().Where(f => filesIdsList.Contains(f.Id));
-
-            var s = files.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
-        }*/
     }
 }
