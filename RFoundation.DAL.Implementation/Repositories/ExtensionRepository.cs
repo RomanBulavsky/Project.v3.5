@@ -21,8 +21,8 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalExtension> GetAll()
         {
-            var extensions = Context.Set<Extension>();
-            var dalExtensions = extensions?.Select(e => e.ToDalExtension()).ToList();
+            var extensions = Context.Set<Extension>().ToList();
+            var dalExtensions = extensions?.Select(e => e.ToDalExtension());
             return dalExtensions;
         }
 
