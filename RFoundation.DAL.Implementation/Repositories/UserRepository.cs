@@ -21,15 +21,15 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalUser> GetAll()
         {
-            var users = Context.Set<User>().ToList();
-            var dalUsers = users.Select(u => u.ToDalUser());
+            var users = Context.Set<User>()?.ToList();
+            var dalUsers = users?.Select(u => u.ToDalUser());
             return dalUsers;
         }
 
         public DalUser Get(int id)
         {
-            var user = Context.Set<User>().Find(id);
-            return user.ToDalUser();
+            var user = Context.Set<User>()?.Find(id);
+            return user?.ToDalUser();
         }
 
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
@@ -40,27 +40,32 @@ namespace RFoundation.DAL.Implementation.Repositories
         public void Create(DalUser entity)
         {
             //TODO: clean all repo => + ExprBody
-            var ormUser = entity.ToOrmUser();
-            Context.Set<User>().Add(ormUser);
+            var ormUser = entity?.ToOrmUser();
+            if(ormUser == null) return;
+            Context.Set<User>()?.Add(ormUser);
         }
 
         public void Delete(DalUser entity)
         {
-            Context.Set<User>().Remove(entity.ToOrmUser());
+            if(entity == null) return;
+            Context.Set<User>()?.Remove(entity.ToOrmUser());
         }
 
         public void Delete(int id)
         {
-            var user = Context.Set<User>().Find(id);
+            var user = Context.Set<User>()?.Find(id);
+            if (user == null) return;
             Context.Set<User>().Remove(user);
         }
 
         public void Update(DalUser entity)
         {
-            var ormUser = Context.Set<User>().Find(entity.Id);
+            if (entity == null) return;
+            var ormUser = Context.Set<User>()?.Find(entity.Id);
+            if (ormUser == null) return;
             ormUser.Email = entity.Email;
             ormUser.Login = entity.Login;
-            ormUser.Password = entity.Password;    
+            ormUser.Password = entity.Password;
             ormUser.LastUpdateDate = DateTime.Now;
             ormUser.RoleId = entity.RoleId;
             ormUser.FirstName = entity.FirstName;

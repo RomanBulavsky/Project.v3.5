@@ -21,15 +21,15 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalFile> GetAll()
         {
-            var files = Context.Set<File>().ToList();
-            var dalFiles = files.Select(u => u.ToDalFile());
+            var files = Context.Set<File>()?.ToList();
+            var dalFiles = files?.Select(u => u.ToDalFile());
             return dalFiles;
         }
 
         public DalFile Get(int id)
         {
-            var file = Context.Set<File>().Find(id);
-            return file.ToDalFile();
+            var file = Context.Set<File>()?.Find(id);
+            return file?.ToDalFile();
         }
 
         public DalFile GetByPredicate(Expression<Func<DalFile, bool>> f)
@@ -39,26 +39,30 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalFile entity)
         {
-            var ormFile = entity.ToOrmFile();
-            Context.Set<File>().Add(ormFile);
+            var ormFile = entity?.ToOrmFile();
+            if(ormFile == null) return;
+            Context.Set<File>()?.Add(ormFile);
         }
 
         public void Delete(DalFile entity)
         {
-            var file = entity.ToOrmFile();
-            Context.Set<File>().Remove(file);
+            var file = entity?.ToOrmFile();
+            if(file == null) return;
+            Context.Set<File>()?.Remove(file);
         }
 
         public void Delete(int id)
         {
-            var file = Context.Set<File>().Find(id);
+            var file = Context.Set<File>()?.Find(id);
+            if (file == null) return;
             Context.Set<File>().Remove(file);
-
         }
 
         public void Update(DalFile entity)
         {
-            var ormFile = Context.Set<File>().Find(entity.Id);
+            if (entity == null) return;
+            var ormFile = Context.Set<File>()?.Find(entity.Id);
+            if (ormFile == null) return;
             ormFile.Name = entity.Name;
             ormFile.Data = entity.Data;
             ormFile.Banned = entity.Banned;
