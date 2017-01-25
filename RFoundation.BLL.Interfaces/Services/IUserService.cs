@@ -2,7 +2,7 @@
 
 namespace RFoundation.BLL.Interfaces.Services
 {
-    public interface IUserService : IService<BllFriendRequest>
+    public interface IUserService : IService<BllUser>
     {
     }
 }

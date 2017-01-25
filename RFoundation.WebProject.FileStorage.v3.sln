@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.BLL.Interfaces"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.BLL.Implementation", "RFoundation.BLL.Implementation\RFoundation.BLL.Implementation.csproj", "{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BllTests", "BllTests\BllTests.csproj", "{3177F259-CC83-42DA-BC3A-479523E580F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3177F259-CC83-42DA-BC3A-479523E580F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3177F259-CC83-42DA-BC3A-479523E580F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3177F259-CC83-42DA-BC3A-479523E580F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3177F259-CC83-42DA-BC3A-479523E580F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

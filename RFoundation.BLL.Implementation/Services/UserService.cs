@@ -16,27 +16,28 @@ namespace RFoundation.BLL.Implementation.Services
             UnitOfWork = unitOfWork;
         }
 
-        public IEnumerable<BllFriendRequest> GetAll()
+
+        public IEnumerable<BllUser> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public BllFriendRequest Get(int id)
+        public BllUser Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public BllFriendRequest GetByPredicate(Expression<Func<BllFriendRequest, bool>> f)
+        public BllUser GetByPredicate(Expression<Func<BllUser, bool>> f)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(BllFriendRequest entity)
+        public void Create(BllUser entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(BllFriendRequest entity)
+        public void Delete(BllUser entity)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +47,7 @@ namespace RFoundation.BLL.Implementation.Services
             throw new NotImplementedException();
         }
 
-        public void Update(BllFriendRequest entity)
+        public void Update(BllUser entity)
         {
             throw new NotImplementedException();
         }
