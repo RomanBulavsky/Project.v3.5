@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.DAL.Implementat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.BLL.Interfaces", "RFoundation.BLL.Interfaces\RFoundation.BLL.Interfaces.csproj", "{811B7A7F-3D1F-4352-9611-775BC0DA9200}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFoundation.BLL.Implementation", "RFoundation.BLL.Implementation\RFoundation.BLL.Implementation.csproj", "{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{811B7A7F-3D1F-4352-9611-775BC0DA9200}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{811B7A7F-3D1F-4352-9611-775BC0DA9200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{811B7A7F-3D1F-4352-9611-775BC0DA9200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66ABB9A-0710-4B3A-8E37-4F46686F9D0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
