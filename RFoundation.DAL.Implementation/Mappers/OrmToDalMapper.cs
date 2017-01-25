@@ -45,7 +45,6 @@ namespace RFoundation.DAL.Implementation.Mappers
                 ParentFileFolderId = fileEntity.ParentFileFolderId
             };
         }
-
         public static DalFriend ToDalFriend(this Friend friendEntity)
         {
             return new DalFriend()
@@ -64,5 +63,32 @@ namespace RFoundation.DAL.Implementation.Mappers
                 FileId = sharedFileEntity.FileId
             };
         }
+        public static DalExtension ToDalExtension(this Extension extensionEntity)
+        {
+            return new DalExtension()
+            {
+                Id = extensionEntity.Id,
+                ExtensionName = extensionEntity.ExtensionName
+            };
+        }
+        public static DalFriendRequest ToDalFriendRequest(this FriendRequest friendRequestEntity)
+        {
+            return new DalFriendRequest()
+            {
+                FromUserId = friendRequestEntity.FromUserId,
+                ToUserId = friendRequestEntity.ToUserId,
+                Confirmed = friendRequestEntity.Confirmed
+            };
+        }
+        public static DalRole ToDalRole(this Role roleEntity)
+        {
+            return new DalRole()
+            {
+                Id = roleEntity.Id,
+                Name = roleEntity.Name,
+                Users = roleEntity.Users.Select(u=>u.ToDalUser()).ToList()
+            };
+        }
+
     }
 }

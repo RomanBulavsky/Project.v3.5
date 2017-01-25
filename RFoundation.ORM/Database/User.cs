@@ -35,17 +35,17 @@ namespace RFoundation.ORM.Database
         [StringLength(50)]
         public string Password { get; set; }
 
-        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTime CreationDate { get; set; }
 
-        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
+        public DateTime LastUpdateDate { get; set; }
 
-        public int RoleId { get; set; } = 2;
-
-        [StringLength(50)]
-        public string FirstName { get; set; } = "ORM_plug";
+        public int RoleId { get; set; }
 
         [StringLength(50)]
-        public string LastName { get; set; } = "ORM_plug";
+        public string FirstName { get; set; }
+
+        [StringLength(50)]
+        public string LastName { get; set; }
 
         public DateTime? Birthdate { get; set; }
 

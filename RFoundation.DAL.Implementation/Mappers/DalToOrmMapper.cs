@@ -1,4 +1,5 @@
-﻿using RFoundation.DAL.Interfaces.Entities;
+﻿using System.Linq;
+using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.ORM.Database;
 
 namespace RFoundation.DAL.Implementation.Mappers
@@ -43,6 +44,51 @@ namespace RFoundation.DAL.Implementation.Mappers
                 Banned = fileEntity.Banned,
                 IsFolder = fileEntity.IsFolder,
                 ParentFileFolderId = fileEntity.ParentFileFolderId
+            };
+        }
+
+        public static Extension ToOrmExtension(this DalExtension extensionEntity)
+        {
+            return new Extension()
+            {
+                Id = extensionEntity.Id,
+                ExtensionName = extensionEntity.ExtensionName    
+            };
+        }
+        public static Friend ToOrmFriend(this DalFriend friendEntity)
+        {
+            return new Friend()
+            {
+                Id = friendEntity.Id,
+                FriendId = friendEntity.FriendId,
+                UserId = friendEntity.UserId
+            };
+        }
+        public static FriendRequest ToOrmFriendRequest(this DalFriendRequest friendRequestEntity)
+        {
+            return new FriendRequest()
+            {
+                FromUserId = friendRequestEntity.FromUserId,
+                ToUserId = friendRequestEntity.ToUserId,
+                Confirmed = friendRequestEntity.Confirmed
+            };
+        }
+        public static Role ToOrmRole(this DalRole roleEntity)
+        {
+            return new Role()
+            {
+                Id = roleEntity.Id,
+                Name = roleEntity.Name,
+                Users = roleEntity.Users.Select(u=>u.ToOrmUser()).ToList()
+            };
+        }
+        public static SharedFile ToOrmSharedFile(this DalSharedFile sharedFileEntity)
+        {
+            return new SharedFile()
+            {
+                FileId = sharedFileEntity.FileId,
+                OwnerId = sharedFileEntity.OwnerId,
+                RecipientId = sharedFileEntity.RecipientId 
             };
         }
     }
