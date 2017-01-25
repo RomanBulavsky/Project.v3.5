@@ -23,7 +23,8 @@ namespace RFoundation.DAL.Implementation.Mappers
                 ProfileImageFileId = userEntity.ProfileImageFileId, 
                 Friends = userEntity.Friends.Select(u=>u.ToDalFriend()).ToList(),
                 Files = userEntity.Files.Select(f=>f.ToDalFile()).ToList(),
-                ReceivedFiles = userEntity.ReceivedFiles.Select(rf=>rf.ToDalSharedFile()).ToList()
+                ReceivedFiles = userEntity.ReceivedFiles.Select(rf=>rf.ToDalSharedFile()).ToList(),
+                SharedFiles = userEntity.SharedFiles.Select(sf=>sf.ToDalSharedFile()).ToList()
 
             };
         }
@@ -31,17 +32,37 @@ namespace RFoundation.DAL.Implementation.Mappers
         {
             return new DalFile()
             {
-
+                Id = fileEntity.Id,
+                UserId = fileEntity.UserId,
+                Name = fileEntity.Name,
+                ExtensionId = fileEntity.ExtensionId,
+                Size = fileEntity.Size,
+                Data = fileEntity.Data,
+                UploadDate = fileEntity.UploadDate,
+                IsProfileImage = fileEntity.IsProfileImage,
+                Banned = fileEntity.Banned,
+                IsFolder = fileEntity.IsFolder,
+                ParentFileFolderId = fileEntity.ParentFileFolderId
             };
         }
 
         public static DalFriend ToDalFriend(this Friend friendEntity)
         {
-            return new DalFriend();
+            return new DalFriend()
+            {
+                Id = friendEntity.Id,
+                FriendId = friendEntity.FriendId,
+                UserId = friendEntity.UserId
+            };
         }
-        public static DalSharedFile ToDalSharedFile(this SharedFile friendEntity)
+        public static DalSharedFile ToDalSharedFile(this SharedFile sharedFileEntity)
         {
-            return new DalSharedFile();
+            return new DalSharedFile()
+            {
+                OwnerId = sharedFileEntity.OwnerId,
+                RecipientId = sharedFileEntity.RecipientId,
+                FileId = sharedFileEntity.FileId
+            };
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
 using RFoundation.DAL.Implementation.Mappers;
 using RFoundation.DAL.Interfaces.Entities;
@@ -20,7 +21,9 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalUser> GetAll()
         {
-            throw new NotImplementedException();
+            var users = Context.Set<User>().ToList();
+            var dalUsers = users.Select(u => u.ToDalUser());
+            return dalUsers;
         }
 
         public DalUser Get(int id)
@@ -36,17 +39,19 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalUser entity)
         {
-            throw new NotImplementedException();
+            var ormUser = entity.ToOrmUser();
+            Context.Set<User>().Add(ormUser);
         }
 
         public void Delete(DalUser entity)
         {
-            throw new NotImplementedException();
+            Context.Set<User>().Remove(entity.ToOrmUser());
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var user = Context.Set<User>().Find(id);
+            Context.Set<User>().Remove(user);
         }
 
         public void Update(DalUser entity)
