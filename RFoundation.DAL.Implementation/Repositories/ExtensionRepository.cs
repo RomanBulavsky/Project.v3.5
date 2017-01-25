@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.DAL.Implementation.Mappers;
 using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.DAL.Interfaces.Repositories;
+using RFoundation.ORM.Database;
 
 namespace RFoundation.DAL.Implementation.Repositories
 {
@@ -18,12 +21,15 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalExtension> GetAll()
         {
-            throw new NotImplementedException();
+            var extensions = Context.Set<Extension>();
+            var dalExtensions = extensions?.Select(e => e.ToDalExtension()).ToList();
+            return dalExtensions;
         }
 
         public DalExtension Get(int id)
         {
-            throw new NotImplementedException();
+            var extension = Context.Set<Extension>()?.Find(id);
+            return extension?.ToDalExtension();
         }
 
         public DalExtension GetByPredicate(Expression<Func<DalExtension, bool>> f)
@@ -33,22 +39,32 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalExtension entity)
         {
-            throw new NotImplementedException();
+            var ormExtension = entity?.ToOrmExtension();
+            if (ormExtension == null) return;
+            Context.Set<Extension>()?.Add(ormExtension);
         }
 
         public void Delete(DalExtension entity)
         {
-            throw new NotImplementedException();
+            var ormExtension = entity?.ToOrmExtension();
+            if (ormExtension == null) return;
+            Context.Set<Extension>()?.Remove(ormExtension);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var extension = Context.Set<Extension>()?.Find(id);
+            if (extension == null) return;
+            Context.Set<Extension>().Remove(extension);
         }
 
         public void Update(DalExtension entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            var ormExtension = Context.Set<Extension>()?.Find(entity.Id);
+            if (ormExtension == null) return;
+            ormExtension.Id = entity.Id;
+            ormExtension.ExtensionName = entity.ExtensionName;
         }
 
         public void Update(int id)
