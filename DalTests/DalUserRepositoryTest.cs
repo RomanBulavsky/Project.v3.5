@@ -63,8 +63,8 @@ namespace DalTests
         {
             var user = UnitOfWork.UserRepository.Get(userId);
             var filesIdsList = user.Files.Select(f => f.Data).ToList();
-            var s = filesIdsList.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
+            var bytes = filesIdsList.Select(f => f[0]).ToList();
+            Assert.AreEqual(bytes, list.ToList());
         }
 
         [TestCase(2, new int[] {1, 2, 3})]
@@ -97,7 +97,20 @@ namespace DalTests
             Assert.AreEqual(user.Email, dalUser.Email);
 
         }
-        [TestCase("Test@", "Test", "Test")]
+
+        [TestCase("Test@", "Test@XXX")]
+        public void UpdateUser(string oldEmail, string newEmail)
+        {
+            var userFromDb = UnitOfWork.UserRepository.GetAll().FirstOrDefault(user => user.Email == oldEmail);
+            var id = userFromDb.Id;
+            userFromDb.Email = newEmail;
+            UnitOfWork.UserRepository.Update(userFromDb);
+            UnitOfWork.Commit();
+
+            var newUser = UnitOfWork.UserRepository.Get(id);
+            Assert.AreEqual(newUser.Email, newEmail);
+        }
+        [TestCase("Test@XXX", "Test", "Test")]
         public void DeleteUser(string email, string login, string password)
         {
             var user = UnitOfWork.UserRepository.GetAll().FirstOrDefault(u => u.Email.Equals(email));

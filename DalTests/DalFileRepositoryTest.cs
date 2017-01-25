@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using RFoundation.DAL.Implementation;
+using RFoundation.DAL.Implementation.Mappers;
 using RFoundation.DAL.Interfaces;
 using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.ORM.Database;
@@ -19,106 +21,65 @@ namespace DalTests
         private IUnitOfWork UnitOfWork
             => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
 
-        [TestCase(2, "2")]
-        public void TakeLoginById(int userId, string login)
+        [TestCase(1, "21")]
+        public void TakeFileNameById(int fileId, string fileName)
         {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            Assert.AreEqual(user.Login, login);
+            var file = UnitOfWork.FileRepository.Get(fileId);
+            Assert.AreEqual(file.Name, fileName);
         }
 
-        [TestCase(2, "2@")]
-        public void TakeEmailById(int userId, string email)
+        [TestCase(1, 1)]
+        public void TakeFileDataById(int fileId, byte data)
         {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            Assert.AreEqual(user.Email, email);
+            var file = UnitOfWork.FileRepository.Get(fileId);
+            var bytes = file.Data[0];
+            Assert.AreEqual(bytes, data);
         }
 
-        [TestCase(2, "2")]
-        public void TakePasswordById(int userId, string password)
+        [TestCase(1, 2)]
+        public void TakeOwnerIdById(int fileId, int ownerId)
         {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            Assert.AreEqual(user.Password, password);
+            var file = UnitOfWork.FileRepository.Get(fileId);
+            var owner = file.User;//TODO: we don't mapped it.
+            var userId = file.UserId;
+            Assert.AreEqual(userId, ownerId);
         }
 
-        [TestCase(2, new int[] {4, 6, 8})]
-        public void TakeFriendsById(int userId, int[] list)
+        [TestCase(2,"FileTestName", 1, 20,new byte[]{1,0,1})]
+        public void CreateUser(int userId, string fileName, int fileExtensionId, int size, byte[] data)
         {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var friendsIDsList = user.Friends.Select(u => u.UserId).ToList();
-
-            Assert.AreEqual(friendsIDsList, list.ToList());
-        }
-
-        [TestCase(2, new int[] {1, 2, 3, 4, 5})]
-        public void TakeUserFilesById(int userId, int[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.Files.Select(f => f.Id).ToList();
-
-            Assert.AreEqual(filesIdsList, list.ToList());
-        }
-
-        [TestCase(2, new byte[] {1, 1, 1, 1, 1})]
-        public void TakeUserFilesDataById(int userId, byte[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.Files.Select(f => f.Data).ToList();
-            var s = filesIdsList.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
-        }
-
-        [TestCase(2, new int[] {1, 2, 3})]
-        public void TakeUserSharedFilesById(int userId, int[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.SharedFiles.Select(f => f.FileId).ToList();
-
-            Assert.AreEqual(filesIdsList, list.ToList());
-        }
-
-        [TestCase(2, new int[] {8})]
-        public void TakeUserReceivedFilesById(int userId, int[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
-
-            Assert.AreEqual(filesIdsList, list.ToList());
-        }
-        
-        [TestCase("Test@", "Test", "Test")]
-        public void CreateUser(string email, string login, string password)
-        {
-            var dalUser = new DalUser() { Email = email, Login = login, Password = password };
-            UnitOfWork.UserRepository.Create(dalUser);
+            var dalFile = new DalFile() {UserId = userId,Name = fileName, ExtensionId = fileExtensionId ,Size = size, Data = data};
+            UnitOfWork.FileRepository.Create(dalFile);
             UnitOfWork.Commit();
 
-            var user = UnitOfWork.UserRepository.GetAll().FirstOrDefault(u => u.Email.Equals(email));
-
-            Assert.AreEqual(user.Email, dalUser.Email);
-
+            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == dalFile.Name);
+            Assert.AreEqual(fileFromDb?.Name, fileName);
         }
-        [TestCase("Test@", "Test", "Test")]
-        public void DeleteUser(string email, string login, string password)
+
+        [TestCase("FileTestName", "FileTestNameXXX")]
+        public void UpdateFile(string oldName, string newName)
         {
-            var user = UnitOfWork.UserRepository.GetAll().FirstOrDefault(u => u.Email.Equals(email));
-            UnitOfWork.UserRepository.Delete(user.Id);
+            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == oldName);
+            var id = fileFromDb.Id;
+            fileFromDb.Name = newName;
+            UnitOfWork.FileRepository.Update(fileFromDb);
             UnitOfWork.Commit();
 
-            user = UnitOfWork.UserRepository.GetAll().FirstOrDefault(u => u.Email.Equals(email));
-            Assert.IsNull(user);
-
+            var newFile = UnitOfWork.FileRepository.Get(id);
+            Assert.AreEqual(newFile.Name, newName);
         }
 
-        //TODO: not important
-        /*[TestCase(2, new byte[] {1})]
-        public void TakeUserSharedFilesDataById(int userId, byte[] list)
+        [TestCase("FileTestNameXXX")]
+        public void DeleteFile(string fileName)
         {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
-            var files = UnitOfWork.FileRepository.GetAll().Where(f => filesIdsList.Contains(f.Id));
+            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == fileName);
+            var id = fileFromDb.Id;
+            UnitOfWork.FileRepository.Delete(id);
+            UnitOfWork.Commit();
 
-            var s = files.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
-        }*/
+            var delFile = UnitOfWork.FileRepository.GetAll().FirstOrDefault(f=>f.Name == fileName);
+            Assert.IsNull(delFile);
+        }
+
     }
 }

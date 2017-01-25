@@ -17,11 +17,11 @@ namespace RFoundation.DAL.Interfaces.Entities
         
         public byte[] Data { get; set; }
 
-        public DateTime UploadDate { get; set; }
+        public DateTime UploadDate { get; set; } = DateTime.Now;
 
-        public bool IsProfileImage { get; set; }
+        public bool IsProfileImage { get; set; } = false;
 
-        public bool Banned { get; set; }
+        public bool Banned { get; set; } = false;
 
         public bool? IsFolder { get; set; }
 

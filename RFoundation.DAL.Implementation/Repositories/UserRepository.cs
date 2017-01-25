@@ -39,6 +39,7 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalUser entity)
         {
+            //TODO: clean all repo => + ExprBody
             var ormUser = entity.ToOrmUser();
             Context.Set<User>().Add(ormUser);
         }
@@ -56,7 +57,16 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Update(DalUser entity)
         {
-            throw new NotImplementedException();
+            var ormUser = Context.Set<User>().Find(entity.Id);
+            ormUser.Email = entity.Email;
+            ormUser.Login = entity.Login;
+            ormUser.Password = entity.Password;    
+            ormUser.LastUpdateDate = DateTime.Now;
+            ormUser.RoleId = entity.RoleId;
+            ormUser.FirstName = entity.FirstName;
+            ormUser.LastName = entity.LastName;
+            ormUser.Birthdate = entity.Birthdate;
+            ormUser.ProfileImageFileId = entity.ProfileImageFileId;
         }
 
         public void Update(int id)

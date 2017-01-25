@@ -3,7 +3,7 @@ using RFoundation.ORM.Database;
 
 namespace RFoundation.DAL.Implementation.Mappers
 {
-    static class DalToOrmMapper
+    public static class DalToOrmMapper
     {
         public static User ToOrmUser(this DalUser userEntity)
         {
