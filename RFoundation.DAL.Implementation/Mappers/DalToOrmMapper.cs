@@ -79,7 +79,8 @@ namespace RFoundation.DAL.Implementation.Mappers
             {
                 Id = roleEntity.Id,
                 Name = roleEntity.Name,
-                Users = roleEntity.Users.Select(u=>u.ToOrmUser()).ToList()
+                //TODO: Don't need it
+                //Users = roleEntity.Users.Select(u=>u.ToOrmUser()).ToList()
             };
         }
         public static SharedFile ToOrmSharedFile(this DalSharedFile sharedFileEntity)

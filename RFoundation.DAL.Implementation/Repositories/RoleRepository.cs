@@ -39,16 +39,14 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalRole entity)
         {
-            var ormRole = entity?.ToOrmRole();
-            if (ormRole == null) return;
-            Context.Set<Role>()?.Add(ormRole);
+            if (entity == null) return;
+            Context.Set<Role>()?.Add(entity.ToOrmRole());
         }
 
         public void Delete(DalRole entity)
         {
-            var ormRole = entity?.ToOrmRole();
-            if (ormRole == null) return;
-            Context.Set<Role>()?.Remove(ormRole);
+            if (entity == null) return;
+            Delete(entity.Id);
         }
 
         public void Delete(int id)

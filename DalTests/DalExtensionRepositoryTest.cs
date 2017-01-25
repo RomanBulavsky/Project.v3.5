@@ -55,7 +55,7 @@ namespace DalTests
 
         [Order(3)]
         [TestCase("ExtX")]
-        public void DeleteUser(string extName)
+        public void DeleteExtension(string extName)
         {
             var extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(e => e.ExtensionName.Equals(extName));
             UnitOfWork.ExtensionRepository.Delete(extFromDb.Id);
@@ -64,17 +64,5 @@ namespace DalTests
             extFromDb = UnitOfWork.ExtensionRepository.GetAll().FirstOrDefault(e => e.ExtensionName.Equals(extName));
             Assert.IsNull(extFromDb);
         }
-
-        //TODO: not important
-        /*[TestCase(2, new byte[] {1})]
-        public void GetUserSharedFilesDataById(int userId, byte[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
-            var files = UnitOfWork.FileRepository.GetAll().Where(f => filesIdsList.Contains(f.Id));
-
-            var s = files.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
-        }*/
     }
 }
