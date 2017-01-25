@@ -2,7 +2,7 @@
 
 namespace RFoundation.DAL.Interfaces.Repositories
 {
-    public interface IFriendRepository : IRepository<DalFriendRequest>
+    public interface IFriendRepository : IRepository<DalFriend>
     {
     }
 }
