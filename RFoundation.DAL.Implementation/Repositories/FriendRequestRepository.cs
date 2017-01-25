@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.DAL.Implementation.Mappers;
 using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.DAL.Interfaces.Repositories;
+using RFoundation.ORM.Database;
 
 namespace RFoundation.DAL.Implementation.Repositories
 {
@@ -18,12 +21,15 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public IEnumerable<DalFriendRequest> GetAll()
         {
-            throw new NotImplementedException();
+            var friendRequests = Context.Set<FriendRequest>()?.ToList();
+            var dalFriendRequests = friendRequests?.Select(fr => fr.ToDalFriendRequest());
+            return dalFriendRequests;
         }
 
         public DalFriendRequest Get(int id)
         {
-            throw new NotImplementedException();
+            var friendRequest = Context.Set<FriendRequest>()?.Find(id);
+            return friendRequest?.ToDalFriendRequest();
         }
 
         public DalFriendRequest GetByPredicate(Expression<Func<DalFriendRequest, bool>> f)
@@ -33,22 +39,35 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalFriendRequest entity)
         {
-            throw new NotImplementedException();
+            var ormFriendRequest = entity?.ToOrmFriendRequest();
+            if (ormFriendRequest == null) return;
+            Context.Set<FriendRequest>()?.Add(ormFriendRequest);
         }
 
         public void Delete(DalFriendRequest entity)
         {
-            throw new NotImplementedException();
+            var ormFriendRequest = entity?.ToOrmFriendRequest();
+            if (ormFriendRequest == null) return;
+            Context.Set<FriendRequest>()?.Remove(ormFriendRequest);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var ormFriendRequest = Context.Set<FriendRequest>()?.Find(id);
+            if (ormFriendRequest == null) return;
+            Context.Set<FriendRequest>().Remove(ormFriendRequest);
         }
 
         public void Update(DalFriendRequest entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            var ormFriendRequest =
+                Context.Set<FriendRequest>()?
+                    .FirstOrDefault(fr => (fr.FromUserId == entity.FromUserId) && (fr.ToUserId == entity.ToUserId));
+            if (ormFriendRequest == null) return;
+            ormFriendRequest.FromUserId = entity.FromUserId;
+            ormFriendRequest.ToUserId = entity.ToUserId;
+            ormFriendRequest.Confirmed = entity.Confirmed;
         }
 
         public void Update(int id)
