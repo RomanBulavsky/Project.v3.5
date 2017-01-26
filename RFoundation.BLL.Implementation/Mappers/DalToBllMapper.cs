@@ -4,8 +4,18 @@ using RFoundation.DAL.Interfaces.Entities;
 
 namespace RFoundation.BLL.Implementation.Mappers
 {
+    /// <summary>
+    /// Class that provides extension mapper methods 
+    /// from <see cref="RFoundation.DAL.Interfaces.Entities"/> entities 
+    /// to <see cref="RFoundation.BLL.Interfaces.Entities"/> entities
+    /// </summary>
+    /// <seealso cref="RFoundation.DAL"/>
+    /// <seealso cref="RFoundation.BLL"/>
     static class DalToBllMapper
     {
+        /// <summary>
+        /// Mapping <see cref="DalUser"/> entity to <see cref="BllUser"/> entity.
+        /// </summary>
         public static BllUser ToBllUser(this DalUser userEntity)
         {
             return new BllUser()
@@ -28,6 +38,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalFile"/> entity to <see cref="BllFile"/> entity.
+        /// </summary>
         public static BllFile ToBllFile(this DalFile fileEntity)
         {
             return new BllFile()
@@ -46,6 +59,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalFriend"/> entity to <see cref="BllFriend"/> entity.
+        /// </summary>
         public static BllFriend ToBllFriend(this DalFriend friendEntity)
         {
             return new BllFriend()
@@ -56,6 +72,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalSharedFile"/> entity to <see cref="BllSharedFile"/> entity.
+        /// </summary>
         public static BllSharedFile ToBllSharedFileFile(this DalSharedFile sharedFileEntity)
         {
             return new BllSharedFile()
@@ -66,6 +85,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalExtension"/> entity to <see cref="BllExtension"/> entity.
+        /// </summary>
         public static BllExtension ToBllExtension(this DalExtension extensionEntity)
         {
             return new BllExtension()
@@ -75,6 +97,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalFriendRequest"/> entity to <see cref="BllFriendRequest"/> entity.
+        /// </summary>
         public static BllFriendRequest ToBllFriendRequest(this DalFriendRequest friendRequestEntity)
         {
             return new BllFriendRequest()
@@ -85,6 +110,9 @@ namespace RFoundation.BLL.Implementation.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapping <see cref="DalRole"/> entity to <see cref="BllRole"/> entity.
+        /// </summary>
         public static BllRole ToBllRole(this DalRole roleEntity)
         {
             return new BllRole()
@@ -94,6 +122,5 @@ namespace RFoundation.BLL.Implementation.Mappers
                 Users = roleEntity.Users.Select(u => u.ToBllUser()).ToList()
             };
         }
-
     }
 }

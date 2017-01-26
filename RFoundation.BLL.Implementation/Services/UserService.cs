@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.BLL.Implementation.Mappers;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Interfaces;
@@ -19,7 +21,8 @@ namespace RFoundation.BLL.Implementation.Services
 
         public IEnumerable<BllUser> GetAll()
         {
-            throw new NotImplementedException();
+            var users = UnitOfWork?.UserRepository?.GetAll();
+            return users?.Select(u => u.ToBllUser());
         }
 
         public BllUser Get(int id)
