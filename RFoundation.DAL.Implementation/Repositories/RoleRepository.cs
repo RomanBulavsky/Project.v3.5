@@ -63,7 +63,8 @@ namespace RFoundation.DAL.Implementation.Repositories
             if (ormRole == null) return;
             ormRole.Id = entity.Id;
             ormRole.Name = entity.Name;
-            ormRole.Users = entity.Users.Select(r => r.ToOrmUser()).ToList();
+            //TODO: Roles For admin do I need that functionality? I don't think so
+            //ormRole.Users = entity.Users.Select(r => r.ToOrmUser()).ToList();
         }
 
         public void Update(int id)
