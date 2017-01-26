@@ -24,6 +24,14 @@ namespace RFoundation.BLL.Implementation.Services
             return sharedFiles?.Select(sf => sf.ToBllSharedFileFile());
         }
 
+        public BllSharedFile Get(BllSharedFile entity)
+        {
+            //TODO: Exc??
+            if (entity == null) return null;
+            var sharedFile = UnitOfWork?.SharedFileRepository?.Get(entity.ToDalSharedFile());
+            return sharedFile?.ToBllSharedFileFile();
+        }
+
         public BllSharedFile Get(int id)
         {
             throw new NotImplementedException();

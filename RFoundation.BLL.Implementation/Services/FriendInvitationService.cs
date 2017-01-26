@@ -32,7 +32,7 @@ namespace RFoundation.BLL.Implementation.Services
         public BllFriendRequest Get(BllFriendRequest entity)
         {
             if (entity == null) return null;
-            return UnitOfWork?.FriendRequestRepository?.Get(entity.ToDalFriendRequest()).ToBllFriendRequest();
+            return UnitOfWork?.FriendRequestRepository?.Get(entity.ToDalFriendRequest())?.ToBllFriendRequest();
         }
 
         public BllFriendRequest GetByPredicate(Expression<Func<BllFriendRequest, bool>> f)

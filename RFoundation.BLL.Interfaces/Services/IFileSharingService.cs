@@ -4,5 +4,6 @@ namespace RFoundation.BLL.Interfaces.Services
 {
     public interface IFileSharingService : IService<BllSharedFile>
     {
+        BllSharedFile Get(BllSharedFile entity);
     }
 }
