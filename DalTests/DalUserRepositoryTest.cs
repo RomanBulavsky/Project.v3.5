@@ -126,16 +126,5 @@ namespace DalTests
 
         }
 
-        //TODO: not important
-        /*[TestCase(2, new byte[] {1})]
-        public void GetUserSharedFilesDataById(int userId, byte[] list)
-        {
-            var user = UnitOfWork.UserRepository.Get(userId);
-            var filesIdsList = user.ReceivedFiles.Select(f => f.FileId).ToList();
-            var files = UnitOfWork.FileRepository.GetAll().Where(f => filesIdsList.Contains(f.Id));
-
-            var s = files.Select(f => f[0]).ToList();
-            Assert.AreEqual(s, list.ToList());
-        }*/
     }
 }

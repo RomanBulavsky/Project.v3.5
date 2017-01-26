@@ -46,9 +46,8 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalExtension entity)
         {
-            var ormExtension = entity?.ToOrmExtension();
-            if (ormExtension == null) return;
-            Context.Set<Extension>()?.Remove(ormExtension);
+            if (entity == null) return;
+            Delete(entity.Id);
         }
 
         public void Delete(int id)

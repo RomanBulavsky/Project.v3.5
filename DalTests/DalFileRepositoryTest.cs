@@ -40,7 +40,6 @@ namespace DalTests
         public void GetOwnerIdById(int fileId, int ownerId)
         {
             var file = UnitOfWork.FileRepository.Get(fileId);
-            var owner = file.User;//TODO: we don't mapped it.
             var userId = file.UserId;
             Assert.AreEqual(userId, ownerId);
         }

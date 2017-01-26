@@ -46,9 +46,8 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalFile entity)
         {
-            var file = entity?.ToOrmFile();
-            if(file == null) return;
-            Context.Set<File>()?.Remove(file);
+            if (entity == null) return;
+            Delete(entity.Id);
         }
 
         public void Delete(int id)

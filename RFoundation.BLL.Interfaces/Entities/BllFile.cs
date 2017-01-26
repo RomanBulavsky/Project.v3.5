@@ -27,7 +27,6 @@ namespace RFoundation.BLL.Interfaces.Entities
 
         public int? ParentFileFolderId { get; set; }
 
-        // TODO: Main Navigation
 
         public BllExtension Extension { get; set; }
 

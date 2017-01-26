@@ -47,9 +47,8 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalFriend entity)
         {
-            var ormFriend = entity?.ToOrmFriend();
-            if (ormFriend == null) return;
-            Context.Set<Friend>()?.Remove(ormFriend);
+            if (entity == null) return;
+            Delete(entity.Id);
         }
 
         public void Delete(int id)

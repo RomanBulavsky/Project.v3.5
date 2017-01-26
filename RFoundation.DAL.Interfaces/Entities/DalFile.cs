@@ -27,7 +27,6 @@ namespace RFoundation.DAL.Interfaces.Entities
 
         public int? ParentFileFolderId { get; set; }
 
-        // TODO: Main Navigation
 
         public DalExtension Extension { get; set; }
 

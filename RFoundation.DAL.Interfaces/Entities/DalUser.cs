@@ -27,8 +27,7 @@ namespace RFoundation.DAL.Interfaces.Entities
 
         public int? ProfileImageFileId { get; set; }
 
-        //TODO: Main Navigation
-        
+
         public ICollection<DalFile> Files { get; set; }
 
         public DalFile ProfileImageFile { get; set; }

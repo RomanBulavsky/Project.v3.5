@@ -27,7 +27,6 @@ namespace RFoundation.BLL.Interfaces.Entities
 
         public int? ProfileImageFileId { get; set; }
 
-        //TODO: Main Navigation
         
         public ICollection<BllFile> Files { get; set; }
 

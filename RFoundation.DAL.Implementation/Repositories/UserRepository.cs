@@ -39,7 +39,6 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Create(DalUser entity)
         {
-            //TODO: clean all repo => + ExprBody
             var ormUser = entity?.ToOrmUser();
             if(ormUser == null) return;
             Context.Set<User>()?.Add(ormUser);
@@ -47,8 +46,8 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(DalUser entity)
         {
-            if(entity == null) return;
-            Context.Set<User>()?.Remove(entity.ToOrmUser());
+            if (entity == null) return;
+            Delete(entity.Id);
         }
 
         public void Delete(int id)

@@ -21,7 +21,7 @@ namespace RFoundation.DAL.Implementation.Mappers
                 LastName = userEntity.LastName,
                 Birthdate = userEntity.Birthdate,
                 ProfileImageFileId = userEntity.ProfileImageFileId
-                /* TODO: for deleting,
+                /* TODO: We dont pass navigation from bll to orm, but we pass nav from orm to bll!
                 Friends = userEntity.Friends.Select(u => u.ToDalFriend()).ToList(),
                 Files = userEntity.Files.Select(f => f.ToDalFile()).ToList(),
                 ReceivedFiles = userEntity.ReceivedFiles.Select(rf => rf.ToDalSharedFile()).ToList(),
@@ -78,9 +78,7 @@ namespace RFoundation.DAL.Implementation.Mappers
             return new Role()
             {
                 Id = roleEntity.Id,
-                Name = roleEntity.Name,
-                //TODO: Don't need it
-                //Users = roleEntity.Users.Select(u=>u.ToOrmUser()).ToList()
+                Name = roleEntity.Name
             };
         }
         public static SharedFile ToOrmSharedFile(this DalSharedFile sharedFileEntity)

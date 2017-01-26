@@ -25,8 +25,7 @@ namespace RFoundation.DAL.Implementation.Repositories
             var dalFriendRequests = friendRequests?.Select(fr => fr.ToDalFriendRequest());
             return dalFriendRequests;
         }
-
-        //TODO: Delete method like that from Irepo!
+        
         public DalFriendRequest Get(int id)
         {
             throw new NotImplementedException();
@@ -62,10 +61,7 @@ namespace RFoundation.DAL.Implementation.Repositories
 
         public void Delete(int id)
         {
-            //TODO: notImpl
-            var ormFriendRequest = Context.Set<FriendRequest>()?.Find(id);
-            if (ormFriendRequest == null) return;
-            Context.Set<FriendRequest>().Remove(ormFriendRequest);
+            throw new NotImplementedException();
         }
 
         public void Update(DalFriendRequest entity)
