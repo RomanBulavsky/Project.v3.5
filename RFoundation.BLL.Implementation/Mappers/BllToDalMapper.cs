@@ -69,7 +69,7 @@ namespace RFoundation.BLL.Implementation.Mappers
         /// <summary>
         /// Mapping <see cref="BllFriend"/> entity to <see cref="DalFriend"/> entity.
         /// </summary>
-        public static DalFriend ToDalFriend(BllFriend friendEntity)
+        public static DalFriend ToDalFriend(this BllFriend friendEntity)
         {
             return new DalFriend()
             {

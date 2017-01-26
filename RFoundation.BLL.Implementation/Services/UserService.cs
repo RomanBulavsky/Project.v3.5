@@ -27,7 +27,8 @@ namespace RFoundation.BLL.Implementation.Services
 
         public BllUser Get(int id)
         {
-            throw new NotImplementedException();
+            var user = UnitOfWork?.UserRepository?.Get(id);
+            return user?.ToBllUser();
         }
 
         public BllUser GetByPredicate(Expression<Func<BllUser, bool>> f)
@@ -37,22 +38,26 @@ namespace RFoundation.BLL.Implementation.Services
 
         public void Create(BllUser entity)
         {
-            throw new NotImplementedException();
+            //TODO: throw of not to throw
+            if (entity == null) return;
+            UnitOfWork?.UserRepository?.Create(entity.ToDalUser());
         }
 
         public void Delete(BllUser entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.UserRepository?.Delete(entity.ToDalUser());
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            UnitOfWork?.UserRepository?.Delete(id);
         }
 
         public void Update(BllUser entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.UserRepository?.Update(entity.ToDalUser());
         }
 
         public void Update(int id)

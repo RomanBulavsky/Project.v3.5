@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.BLL.Implementation.Mappers;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Interfaces;
@@ -18,12 +20,19 @@ namespace RFoundation.BLL.Implementation.Services
 
         public IEnumerable<BllFriendRequest> GetAll()
         {
-            throw new NotImplementedException();
+            var friendRequests = UnitOfWork?.FriendRequestRepository?.GetAll();
+            return friendRequests?.Select(fr => fr.ToBllFriendRequest());
         }
 
         public BllFriendRequest Get(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public BllFriendRequest Get(BllFriendRequest entity)
+        {
+            if (entity == null) return null;
+            return UnitOfWork?.FriendRequestRepository?.Get(entity.ToDalFriendRequest()).ToBllFriendRequest();
         }
 
         public BllFriendRequest GetByPredicate(Expression<Func<BllFriendRequest, bool>> f)
@@ -33,12 +42,14 @@ namespace RFoundation.BLL.Implementation.Services
 
         public void Create(BllFriendRequest entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRequestRepository?.Create(entity.ToDalFriendRequest());
         }
 
         public void Delete(BllFriendRequest entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRequestRepository?.Delete(entity.ToDalFriendRequest());
         }
 
         public void Delete(int id)
@@ -48,12 +59,14 @@ namespace RFoundation.BLL.Implementation.Services
 
         public void Update(BllFriendRequest entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRequestRepository?.Update(entity.ToDalFriendRequest());
         }
 
         public void Update(int id)
         {
             throw new NotImplementedException();
         }
+
     }
 }

@@ -9,53 +9,53 @@ using RFoundation.DAL.Interfaces;
 
 namespace RFoundation.BLL.Implementation.Services
 {
-    public class FileService : IFileService
+    public class RoleService : IRoleService
     {
         private IUnitOfWork UnitOfWork { get; set; }
 
-        public FileService(IUnitOfWork unitOfWork)
+        public RoleService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
 
-        public IEnumerable<BllFile> GetAll()
+        public IEnumerable<BllRole> GetAll()
         {
-            var files = UnitOfWork?.FileRepository?.GetAll();
-            return files?.Select(f => f.ToBllFile());
+            var roles = UnitOfWork?.RoleRepository?.GetAll();
+            return roles?.Select(r => r.ToBllRole());
         }
 
-        public BllFile Get(int id)
+        public BllRole Get(int id)
         {
-            var file = UnitOfWork?.FileRepository?.Get(id);
-            return file?.ToBllFile();
+            var role = UnitOfWork?.RoleRepository?.Get(id);
+            return role?.ToBllRole();
         }
 
-        public BllFile GetByPredicate(Expression<Func<BllFile, bool>> f)
+        public BllRole GetByPredicate(Expression<Func<BllRole, bool>> f)
         {
             throw new NotImplementedException();
         }
 
-        public void Create(BllFile entity)
+        public void Create(BllRole entity)
         {
             if (entity == null) return;
-            UnitOfWork?.FileRepository?.Create(entity.ToDalFile());
+            UnitOfWork?.RoleRepository?.Create(entity.ToDalRole());
         }
 
-        public void Delete(BllFile entity)
+        public void Delete(BllRole entity)
         {
             if (entity == null) return;
-            UnitOfWork?.FileRepository?.Delete(entity.ToDalFile());
+            UnitOfWork?.RoleRepository?.Delete(entity.ToDalRole());
         }
 
         public void Delete(int id)
         {
-            UnitOfWork?.FileRepository?.Delete(id);
+            UnitOfWork?.RoleRepository?.Delete(id);
         }
 
-        public void Update(BllFile entity)
+        public void Update(BllRole entity)
         {
             if (entity == null) return;
-            UnitOfWork?.FileRepository?.Update(entity.ToDalFile());
+            UnitOfWork?.RoleRepository?.Update(entity.ToDalRole());
         }
 
         public void Update(int id)

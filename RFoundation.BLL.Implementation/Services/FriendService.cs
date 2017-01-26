@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.BLL.Implementation.Mappers;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Interfaces;
@@ -18,12 +20,14 @@ namespace RFoundation.BLL.Implementation.Services
 
         public IEnumerable<BllFriend> GetAll()
         {
-            throw new NotImplementedException();
+            var friends = UnitOfWork?.FriendRepository?.GetAll();
+            return friends?.Select(f => f.ToBllFriend());
         }
 
         public BllFriend Get(int id)
         {
-            throw new NotImplementedException();
+            var friend = UnitOfWork?.FriendRepository?.Get(id);
+            return friend?.ToBllFriend();
         }
 
         public BllFriend GetByPredicate(Expression<Func<BllFriend, bool>> f)
@@ -33,22 +37,25 @@ namespace RFoundation.BLL.Implementation.Services
 
         public void Create(BllFriend entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRepository?.Create(entity.ToDalFriend());
         }
 
         public void Delete(BllFriend entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRepository?.Delete(entity.ToDalFriend());
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            UnitOfWork?.FriendRepository?.Delete(id);
         }
 
         public void Update(BllFriend entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.FriendRepository?.Update(entity.ToDalFriend());
         }
 
         public void Update(int id)

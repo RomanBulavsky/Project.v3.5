@@ -4,5 +4,6 @@ namespace RFoundation.BLL.Interfaces.Services
 {
     public interface IFriendInvitationService : IService<BllFriendRequest>
     {
+        BllFriendRequest Get(BllFriendRequest entity);
     }
 }

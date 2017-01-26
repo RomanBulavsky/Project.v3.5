@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using RFoundation.BLL.Implementation.Mappers;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Interfaces;
@@ -18,7 +20,8 @@ namespace RFoundation.BLL.Implementation.Services
 
         public IEnumerable<BllSharedFile> GetAll()
         {
-            throw new NotImplementedException();
+            var sharedFiles = UnitOfWork?.SharedFileRepository?.GetAll();
+            return sharedFiles?.Select(sf => sf.ToBllSharedFileFile());
         }
 
         public BllSharedFile Get(int id)
@@ -33,12 +36,14 @@ namespace RFoundation.BLL.Implementation.Services
 
         public void Create(BllSharedFile entity)
         {
-            throw new NotImplementedException();
+            if(entity == null) return;
+            UnitOfWork?.SharedFileRepository?.Create(entity.ToDalSharedFile());
         }
 
         public void Delete(BllSharedFile entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) return;
+            UnitOfWork?.SharedFileRepository?.Delete(entity.ToDalSharedFile());
         }
 
         public void Delete(int id)

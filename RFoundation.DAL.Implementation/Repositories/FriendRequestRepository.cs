@@ -71,6 +71,7 @@ namespace RFoundation.DAL.Implementation.Repositories
                 Context.Set<FriendRequest>()?
                     .FirstOrDefault(fr => (fr.FromUserId == entity.FromUserId) && (fr.ToUserId == entity.ToUserId));
             if (ormFriendRequest == null) return;
+            //TODO: PK Complex next 2 string have no meaning
             ormFriendRequest.FromUserId = entity.FromUserId;
             ormFriendRequest.ToUserId = entity.ToUserId;
             ormFriendRequest.Confirmed = entity.Confirmed;
