@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using Ninject;
 using NinjectConfigurator;
 
 namespace RFoundation.PL.WEB.Infrastructure
 {
-    public class DependencyResolverNinject
+    public class DependencyResolverNinject : IDependencyResolver
     {
         private IKernel kernel;
 

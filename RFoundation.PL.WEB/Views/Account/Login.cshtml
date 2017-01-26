@@ -1,0 +1,42 @@
+﻿@model RFoundation.PL.WEB.Models.LogOnModel
+@{
+    ViewBag.Title = "Вход в систему";
+}
+<h2>Вход в систему</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Введите логин и пароль</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RememberMe)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RememberMe)
+            @Html.ValidationMessageFor(model => model.RememberMe)
+        </div>
+
+        <p>
+            <input type="submit" value="Войти" />
+        </p>
+    </fieldset>
+}
