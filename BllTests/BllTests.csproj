@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BllFriendServiceTest.cs" />
     <Compile Include="BllFileServiceTest.cs" />
     <Compile Include="BllUserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

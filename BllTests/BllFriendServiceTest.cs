@@ -4,25 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RFoundation.BLL.Implementation.Services;
+using RFoundation.BLL.Interfaces.Entities;
+using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Implementation;
-using RFoundation.DAL.Interfaces;
-using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.ORM.Database;
 
-namespace DalTests
+namespace BllTests
 {
     [TestFixture]
-    public class DalFriendRepositoryTest
+    public class BllFriendServiceTest
     {
-        private IUnitOfWork unitOfWork;
+        private IFriendService userService;
 
-        private IUnitOfWork UnitOfWork
-            => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
+        private IFriendService FriendService
+            => userService ?? (userService = new FriendService(new UnitOfWork(new FileStorageDatabaseContext())));
+
 
         [TestCase(1, 4)]
         public void GetById(int id, int friendId)
         {
-            var friend = UnitOfWork.FriendRepository.Get(id);
+            var friend = FriendService.Get(id);
             Assert.AreEqual(friend.FriendId, friendId);
         }
 
@@ -30,12 +32,11 @@ namespace DalTests
         [TestCase(1, 2)]
         public void CreateFriendship(int userId, int friendId)
         {
-            var friendship = new DalFriend() {FriendId = friendId, UserId = userId};
-            UnitOfWork.FriendRepository.Create(friendship);
-            UnitOfWork.Commit();
+            var friendship = new BllFriend() { FriendId = friendId, UserId = userId };
+            FriendService.Create(friendship);
 
             var friendshipFromDb =
-                UnitOfWork.FriendRepository.GetAll()
+                FriendService.GetAll()
                     .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == friendId);
 
             Assert.AreEqual(friendshipFromDb.FriendId, friendId);
@@ -46,14 +47,13 @@ namespace DalTests
         public void UpdateExtension(int userId, int oldfriendId, int newFriendId)
         {
             var friendship =
-                UnitOfWork.FriendRepository.GetAll()
+                FriendService.GetAll()
                     .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == oldfriendId);
             var id = friendship.Id;
             friendship.FriendId = newFriendId;
-            UnitOfWork.FriendRepository.Update(friendship);
-            UnitOfWork.Commit();
+            FriendService.Update(friendship);
 
-            var newFriendship = UnitOfWork.FriendRepository.Get(id);
+            var newFriendship = FriendService.Get(id);
             Assert.AreEqual(newFriendship.FriendId, newFriendId);
         }
 
@@ -62,12 +62,11 @@ namespace DalTests
         public void DeleteUser(int userId, int friendId)
         {
             var friendship =
-                UnitOfWork.FriendRepository.GetAll()
+                FriendService.GetAll()
                     .FirstOrDefault(fs => fs.UserId == userId && fs.FriendId == friendId);
-            UnitOfWork.FriendRepository.Delete(friendship.Id);
-            UnitOfWork.Commit();
+            FriendService.Delete(friendship.Id);
 
-            var friendshipFromDb = UnitOfWork.FriendRepository.Get(friendship.Id);
+            var friendshipFromDb = FriendService.Get(friendship.Id);
             Assert.IsNull(friendshipFromDb);
         }
     }
