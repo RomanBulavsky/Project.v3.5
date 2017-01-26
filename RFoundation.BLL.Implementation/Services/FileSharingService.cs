@@ -38,12 +38,14 @@ namespace RFoundation.BLL.Implementation.Services
         {
             if(entity == null) return;
             UnitOfWork?.SharedFileRepository?.Create(entity.ToDalSharedFile());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(BllSharedFile entity)
         {
             if (entity == null) return;
             UnitOfWork?.SharedFileRepository?.Delete(entity.ToDalSharedFile());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(int id)

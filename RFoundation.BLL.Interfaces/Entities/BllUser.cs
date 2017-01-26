@@ -13,15 +13,15 @@ namespace RFoundation.BLL.Interfaces.Entities
         
         public string Password { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
 
-        public int RoleId { get; set; }
-        
-        public string FirstName { get; set; }
-        
-        public string LastName { get; set; }
+        public int RoleId { get; set; } = 2;
+
+        public string FirstName { get; set; } = "Bll_Plug";
+
+        public string LastName { get; set; } = "Bll_Plug";
 
         public DateTime? Birthdate { get; set; }
 

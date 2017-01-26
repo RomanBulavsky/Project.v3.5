@@ -44,12 +44,14 @@ namespace RFoundation.BLL.Implementation.Services
         {
             if (entity == null) return;
             UnitOfWork?.FriendRequestRepository?.Create(entity.ToDalFriendRequest());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(BllFriendRequest entity)
         {
             if (entity == null) return;
             UnitOfWork?.FriendRequestRepository?.Delete(entity.ToDalFriendRequest());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(int id)
@@ -61,6 +63,7 @@ namespace RFoundation.BLL.Implementation.Services
         {
             if (entity == null) return;
             UnitOfWork?.FriendRequestRepository?.Update(entity.ToDalFriendRequest());
+            UnitOfWork?.Commit();
         }
 
         public void Update(int id)

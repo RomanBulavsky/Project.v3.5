@@ -41,23 +41,27 @@ namespace RFoundation.BLL.Implementation.Services
             //TODO: throw of not to throw
             if (entity == null) return;
             UnitOfWork?.UserRepository?.Create(entity.ToDalUser());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(BllUser entity)
         {
             if (entity == null) return;
             UnitOfWork?.UserRepository?.Delete(entity.ToDalUser());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(int id)
         {
             UnitOfWork?.UserRepository?.Delete(id);
+            UnitOfWork?.Commit();
         }
 
         public void Update(BllUser entity)
         {
             if (entity == null) return;
-            UnitOfWork?.UserRepository?.Update(entity.ToDalUser());
+            Delete(entity.Id);
+            UnitOfWork?.Commit();
         }
 
         public void Update(int id)

@@ -39,23 +39,27 @@ namespace RFoundation.BLL.Implementation.Services
         {
             if (entity == null) return;
             UnitOfWork?.FriendRepository?.Create(entity.ToDalFriend());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(BllFriend entity)
         {
             if (entity == null) return;
-            UnitOfWork?.FriendRepository?.Delete(entity.ToDalFriend());
+            Delete(entity.Id);
+            UnitOfWork?.Commit();
         }
 
         public void Delete(int id)
         {
             UnitOfWork?.FriendRepository?.Delete(id);
+            UnitOfWork?.Commit();
         }
 
         public void Update(BllFriend entity)
         {
             if (entity == null) return;
             UnitOfWork?.FriendRepository?.Update(entity.ToDalFriend());
+            UnitOfWork?.Commit();
         }
 
         public void Update(int id)

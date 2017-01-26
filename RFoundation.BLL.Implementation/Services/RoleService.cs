@@ -39,23 +39,27 @@ namespace RFoundation.BLL.Implementation.Services
         {
             if (entity == null) return;
             UnitOfWork?.RoleRepository?.Create(entity.ToDalRole());
+            UnitOfWork?.Commit();
         }
 
         public void Delete(BllRole entity)
         {
             if (entity == null) return;
-            UnitOfWork?.RoleRepository?.Delete(entity.ToDalRole());
+            Delete(entity.Id);
+            UnitOfWork?.Commit();
         }
 
         public void Delete(int id)
         {
             UnitOfWork?.RoleRepository?.Delete(id);
+            UnitOfWork?.Commit();
         }
 
         public void Update(BllRole entity)
         {
             if (entity == null) return;
             UnitOfWork?.RoleRepository?.Update(entity.ToDalRole());
+            UnitOfWork?.Commit();
         }
 
         public void Update(int id)
