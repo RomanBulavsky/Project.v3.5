@@ -47,7 +47,7 @@ namespace RFoundation.BLL.Implementation.Services
         public void Delete(BllUser entity)
         {
             if (entity == null) return;
-            UnitOfWork?.UserRepository?.Delete(entity.ToDalUser());
+            Delete(entity.Id);
             UnitOfWork?.Commit();
         }
 
@@ -60,7 +60,7 @@ namespace RFoundation.BLL.Implementation.Services
         public void Update(BllUser entity)
         {
             if (entity == null) return;
-            Delete(entity.Id);
+            UnitOfWork?.UserRepository?.Update(entity.ToDalUser());
             UnitOfWork?.Commit();
         }
 
