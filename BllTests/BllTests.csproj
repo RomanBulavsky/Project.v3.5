@@ -53,14 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BllFileServiceTest.cs" />
     <Compile Include="BllUserServiceTest.cs" />
-    <Compile Include="DalExtensionRepositoryTest.cs" />
-    <Compile Include="DalFileRepositoryTest.cs" />
-    <Compile Include="DalFriendRepositoryTest.cs" />
-    <Compile Include="DalFriendRequestRepositoryTest.cs" />
-    <Compile Include="DalRoleRepositoryTest.cs" />
-    <Compile Include="DalSharedFileRepositoryTest.cs" />
-    <Compile Include="DalUserRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

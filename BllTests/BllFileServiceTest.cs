@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RFoundation.BLL.Implementation.Services;
+using RFoundation.BLL.Interfaces.Entities;
+using RFoundation.BLL.Interfaces.Services;
 using RFoundation.DAL.Implementation;
-using RFoundation.DAL.Implementation.Mappers;
-using RFoundation.DAL.Interfaces;
-using RFoundation.DAL.Interfaces.Entities;
 using RFoundation.ORM.Database;
 
-namespace DalTests
+namespace BllTests
 {
     [TestFixture]
-    public class DalFileRepositoryTest
+    public class BllFileServiceTest
     {
-        private IUnitOfWork unitOfWork;
+        private IFileService userService;
 
-        private IUnitOfWork UnitOfWork
-            => unitOfWork ?? (unitOfWork = new UnitOfWork(new FileStorageDatabaseContext()));
+        private IFileService FileService
+            => userService ?? (userService = new FileService(new UnitOfWork(new FileStorageDatabaseContext())));
+
 
         [TestCase(1, "21")]
         public void GetFileNameById(int fileId, string fileName)
         {
-            var file = UnitOfWork.FileRepository.Get(fileId);
+            var file = FileService.Get(fileId);
             Assert.AreEqual(file.Name, fileName);
         }
 
         [TestCase(1, 1)]
         public void GetFileDataById(int fileId, byte data)
         {
-            var file = UnitOfWork.FileRepository.Get(fileId);
+            var file = FileService.Get(fileId);
             var bytes = file.Data[0];
             Assert.AreEqual(bytes, data);
         }
@@ -39,7 +39,7 @@ namespace DalTests
         [TestCase(1, 2)]
         public void GetOwnerIdById(int fileId, int ownerId)
         {
-            var file = UnitOfWork.FileRepository.Get(fileId);
+            var file = FileService.Get(fileId);
             var userId = file.UserId;
             Assert.AreEqual(userId, ownerId);
         }
@@ -48,11 +48,10 @@ namespace DalTests
         [TestCase(2,"FileTestName", 1, 20,new byte[]{1,0,1})]
         public void CreateFile(int userId, string fileName, int fileExtensionId, int size, byte[] data)
         {
-            var dalFile = new DalFile() {UserId = userId,Name = fileName, ExtensionId = fileExtensionId ,Size = size, Data = data};
-            UnitOfWork.FileRepository.Create(dalFile);
-            UnitOfWork.Commit();
+            var bllFile = new BllFile() {UserId = userId,Name = fileName, ExtensionId = fileExtensionId ,Size = size, Data = data};
+            FileService.Create(bllFile);
 
-            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == dalFile.Name);
+            var fileFromDb = FileService.GetAll().FirstOrDefault(file => file.Name == bllFile.Name);
             Assert.AreEqual(fileFromDb?.Name, fileName);
         }
 
@@ -60,13 +59,12 @@ namespace DalTests
         [TestCase("FileTestName", "FileTestNameXXX")]
         public void UpdateFile(string oldName, string newName)
         {
-            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == oldName);
+            var fileFromDb =FileService.GetAll().FirstOrDefault(file => file.Name == oldName);
             var id = fileFromDb.Id;
             fileFromDb.Name = newName;
-            UnitOfWork.FileRepository.Update(fileFromDb);
-            UnitOfWork.Commit();
+            FileService.Update(fileFromDb);
 
-            var newFile = UnitOfWork.FileRepository.Get(id);
+            var newFile = FileService.Get(id);
             Assert.AreEqual(newFile.Name, newName);
         }
 
@@ -74,14 +72,12 @@ namespace DalTests
         [TestCase("FileTestNameXXX")]
         public void DeleteFile(string fileName)
         {
-            var fileFromDb = UnitOfWork.FileRepository.GetAll().FirstOrDefault(file => file.Name == fileName);
+            var fileFromDb = FileService.GetAll().FirstOrDefault(file => file.Name == fileName);
             var id = fileFromDb.Id;
-            UnitOfWork.FileRepository.Delete(id);
-            UnitOfWork.Commit();
+            FileService.Delete(id);
 
-            var dalFile = UnitOfWork.FileRepository.GetAll().FirstOrDefault(f=>f.Name == fileName);
+            var dalFile = FileService.GetAll().FirstOrDefault(f=>f.Name == fileName);
             Assert.IsNull(dalFile);
         }
-
     }
 }
