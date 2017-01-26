@@ -17,9 +17,9 @@ namespace RFoundation.BLL.Interfaces.Entities
         
         public byte[] Data { get; set; }
 
-        public DateTime UploadDate { get; set; }
+        public DateTime UploadDate { get; set; } = DateTime.Now;
 
-        public bool IsProfileImage { get; set; }
+        public bool IsProfileImage { get; set; } = false;
 
         public bool Banned { get; set; }
 
