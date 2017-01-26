@@ -142,7 +142,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DependencyResolverNinject.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\CustomMembershipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -184,7 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -193,6 +194,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DependencyResolver\NinjectConfigurator.csproj">
+      <Project>{17B17EB1-CECA-4D5A-AFF7-3200BB8A0EA5}</Project>
+      <Name>NinjectConfigurator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RFoundation.BLL.Interfaces\RFoundation.BLL.Interfaces.csproj">
+      <Project>{811b7a7f-3d1f-4352-9611-775bc0da9200}</Project>
+      <Name>RFoundation.BLL.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

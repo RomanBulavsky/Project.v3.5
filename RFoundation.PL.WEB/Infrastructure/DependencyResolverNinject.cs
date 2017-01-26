@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Ninject;
+using NinjectConfigurator;
 
 namespace RFoundation.PL.WEB.Infrastructure
 {
@@ -13,7 +12,7 @@ namespace RFoundation.PL.WEB.Infrastructure
         public DependencyResolverNinject(IKernel kernel)
         {
             this.kernel = kernel;
-            kernel.ConfigurateResolverWeb();// Exten
+            kernel.ConfigurateResolverWeb();
         }
         public object GetService(Type serviceType)
         {
