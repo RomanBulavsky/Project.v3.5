@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using RFoundation.BLL.Interfaces.Services;
 using RFoundation.PL.WEB.Models;
 
 namespace RFoundation.PL.WEB.Controllers
@@ -11,6 +12,8 @@ namespace RFoundation.PL.WEB.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
+
         public ActionResult Login()
         {
             return View();
@@ -22,7 +25,7 @@ namespace RFoundation.PL.WEB.Controllers
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.Email, model.Password))
-                //При логине метод Membership.ValidateUser проверяет, имеется ли в базе данных пользователь с введенными логином и паролем в системе.
+                    //При логине метод Membership.ValidateUser проверяет, имеется ли в базе данных пользователь с введенными логином и паролем в системе.
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     ViewBag.User = model.Email;
@@ -32,7 +35,6 @@ namespace RFoundation.PL.WEB.Controllers
                     }
                     else
                     {
-
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -62,7 +64,8 @@ namespace RFoundation.PL.WEB.Controllers
             {
                 MembershipCreateStatus createStatus;
 
-                Membership.CreateUser(model.Email, model.Password, model.Email, null, null, false, false, out createStatus);
+                Membership.CreateUser(model.Login, model.Password, model.Email, null, null, false, false,
+                    out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
@@ -76,6 +79,23 @@ namespace RFoundation.PL.WEB.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult CheckLogin(string login)
+        {
+            var user = UserService.GetAll()?.FirstOrDefault(u => u.Login == login);
+            if (user != null) return Json("Login is already exist ~~ Json", JsonRequestBehavior.AllowGet);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult CheckEmail(string email)
+        {
+            var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
+            return Json(user == null, JsonRequestBehavior.AllowGet);
         }
     }
 }
