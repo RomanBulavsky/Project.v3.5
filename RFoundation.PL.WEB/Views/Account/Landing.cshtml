@@ -1,8 +1,18 @@
 ﻿@{
     Layout = null;
 }
-
+@Scripts.Render("~/bundles/jqueryunobtrusive")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/scripts/jquery-1.10.2.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryunobtrusive")
+@Scripts.Render("~/bundles/jqueryval")
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -10,79 +20,78 @@
     <meta name="viewport" content="width=device-width"/>
     <title>Landing</title>
 
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <link href="~/Content/myStyles/Landing.css" rel="stylesheet"/>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        body {
+            /*height: 350px;
+            /* additional background properties */
+            /*background-repeat: no-repeat;
+            /*background-position: auto;
+            /* some box shadow for good fun */
+            background-size: 100% auto;
+            background-image: url("");
+            background: url('../../Content/4k.jpg') no-repeat center center fixed;
+           
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        html,
+        body,
+        .container-table { height: 100%; }
+
+        .container-table { display: table; }
+
+        .vertical-center-row {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
 
 </head>
 <body>
-
-
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Your Warehouse", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
-        </div>
-        <div class="navbar-collapse collapse">
-
-            <ul class="nav navbar-nav">
-                <li>
-
-
-                    @Ajax.ActionLink("Registration", "Register", new AjaxOptions
-                       {
-                           UpdateTargetId = "results",
-                           LoadingElementId = "loading",
-                           LoadingElementDuration = 10,
-                       });
-                </li>
-                <li>
-
-                    @Ajax.ActionLink("Sign In", "Login", new AjaxOptions
-                       {
-                           UpdateTargetId = "results",
-                           LoadingElementId = "loading",
-                           LoadingElementDuration = 10,
-                       });
-
-                </li>
-
-
-
-
+    
                 
 
 
-            </ul>
+<div id="results" class="col-lg-12 col-md-12"> 
+                    </div>
 
-        </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">
+                            @Ajax.ActionLink("Registration", "Register", new AjaxOptions
+                   {
+                       UpdateTargetId = "results",
+                       LoadingElementId = "loading",
+                       LoadingElementDuration = 1000,
+                   });
+                        </button>
+                        <button type="button" class="btn btn-default">
+                            @Ajax.ActionLink("Sign In", "Login", new AjaxOptions
+                   {
+                       UpdateTargetId = "results",
+                       LoadingElementId = "loading",
+                       LoadingElementDuration = 1000,
+                   });
+                        </button>
+                    </div>
 
-    </div>
 
-</div>
+                    <br />
+                    >
 
-
-<div id="results" class="col-lg-12 col-md-12">
-</div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jqueryunobtrusive")
 </body>
+
 
 
 </html>
