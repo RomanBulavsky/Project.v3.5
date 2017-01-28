@@ -1,0 +1,358 @@
+﻿@model RFoundation.PL.WEB.Models.RegistrationViewModel
+
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <!-- BootstrapValidator-->
+    <link href="~/Content/bootstrapValidator/bootstrapValidator.css" rel="stylesheet"/>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- BootstrapValidator-->
+    <script src="~/Scripts/bootstrapValidator/bootstrapValidator.min.js"></script>
+
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/bundles/jqueryunobtrusive")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            /*height: 350px;
+            /* additional background properties */
+            /*background-repeat: no-repeat;
+            /*background-position: auto;
+            /* some box shadow for good fun */
+            background-size: 100% auto;
+            background-image: url("");
+            background: url('../../Content/4k.jpg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        html,
+        body,
+        .container-table { height: 100%; }
+
+        .container-table { display: table; }
+
+        .vertical-center-row {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container container-table registration">
+    <div class="row vertical-center-row">
+        <div class="text-center form-signin jumbotron">
+
+            @using (Html.BeginForm())
+            {
+                <h2 class="">Registration</h2>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Email)
+                    <br/>
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Login)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Login)
+                    @Html.ValidationMessageFor(model => model.Login)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ConfirmPassword)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.ConfirmPassword)
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                </div>
+
+                <p>
+                    <input type="submit" value="Зарегистрировать"/>
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="container container-table registration">
+    <div class="row vertical-center-row">
+        <div class="text-center ">
+            <form id="registration-form" class="form-signin jumbotron " action="#">
+
+                <h2 class="">Registration</h2>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+
+                    <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
+
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                </div>
+
+                Have account?<a href="#" class="regsig">Sign In</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+<br/>
+
+<script type="text/javascript">
+
+
+    $(document)
+        .ready(function() {
+
+            $('.input-validation-error').parents('.form-group').addClass('has-error');
+            $('.field-validation-error').addClass('text-danger');
+            $(".regsig")
+                .click(function() {
+                    $(".registration").addClass("hidden");
+                    $(".signin").removeClass("hidden");
+                });
+
+            $(".sigreg")
+                .click(function() {
+                    $(".registration").removeClass("hidden");
+                    $(".signin").addClass("hidden");
+                });
+            var validator = $("#registration-form")
+                .bootstrapValidator({
+                    feedbackIcons: {
+                        valid: "glyphicon glyphicon-ok",
+                        invalid: "glyphicon glyphicon-remove",
+                        validating: "glyphicon glyphicon-refresh"
+                    },
+                    fields: {
+                        Email: {
+                            message: "Email address is required",
+                            validators: {
+                                notEmpty: {
+                                    message: "Please provide an email address"
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 35,
+                                    message: "Email address must be between 6 and 35 characters long"
+                                },
+                                different: {
+                                    field: "password",
+                                    message: "Email address and password must be different"
+                                },
+                                emailAddress: {
+                                    message: "Email address was invalid"
+                                },
+                                regexp: {
+                                    message: 'The value is not a valid email address'
+                                }
+                            }
+
+                        },
+                        email: {
+                            message: "Email address is required",
+                            validators: {
+                                notEmpty: {
+                                    message: "Please provide an email address"
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 35,
+                                    message: "Email address must be between 6 and 35 characters long"
+                                },
+                                different: {
+                                    field: "password",
+                                    message: "Email address and password must be different"
+                                },
+                                emailAddress: {
+                                    message: "Email address was invalid"
+                                },
+                                regexp: {
+                                    message: 'The value is not a valid email address'
+                                }
+                            }
+
+                        },
+                        password: {
+                            validators: {
+                                notEmpty: {
+                                    message: "Password is required"
+                                },
+                                stringLength: {
+                                    min: 8,
+                                    message: "Password must at least characters long"
+                                },
+                                different: {
+                                    field: "email",
+                                    message: "Email address and password must be different"
+                                }
+                            }
+
+                        },
+                        confirmpassword: {
+                            validators: {
+                                notEmpty: {
+                                    message: "Confirm password field is required"
+                                },
+                                stringLength: {
+                                    min: 8,
+                                    message: "Password must at least characters long"
+                                },
+                                different: {
+                                    field: "email",
+                                    message: "Email address and password must be different"
+                                },
+                                identical: {
+                                    field: "password",
+                                    message: "Password and confirmation must match"
+
+                                }
+                            }
+
+                        }
+                    }
+                });
+            var validator2 = $("#xxx")
+                .bootstrapValidator({
+                    feedbackIcons: {
+                        valid: "glyphicon glyphicon-ok",
+                        invalid: "glyphicon glyphicon-remove",
+                        validating: "glyphicon glyphicon-refresh"
+                    },
+                    fields: {
+                        Email: {
+                            message: "Email address is required",
+                            validators: {
+                                notEmpty: {
+                                    message: "Please provide an email address"
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 35,
+                                    message: "Email address must be between 6 and 35 characters long"
+                                },
+                                different: {
+                                    field: "password",
+                                    message: "Email address and password must be different"
+                                },
+                                emailAddress: {
+                                    message: "Email address was invalid"
+                                },
+                                regexp: {
+                                    message: 'The value is not a valid email address'
+                                }
+                            }
+
+                        },
+                        email: {
+                            message: "Email address is required",
+                            validators: {
+                                notEmpty: {
+                                    message: "Please provide an email address"
+                                },
+                                stringLength: {
+                                    min: 5,
+                                    max: 35,
+                                    message: "Email address must be between 6 and 35 characters long"
+                                },
+                                different: {
+                                    field: "password",
+                                    message: "Email address and password must be different"
+                                },
+                                emailAddress: {
+                                    message: "Email address was invalid"
+                                },
+                                regexp: {
+                                    message: 'The value is not a valid email address'
+                                }
+                            }
+
+                        }
+                    }
+                });
+        });
+
+    (function ($) {
+        var defaultOptions = {
+            validClass: 'has-success',
+            errorClass: 'has-error',
+            highlight: function (element, errorClass, validClass) {
+                $(element).closest(".form-group")
+                    .removeClass(validClass)
+                    .addClass('has-error');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).closest(".form-group")
+                .removeClass('has-error')
+                .addClass(validClass);
+            }
+        };
+
+        $.validator.setDefaults(defaultOptions);
+
+        $.validator.unobtrusive.options = {
+            errorClass: defaultOptions.errorClass,
+            validClass: defaultOptions.validClass,
+        };
+    })(jQuery);
+</script>
+
+</body>
+
+</html >

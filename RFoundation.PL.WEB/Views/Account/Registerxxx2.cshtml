@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+<h2>Регистрация</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Введите данные</legend>
+
+        <div class="editor-label">
+            @Html.Label("Email")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("Email")
+            <br/>
+            @Html.ValidationMessage("Email")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Login")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("Login")
+            @Html.ValidationMessage("Login")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("Password")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("Password")
+            @Html.ValidationMessage("Password")
+        </div>
+
+        <div class="editor-label">
+            @Html.Label("ConfirmPassword")
+        </div>
+        <div class="editor-field">
+            @Html.Editor("ConfirmPassword")
+            @Html.ValidationMessage("ConfirmPassword")
+        </div>
+
+        <p>
+            <input type="submit" value="Зарегистрировать"/>
+        </p>
+    </fieldset>
+
+
+
+
+}
+    @section scripts {
+       @Scripts.Render("~/bundles/jqueryunobtrusive")
+       @Scripts.Render("~/bundles/jqueryval")
+    }

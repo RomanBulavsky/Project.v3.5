@@ -1,0 +1,26 @@
+﻿body {
+    /*height: 350px;
+            /* additional background properties */
+    /*background-repeat: no-repeat;
+            /*background-position: auto;
+            /* some box shadow for good fun */
+    background-size: 100% auto;
+    background-image: url("");
+    background: url('../../Content/4k.jpg') no-repeat center center fixed;
+           
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+html,
+body,
+.container-table { height: 100%; }
+
+.container-table { display: table; }
+
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}

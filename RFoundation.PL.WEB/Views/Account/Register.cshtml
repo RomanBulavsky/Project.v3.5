@@ -1,56 +1,92 @@
-﻿@model RFoundation.PL.WEB.Models.RegisterViewModel
+﻿@model RFoundation.PL.WEB.Models.RegistrationViewModel
 
 @{
-    ViewBag.Title = "Регистрация";
+    ViewBag.Title = "Registration";
 }
 
-<h2>Регистрация</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true)
+<link href="~/Content/myStyles/Landing.css" rel="stylesheet" />
+<script src="~/Scripts/test/JavaScript.js"></script>
+<link href="~/Content/myStyles/RStyles.css" rel="stylesheet"/>
 
-    <fieldset>
-        <legend>Введите данные</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
+<div class="container container-table signin col-md-12 col-lg-12">
+    <div class="row vertical-center-row">
+        <div class="form-horizontal text-center col-xs-12  col-sm-12  col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Login)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Login)
-            @Html.ValidationMessageFor(model => model.Login)
-        </div>
+            <div class="container col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h2 class="text-center form-signin-heading">Registration</h2>
+                    </div>
+                    <div class="panel-body">
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+                        @using (Ajax.BeginForm("Register", new AjaxOptions {UpdateTargetId = "results"}))
+                        {
+                            <div class="form-horizontal myform">
+                                @Html.ValidationSummary(true)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ConfirmPassword)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ConfirmPassword)
-            @Html.ValidationMessageFor(model => model.ConfirmPassword)
-        </div>
+                                <fieldset class="lol">
+                                    <div class="form-horizontal col-sm-12 col-md-12 col-lg-12">
+                                        
+                                       
 
-        <p>
-            <input type="submit" value="Зарегистрировать"/>
-        </p>
-    </fieldset>
-}
-    @section scripts {
-       @Scripts.Render("~/bundles/jqueryunobtrusive")
-       @Scripts.Render("~/bundles/jqueryval")
-    }
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, new {@class = "col-md-2 mylabel myPadding"})
+                                            <div class="editor-field col-md-8">
+                                                @Html.TextBoxFor(model => model.Email, new {@class = "myblock form-control", placeholder = "Your Email"})
+
+                                                @Html.ValidationMessageFor(model => model.Email)
+
+                                            </div>
+                                            <div class="glyphicon  targetEmail col-md-1 hidden myPadding"></div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Login, new {@class = "col-md-2 mylabel myPadding" })
+                                            <div class="editor-field col-md-8">
+                                                @Html.TextBoxFor(model => model.Login, new {@class = "myblock form-control", placeholder = "Your Login"})
+                                                @Html.ValidationMessageFor(model => model.Login)
+                                            </div>
+
+                                            <div class="glyphicon  targetLogin col-md-1 hidden myPadding"></div>
+                                        </div>
+                                        <div class="form-group ">
+                                            @Html.LabelFor(model => model.Password, new {@class = "col-md-2 mylabel myPadding" })
+                                            <div class="editor-field col-md-8">
+                                                @Html.PasswordFor(model => model.Password, new {@class = "myblock form-control", placeholder = "Your Password"})
+                                                @Html.ValidationMessageFor(model => model.Password)
+                                            </div>
+                                            <div class="glyphicon  targetP col-md-1 hidden myPadding"></div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-2 mylabel myPadding" })
+                                            <div class="editor-field col-md-8">
+                                                @Html.PasswordFor(model => model.ConfirmPassword, new {@class = "myblock form-control", placeholder = "Your Email"})
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                            </div>
+                                            <div class="glyphicon  targetCP col-md-1 hidden myPadding"></div>
+                                        </div>
+                                        <div class="form-group ">
+                                            <p>
+                                                <input class="btn btn-lg btn-primary " type="submit" value="Registration"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryunobtrusive")

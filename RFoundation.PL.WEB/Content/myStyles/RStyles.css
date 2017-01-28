@@ -1,0 +1,27 @@
+﻿/* styles for validation helpers */
+.valid { border: 1px solid #31f13d; }
+
+.myblock {
+    display: block;
+    max-width: 400px;
+}
+
+.mylabel { text-align: right; }
+
+.myPadding { margin-top: 7px; }
+
+.green { color: green; }
+
+.red { color: red; }
+
+.field-validation-error { color: #b94a48; }
+
+.field-validation-valid { display: none; }
+
+input.input-validation-error { border: 1px solid #b94a48; }
+
+input[type="checkbox"].input-validation-error { border: 0 none; }
+
+.validation-summary-errors { color: #b94a48; }
+
+.validation-summary-valid { display: none; }

@@ -1,42 +1,51 @@
 ﻿@model RFoundation.PL.WEB.Models.LogOnModel
+
+
 @{
-    ViewBag.Title = "Вход в систему";
+    ViewBag.Title = "Sign in";
 }
-<h2>Вход в систему</h2>
+<div class="container container-table signin">
+    <div class="row vertical-center-row">
+        <div class="text-center col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+            <div id="" class="form-signin jumbotron">
+                <h2 class="form-signin-heading">Sign in</h2>
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true)
+                    <fieldset>
+                        <legend>Введите логин и пароль</legend>
 
-    <fieldset>
-        <legend>Введите логин и пароль</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Email)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Password)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Password)
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.RememberMe)
+                        </div>
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.RememberMe)
+                            @Html.ValidationMessageFor(model => model.RememberMe)
+                        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RememberMe)
+                        <p>
+                            <input type="submit" value="Войти" />
+                        </p>
+                    </fieldset>
+                }
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.RememberMe)
-            @Html.ValidationMessageFor(model => model.RememberMe)
-        </div>
-
-        <p>
-            <input type="submit" value="Войти" />
-        </p>
-    </fieldset>
-}
+    </div>
+</div>

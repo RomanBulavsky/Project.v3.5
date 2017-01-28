@@ -14,9 +14,13 @@ namespace RFoundation.PL.WEB.Controllers
     {
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
 
-        public ActionResult Login()
+        public ActionResult Landing()
         {
             return View();
+        }
+        public ActionResult Login()
+        {
+            return PartialView();
         }
 
         [HttpPost]
@@ -43,7 +47,7 @@ namespace RFoundation.PL.WEB.Controllers
                     ModelState.AddModelError("", "Неправильный пароль или логин");
                 }
             }
-            return View(model);
+            return PartialView(model);
         }
 
         public ActionResult LogOff()
@@ -54,11 +58,11 @@ namespace RFoundation.PL.WEB.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
-        public ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +82,7 @@ namespace RFoundation.PL.WEB.Controllers
                 }
             }
 
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpGet]
@@ -86,14 +90,15 @@ namespace RFoundation.PL.WEB.Controllers
         public JsonResult CheckLogin(string login)
         {
             var user = UserService.GetAll()?.FirstOrDefault(u => u.Login == login);
-            if (user != null) return Json("Login is already exist ~~ Json", JsonRequestBehavior.AllowGet);
-            return Json(true, JsonRequestBehavior.AllowGet);
+            return Json(user == null, JsonRequestBehavior.AllowGet);
+            //if (user != null) return Json("Login is already exist ~~ Json", JsonRequestBehavior.AllowGet);
+            //return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [AllowAnonymous]
         public JsonResult CheckEmail(string email)
-        {
+           {
             var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
             return Json(user == null, JsonRequestBehavior.AllowGet);
         }
