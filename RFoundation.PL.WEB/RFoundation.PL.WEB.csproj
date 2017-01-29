@@ -159,6 +159,7 @@
     <Content Include="Content\myStyles\image.png" />
     <Content Include="Content\myStyles\Landing.css" />
     <Content Include="Content\myStyles\RStyles.css" />
+    <Content Include="Content\myStyles\theme.css" />
     <Content Include="Content\tableSorter\jquery.tablesorter.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
