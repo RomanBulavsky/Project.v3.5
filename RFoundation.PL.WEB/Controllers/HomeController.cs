@@ -14,6 +14,8 @@ namespace RFoundation.PL.WEB.Controllers
     {
         public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
+
+        public IExtensionService ExtensionService => (IExtensionService)DependencyResolver.Current.GetService(typeof(IExtensionService));
         string Name = Membership.GetUser()?.UserName ?? "Anon";
         private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
 
@@ -24,8 +26,10 @@ namespace RFoundation.PL.WEB.Controllers
             IEnumerable<BllFile> files = user?.Files;
             if (files == null) return View();
             List<BllFile> viewFiles = new List<BllFile>();
+            var extensions = ExtensionService.GetAll().ToList();
             foreach (var fileEntity in files)
             {
+                fileEntity.Extension = extensions.FirstOrDefault(e => e.Id == fileEntity.ExtensionId);
                 viewFiles.Add(fileEntity);
             }
             //ViewBag.Files = viewFiles;
@@ -64,7 +68,8 @@ namespace RFoundation.PL.WEB.Controllers
             var file = FileService.Get(id);
             byte[] mas = file.Data;
             string file_type = "text/plain";
-            string file_name = file.Name + "." + file.Extension;
+            var extensions = ExtensionService.GetAll().ToList();
+            string file_name = file.Name + "." + extensions?.FirstOrDefault(e=>e.Id == file.ExtensionId)?.ExtensionName;
             return File(mas, file_type, file_name);
         }
 
