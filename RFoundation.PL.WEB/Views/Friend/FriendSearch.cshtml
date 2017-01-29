@@ -1,0 +1,31 @@
+﻿
+@model IEnumerable<RFoundation.BLL.Interfaces.Entities.BllUser>
+
+
+<div id="searchresults">
+    <h3>Все книги автора : @Model.First().FirstName</h3>
+    <ul>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <li>
+                    @item.FirstName + " " @item.Email + " "
+                    <!--TODO:Offers-->
+                    @Ajax.ActionLink("Add", "AddToFriend","Friend", new { friendId = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+                
+                    @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
+        {
+            <label class="btn btn-default btn-file upload">
+                Browse <input type="file" name="upload" style="display: none;">
+            </label>
+
+            <label class="btn btn-default btn-file">
+                Download<input id="upload" type="submit" value="Загрузить" style="display: none;" />
+            </label>
+        }*@
+                </li>
+            }
+        }
+    </ul>
+</div>

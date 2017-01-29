@@ -1,0 +1,30 @@
+﻿@model System.Collections.Generic.IEnumerable<RFoundation.BLL.Interfaces.Entities.BllFriend>
+
+<h1>Friends</h1>
+<ul>
+    @if (Model != null)
+    {
+        foreach (var friend in Model)
+        {
+            <li>
+                UserID:
+                <li>@friend.UserId</li>
+                <li>@friend.Id</li>
+            </li>
+        }
+    }
+
+</ul>
+
+<div>
+    @using (Ajax.BeginForm("FriendOfferList", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <input type="submit" value="ShowOffers" />
+    }
+    <div id="results"></div>
+</div>
+
+@section scripts{
+    @*Scripts.Render("~/Scripts/jquery-1.10.2.min.js");*@
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js");
+}

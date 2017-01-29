@@ -52,10 +52,12 @@ namespace RFoundation.PL.WEB.Models
         public string ConfirmPassword { get; set; }
     }
 
-
-    public enum Role2
+    public class FileViewModel
     {
-        Administrator = 1,
-        User
+
+    }
+    public class UserViewModel
+    {
+
     }
 }

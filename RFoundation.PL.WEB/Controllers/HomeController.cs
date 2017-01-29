@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 
 namespace RFoundation.PL.WEB.Controllers
@@ -11,22 +13,25 @@ namespace RFoundation.PL.WEB.Controllers
     public class HomeController : Controller
     {
         //Все в BLL
-        public IFileService FileService => (IFileService)DependencyResolver.Current.GetService(typeof(IFileService));
-        public IUserService UserService => (IUserService)DependencyResolver.Current.GetService(typeof(IUserService));
+        public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
+        public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
         string Name = Membership.GetUser()?.UserName ?? "Anon";
+        private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
 
         public ActionResult Index()
         {
-            //IEnumerable<FileEntity> files = FileService.GetAllEntitiesByEmail(Name);
-            //if (files == null) return View();
-            //List<FileViewModel> viewFiles = new List<FileViewModel>();
-            //foreach (var fileEntity in files)
-            //{
-            //    //viewFiles.Add(fileEntity.ToMvcFile());
-            //}
+            var user = UserService.GetAll().FirstOrDefault(u => u.Login == Name);
+            
+            IEnumerable<BllFile> files = user?.Files;
+            if (files == null) return View();
+            List<BllFile> viewFiles = new List<BllFile>();
+            foreach (var fileEntity in files)
+            {
+                viewFiles.Add(fileEntity);
+            }
             //ViewBag.Files = viewFiles;
             ViewBag.User = Name;
-            return View();
+            return View(viewFiles.ToList());
         }
 
         public ActionResult About()
@@ -43,10 +48,59 @@ namespace RFoundation.PL.WEB.Controllers
             return View();
         }
 
+        public ActionResult Download(object fileEntity)
+        {
+            //naryWriter bw = new BinaryWriter();
+            var fileEntity2 = (BllFile) fileEntity;
+
+            BinaryWriter writer =
+                new BinaryWriter(new FileStream($"{fileEntity2.Name}.{fileEntity2.Extension}", FileMode.Create));
+            writer.Write(((BllFile) fileEntity).Data);
+
+            return View("Index");
+        }
+
+        public FileResult GetFile(int id)
+        {
+            var file = FileService.Get(id);
+            byte[] mas = file.Data;
+            string file_type = "text/plain";
+            string file_name = file.Name + "." + file.Extension;
+            return File(mas, file_type, file_name);
+        }
+
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (upload != null)
+            {
+                // получаем имя файла
+                string fileName = System.IO.Path.GetFileName(upload.FileName);
+                // сохраняем файл в папку Files в проекте
+                BinaryReader reader = new BinaryReader(upload.InputStream);
+                byte[] data = reader.ReadBytes(upload.ContentLength);
+
+                var s = upload.FileName.IndexOf(".", StringComparison.Ordinal);
 
 
+                string name = upload.FileName.Substring(0, s);
+                string extension = upload.FileName.Substring(s + 1);
+                FileService.Create(new BllFile()
+                {
+                    Name = name,
+                    IsProfileImage = false,
 
-        
+                    Banned = false,
+                    UploadDate = DateTime.Now,
+                    
+                    ExtensionId = 1,
+                    Data = data,
+                    Size = upload.ContentLength,
+                    UserId = Id//(int)Session["UserId"]//TODO:!~!~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                });
+                //upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+            }
+            return RedirectToAction("Index");
+        }
 
         public ActionResult DeleteFile(int id)
         {

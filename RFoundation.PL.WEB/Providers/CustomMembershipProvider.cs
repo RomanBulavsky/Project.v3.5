@@ -19,14 +19,14 @@ namespace RFoundation.PL.WEB.Providers
             try
             {
                 var user = UserService.GetAll().FirstOrDefault(e => e.Email == email);
-                if (user.Email != email || user.Password != password)
+                if (user?.Email != email || user?.Password != password)
                     isValid = false;
             }
             catch
             {
                 isValid = false;
             }
-
+            
             return isValid;
         }
 
@@ -61,7 +61,7 @@ namespace RFoundation.PL.WEB.Providers
                     //Context.SaveChanges();
                     membershipUser = GetUser(email, false);
 
-                    createStatus = MembershipCreateStatus.Success; ///
+                    createStatus = MembershipCreateStatus.Success; ///TODO: Provider
                     return membershipUser;
                 }
                 catch

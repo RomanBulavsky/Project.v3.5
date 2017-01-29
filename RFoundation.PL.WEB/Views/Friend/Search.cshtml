@@ -1,0 +1,13 @@
+﻿<div>
+    @using (Ajax.BeginForm("FriendSearch", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <input type="text" name="name" />
+        <input type="submit" value="Search" />
+    }
+    <div id="results"></div>
+</div>
+
+@section scripts{
+    @*Scripts.Render("~/Scripts/jquery-1.10.2.min.js");*@
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js");
+}

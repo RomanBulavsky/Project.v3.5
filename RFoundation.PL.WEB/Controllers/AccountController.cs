@@ -32,6 +32,7 @@ namespace RFoundation.PL.WEB.Controllers
                     //При логине метод Membership.ValidateUser проверяет, имеется ли в базе данных пользователь с введенными логином и паролем в системе.
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
+                    Session["UserId"] = UserService.GetAll()?.FirstOrDefault(u => u.Email == model.Email)?.Id;
                     ViewBag.User = model.Email;
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -53,7 +54,7 @@ namespace RFoundation.PL.WEB.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Landing", "Account");
         }
 
         public ActionResult Register()
@@ -73,12 +74,13 @@ namespace RFoundation.PL.WEB.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
+                    Session["UserId"] = UserService.GetAll()?.FirstOrDefault(u => u.Email == model.Email)?.Id;
                     FormsAuthentication.SetAuthCookie(model.Email, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Ошибка при регистрации");
+                    ModelState.AddModelError("", "Registration Error");
                 }
             }
 

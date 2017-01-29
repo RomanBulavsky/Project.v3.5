@@ -1,31 +1,137 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@model List<RFoundation.BLL.Interfaces.Entities.BllFile>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<div class="container jumbotron" style="background: white">
+    <table id="myTable" class="table table-striped tablesorter table-hover">
+        <thead class="thead-default">
+            <tr>
+                <th class="header">File Name</th>
+                <th class="header">Extension</th>
+                <th class="header">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                if (Model != null && Model.FirstOrDefault() != null)
+                {
+                    foreach (var file in Model)
+                    {
+                        if (file != null)
+                        {
+                            <tr>
+                                <td class="container col-lg-6">
+                                    @file.Name
+                                <div class="menu">
+                                    @Html.ActionLink(" ", "GetFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-download" })
+                                    @Html.ActionLink(" ", "DeleteFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-remove-circle" })
+                                </div>
+                            </td>
+                            <td>@file.Extension</td>
+                            <td>
+                                @file.Size
+
+                            </td>
+
+
+                        </tr>
+                        }
+
+                        //@Html.ActionLink("Download", "Download", "Home", (object)file);
+                    }
+                }
+            }
+
+
+        </tbody>
+    </table>
+    
+
+        @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
+        {
+            <label class="btn btn-default btn-file upload">
+                Browse <input type="file" name="upload" style="display: none;">
+            </label>
+
+            <label class="btn btn-default btn-file">
+                Download<input id="upload" type="submit" value="Загрузить" style="display: none;" />
+            </label>
+        }*@
+    
+    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <label class="btn btn-default btn-file upload">
+            Browse <input type="file" name="upload" style="display: none;">
+        </label>
+
+        <label class="btn btn-default btn-file">
+            Download<input id="upload" type="submit" value="Загрузить" style="display: none;" />
+        </label>
+
+    }
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+@section scripts
+{
+    <style>
+        .menu {
+            display: none;
+        }
+
+        tr:hover .menu {
+            display: inline;
+        }
+    </style>
+
+
+    @*<link rel="stylesheet" type="text/css" href="~/Content/tableSorter/style.css" />*@
+    <script type="text/javascript" src="~/Scripts/tablesorter/jquery.tablesorter.js"></script>
+    <script>
+
+        $(document)
+            .ready(function() {
+                $("#myTable").tablesorter();
+            });
+        $(document)
+            .ready(function() {
+                $("#myTable")
+                    .tablesorter({
+                        sortList: [
+                            [0, 0],
+                            [1, 0]
+                        ]
+                    });
+            });
+       /* $('.upload')
+            .click(function () {
+
+
+                var f = function() {
+                    var fullPath = document.getElementById('upload').value;
+                    if (fullPath) {
+                        var startIndex = (fullPath.indexOf('\\') >= 0
+                            ? fullPath.lastIndexOf('\\')
+                            : fullPath.lastIndexOf('/'));
+                        var filename = fullPath.substring(startIndex);
+                        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                            filename = filename.substring(1);
+                        }
+                        alert(filename);
+                    }
+                }
+
+                setTimeout(f, 5000);
+
+
+            });
+       */
+
+    </script>
+}
+
