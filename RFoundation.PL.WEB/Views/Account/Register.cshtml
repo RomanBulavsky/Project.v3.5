@@ -32,7 +32,7 @@
                                        
 
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Email, new {@class = "col-md-2 mylabel myPadding"})
+                                            @Html.LabelFor(model => model.Email, new {@class = "col-md-2 mylabel myPadding labelPadding" })
                                             <div class="editor-field col-md-8">
                                                 @Html.TextBoxFor(model => model.Email, new {@class = "myblock form-control", placeholder = "Your Email"})
 
@@ -43,7 +43,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Login, new {@class = "col-md-2 mylabel myPadding" })
+                                            @Html.LabelFor(model => model.Login, new {@class = "col-md-2 mylabel myPadding labelPadding" })
                                             <div class="editor-field col-md-8">
                                                 @Html.TextBoxFor(model => model.Login, new {@class = "myblock form-control", placeholder = "Your Login"})
                                                 @Html.ValidationMessageFor(model => model.Login)
@@ -52,7 +52,7 @@
                                             <div class="glyphicon  targetLogin col-md-1 hidden myPadding"></div>
                                         </div>
                                         <div class="form-group ">
-                                            @Html.LabelFor(model => model.Password, new {@class = "col-md-2 mylabel myPadding" })
+                                            @Html.LabelFor(model => model.Password, new {@class = "col-md-2 mylabel myPadding labelPadding" })
                                             <div class="editor-field col-md-8">
                                                 @Html.PasswordFor(model => model.Password, new {@class = "myblock form-control", placeholder = "Your Password"})
                                                 @Html.ValidationMessageFor(model => model.Password)
@@ -61,7 +61,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-2 mylabel myPadding" })
+                                            @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-2 mylabel myPadding labelPadding" })
                                             <div class="editor-field col-md-8">
                                                 @Html.PasswordFor(model => model.ConfirmPassword, new {@class = "myblock form-control", placeholder = "Your Email"})
                                                 @Html.ValidationMessageFor(model => model.ConfirmPassword)

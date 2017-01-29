@@ -102,5 +102,13 @@ namespace RFoundation.PL.WEB.Controllers
             var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
             return Json(user == null, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public JsonResult CheckEmail2(string email)
+        {
+            var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
+            return Json(user != null, JsonRequestBehavior.AllowGet);
+        }
     }
 }

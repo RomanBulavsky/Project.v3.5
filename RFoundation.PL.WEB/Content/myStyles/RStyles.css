@@ -8,7 +8,17 @@
 
 .mylabel { text-align: right; }
 
-.myPadding { margin-top: 7px; }
+.myPadding {     margin-top: 7px;
+    }
+.labelPadding {
+    padding-right: 0px;
+    padding-left: 0px;
+    text-align: right;
+}
+.rememberPadding {
+    text-align: left;
+    padding-left: 2px;
+}
 
 .green { color: green; }
 

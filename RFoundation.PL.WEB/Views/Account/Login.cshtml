@@ -4,6 +4,81 @@
 @{
     ViewBag.Title = "Sign in";
 }
+
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="~/Scripts/test/JavaScript.js"></script>
+<link href="~/Content/myStyles/RStyles.css" rel="stylesheet" />
+
+
+<div class="container container-table signin col-md-12 col-lg-12">
+    <div class="row vertical-center-row">
+        <div class="form-horizontal text-center col-xs-12  col-sm-12  col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+
+            <div class="container col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h2 class="text-center form-signin-heading">Sign In</h2>
+                    </div>
+                    <div class="panel-body">
+
+                        @using (Ajax.BeginForm("Login", new AjaxOptions { UpdateTargetId = "results" }))
+                        {
+                            <div class="form-horizontal myform">
+                                @Html.ValidationSummary(true)
+
+                                <fieldset class="lol">
+                                    <div class="form-horizontal col-sm-12 col-md-12 col-lg-12">
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, new { @class = "col-md-2 mylabel myPadding labelPadding" })
+                                            <div class="editor-field col-md-8">
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "myblock form-control", placeholder = "Your Email" })
+
+                                                @Html.ValidationMessageFor(model => model.Email)
+
+                                            </div>
+                                            <div class="glyphicon  targetEmail col-md-1 hidden myPadding"></div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 mylabel myPadding labelPadding" })
+                                            <div class="editor-field col-md-8">
+                                                @Html.PasswordFor(model => model.Password, new { @class = "myblock form-control", placeholder = "Your Password" })
+                                                @Html.ValidationMessageFor(model => model.Password)
+                                            </div>
+                                            <div class="glyphicon  targetP col-md-1 hidden myPadding"></div>
+                                        </div>
+                                        
+                                        <div class="form-group ">
+                                            @Html.LabelFor(model => model.RememberMe, new { @class = "col-md-offset-2 col-md-6 myPadding labelPadding" })
+                                            <div class="editor-field col-md-2 myblock myPadding">
+                                                @Html.CheckBoxFor(model => model.RememberMe, new { @class = "rememberPadding" })
+                                                @Html.ValidationMessageFor(model => model.RememberMe)
+                                            </div>
+ 
+                                        </div>
+                                     
+
+                        
+                                        <div class="form-group">
+                                            <p>
+                                                <input class="btn btn-lg btn-primary " type="submit" value="Sign In" />
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container container-table signin">
     <div class="row vertical-center-row">
         <div class="text-center col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
