@@ -1,0 +1,82 @@
+﻿@model System.Collections.Generic.List<RFoundation.BLL.Interfaces.Entities.BllFile>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<div class="container jumbotron" style="background: white">
+    <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">
+        <thead class="thead-default">
+        <tr>
+            <th class="header">File Name</th>
+            <th class="header">Extension</th>
+            <th class="header">Size</th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            if (Model != null && Model.FirstOrDefault() != null)
+            {
+                foreach (var file in Model)
+                {
+                    if (file != null)
+                    {
+                        <tr>
+                            <td class="container col-lg-6">
+                                @file.Name
+                                <div class="menu">
+                                    @Html.ActionLink(" ", "GetFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-download" })
+                                    @Html.ActionLink(" ", "DeleteFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-remove-circle" })
+                                    @Html.ActionLink(" ", "ShareFile", "File", new { id = file.Id }, new { @class = "glyphicon glyphicon-share" })
+
+                                </div>
+                            </td>
+                            <td>@file.Extension.ExtensionName</td>
+                            <td>
+                                @file.Size
+                            </td>
+                        </tr>
+                    }
+
+                }
+            }
+        }
+
+
+        </tbody>
+    </table>
+    @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
+    *@
+
+    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <label class="btn btn-default btn-file upload">
+            Browse <input type="file" name="upload" style="display: none;">
+        </label>
+
+        <label class="btn btn-default btn-file">
+            Download<input id="upload" type="submit" value="Загрузить" style="display: none;" />
+        </label>
+
+    }
+
+</div>
+
+<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+<script>
+    $(document)
+         .ready(function () {
+             $("#myTable").tablesorter();
+         });
+    $(document)
+        .ready(function () {
+            $("#myTable")
+                .tablesorter({
+                    sortList: [
+                        [0, 0],
+                        [1, 0]
+                    ]
+                });
+        });
+</script>

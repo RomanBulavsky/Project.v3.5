@@ -241,3 +241,19 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /RFoundation.PL.WEB/Scripts/*.min.js
+/PL.WEB.v4/Scripts/jquery.unobtrusive-ajax.min.js
+/PL.WEB.v4/Scripts/jquery.unobtrusive-ajax.js
+/PL.WEB.v4/Scripts/respond.min.js
+/PL.WEB.v4/Scripts/respond.js
+/PL.WEB.v4/Scripts/modernizr-2.6.2.js
+/PL.WEB.v4/Scripts/jquery.validate.unobtrusive.min.js
+/PL.WEB.v4/Scripts/jquery.validate.unobtrusive.js
+/PL.WEB.v4/Scripts/jquery.validate.min.js
+/PL.WEB.v4/Scripts/jquery.validate.js
+/PL.WEB.v4/Scripts/jquery.validate-vsdoc.js
+/PL.WEB.v4/Scripts/jquery-1.10.2.min.map
+/PL.WEB.v4/Scripts/jquery-1.10.2.min.js
+/PL.WEB.v4/Scripts/jquery-1.10.2.js
+/PL.WEB.v4/Scripts/jquery-1.10.2.intellisense.js
+/PL.WEB.v4/Scripts/bootstrap.min.js
+/PL.WEB.v4/Scripts/bootstrap.js

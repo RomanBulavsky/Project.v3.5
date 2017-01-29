@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{68DEF35E-F07B-4F30-9844-FD5297615A10}</ProjectGuid>
+    <ProjectGuid>{0250ED05-4478-41B7-A3F8-4F8DCBDE4B0D}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RFoundation.PL.WEB</RootNamespace>
-    <AssemblyName>RFoundation.PL.WEB</AssemblyName>
+    <RootNamespace>PL.WEB.v4</RootNamespace>
+    <AssemblyName>PL.WEB.v4</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -150,21 +150,20 @@
     <Compile Include="Providers\CustomMembershipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\4k.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\bootstrapValidator\bootstrapValidator.css" />
-    <Content Include="Content\bootstrapValidator\bootstrapValidator.min.css" />
-    <Content Include="Content\tableSorter\jquery.tablesorter.js" />
+    <Content Include="Content\RStyles.css" />
+    <Content Include="Content\tableSorter\asc.gif" />
+    <Content Include="Content\tableSorter\bg.gif" />
+    <Content Include="Content\tableSorter\desc.gif" />
+    <Content Include="Content\tableSorter\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
-    <Content Include="Scripts\bootstrapValidator\bootstrapValidator.js" />
-    <Content Include="Scripts\bootstrapValidator\bootstrapValidator.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -191,23 +190,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Registerxxx.cshtml" />
-    <Content Include="Views\Account\Registerxxx2.cshtml" />
-    <Content Include="Views\Account\Landing.cshtml" />
-    <Content Include="Views\Friend\FriendList.cshtml" />
-    <Content Include="Views\Friend\FriendOfferList.cshtml" />
-    <Content Include="Views\Friend\Search.cshtml" />
-    <Content Include="Views\Friend\FriendSearch.cshtml" />
-    <Content Include="Views\File\ShareFile.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\bootstrapValidator\language\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -223,7 +211,7 @@
       <Name>NinjectConfigurator</Name>
     </ProjectReference>
     <ProjectReference Include="..\RFoundation.BLL.Interfaces\RFoundation.BLL.Interfaces.csproj">
-      <Project>{811b7a7f-3d1f-4352-9611-775bc0da9200}</Project>
+      <Project>{811B7A7F-3D1F-4352-9611-775BC0DA9200}</Project>
       <Name>RFoundation.BLL.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
@@ -243,9 +231,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56891</DevelopmentServerPort>
+          <DevelopmentServerPort>61033</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56891/</IISUrl>
+          <IISUrl>http://localhost:61033/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,17 +1,13 @@
 ﻿@model RFoundation.PL.WEB.Models.LogOnModel
 
-
 @{
-    ViewBag.Title = "Sign in";
+    ViewBag.Title = "Login";
 }
-
-
 @Scripts.Render("~/bundles/jqueryval")
-
+<link href="~/Content/RStyles.css" rel="stylesheet" />
 <script src="~/Scripts/test/JavaScript.js"></script>
-<link href="~/Content/myStyles/RStyles.css" rel="stylesheet" />
 
-
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
 <div class="container container-table signin col-md-12 col-lg-12">
     <div class="row vertical-center-row">
@@ -51,18 +47,18 @@
                                             </div>
                                             <div class="glyphicon  targetP col-md-1 hidden myPadding"></div>
                                         </div>
-                                        
+
                                         <div class="form-group ">
                                             @Html.LabelFor(model => model.RememberMe, new { @class = "col-md-offset-2 col-md-6 myPadding labelPadding" })
                                             <div class="editor-field col-md-2 myblock myPadding">
                                                 @Html.CheckBoxFor(model => model.RememberMe, new { @class = "rememberPadding" })
                                                 @Html.ValidationMessageFor(model => model.RememberMe)
                                             </div>
- 
-                                        </div>
-                                     
 
-                        
+                                        </div>
+
+
+
                                         <div class="form-group">
                                             <p>
                                                 <input class="btn btn-lg btn-primary " type="submit" value="Sign In" />
@@ -80,48 +76,3 @@
     </div>
 </div>
 
-<div class="container container-table signin">
-    <div class="row vertical-center-row">
-        <div class="text-center col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-            <div id="" class="form-signin jumbotron">
-                <h2 class="form-signin-heading">Sign in</h2>
-                @using (Html.BeginForm())
-                {
-                    @Html.ValidationSummary(true)
-
-                    <fieldset>
-                        <legend>Введите логин и пароль</legend>
-
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Email)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.Email)
-                            @Html.ValidationMessageFor(model => model.Email)
-                        </div>
-
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.Password)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.Password)
-                            @Html.ValidationMessageFor(model => model.Password)
-                        </div>
-
-                        <div class="editor-label">
-                            @Html.LabelFor(model => model.RememberMe)
-                        </div>
-                        <div class="editor-field">
-                            @Html.EditorFor(model => model.RememberMe)
-                            @Html.ValidationMessageFor(model => model.RememberMe)
-                        </div>
-
-                        <p>
-                            <input type="submit" value="Войти" />
-                        </p>
-                    </fieldset>
-                }
-            </div>
-        </div>
-    </div>
-</div>
