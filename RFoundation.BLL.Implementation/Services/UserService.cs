@@ -31,6 +31,12 @@ namespace RFoundation.BLL.Implementation.Services
             return user?.ToBllUser();
         }
 
+        public BllUser Get(string email)
+        {
+            var user = UnitOfWork?.UserRepository?.Get(email);
+            return user?.ToBllUser();
+        }
+
         public BllUser GetByPredicate(Expression<Func<BllUser, bool>> f)
         {
             throw new NotImplementedException();

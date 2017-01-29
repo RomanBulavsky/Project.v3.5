@@ -32,6 +32,12 @@ namespace RFoundation.DAL.Implementation.Repositories
             return user?.ToDalUser();
         }
 
+        public DalUser Get(string email)
+        {
+            var user = Context.Set<User>()?.FirstOrDefault(u=>u.Email == email);
+            return user?.ToDalUser();
+        }
+
         public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
         {
             throw new NotImplementedException();

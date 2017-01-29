@@ -4,5 +4,6 @@ namespace RFoundation.DAL.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<DalUser>
     {
+        DalUser Get(string email);
     }
 }
