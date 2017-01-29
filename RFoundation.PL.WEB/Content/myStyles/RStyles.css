@@ -1,5 +1,5 @@
 ﻿/* styles for validation helpers */
-.valid { border: 1px solid #31f13d; }
+.valid { border: 1px solid green; }
 
 .myblock {
     display: block;
