@@ -1,0 +1,32 @@
+﻿@model System.Collections.Generic.IEnumerable<RFoundation.BLL.Interfaces.Entities.BllFriend>
+
+<h1>Friends</h1>
+<ul>
+    @if (Model != null)
+    {
+        foreach (var friend in Model)
+        {
+            <li>
+                UserID:
+                <li>@friend.UserId</li>
+                <li>@friend?.User.Login</li>
+            </li>
+
+            <div>
+                @using (Ajax.BeginForm("ShareFile",new {fileId = ViewBag.fileId, friendId= friend.UserId }, new AjaxOptions { UpdateTargetId = "results" }))
+                {
+                    <input type="submit" value="ShowOffers" />
+                }
+                <div id="results"></div>
+            </div>
+        }
+    }
+
+</ul>
+
+
+@section scripts{
+    @*Scripts.Render("~/Scripts/jquery-1.10.2.min.js");*@
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js");
+}
+

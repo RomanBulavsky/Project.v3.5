@@ -28,6 +28,8 @@
                                 <div class="menu">
                                     @Html.ActionLink(" ", "GetFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-download" })
                                     @Html.ActionLink(" ", "DeleteFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-remove-circle" })
+                                    @Html.ActionLink(" ", "ShareFile", "File", new { id = file.Id }, new { @class = "glyphicon glyphicon-share" })
+                                    
                                 </div>
                             </td>
                             <td>@file.Extension</td>
@@ -39,8 +41,7 @@
 
                         </tr>
                         }
-
-                        //@Html.ActionLink("Download", "Download", "Home", (object)file);
+                        
                     }
                 }
             }
@@ -48,18 +49,8 @@
 
         </tbody>
     </table>
-    
-
         @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
-        {
-            <label class="btn btn-default btn-file upload">
-                Browse <input type="file" name="upload" style="display: none;">
-            </label>
-
-            <label class="btn btn-default btn-file">
-                Download<input id="upload" type="submit" value="Загрузить" style="display: none;" />
-            </label>
-        }*@
+        *@
     
     @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

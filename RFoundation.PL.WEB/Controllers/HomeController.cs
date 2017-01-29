@@ -12,7 +12,6 @@ namespace RFoundation.PL.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        //Все в BLL
         public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
         string Name = Membership.GetUser()?.UserName ?? "Anon";
