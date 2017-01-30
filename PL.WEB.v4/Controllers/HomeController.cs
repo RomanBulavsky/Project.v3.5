@@ -40,7 +40,7 @@ namespace PL.WEB.v4.Controllers
                 viewFiles.Add(userFile.ToMvcFile());
             }
 
-            var recivedFilesIds = CurrentUser.ReceivedFiles.Select(ef=>ef.FileId).ToList();
+            var recivedFilesIds = CurrentUser.ReceivedFiles.Select(ef => ef.FileId).ToList();
 
             foreach (var id in recivedFilesIds)
             {
@@ -49,6 +49,8 @@ namespace PL.WEB.v4.Controllers
                 viewFiles.Add(file);
             }
 
+            if (Request.IsAjaxRequest())
+                return PartialView(viewFiles);
 
             return View(viewFiles);
         }
@@ -63,16 +65,17 @@ namespace PL.WEB.v4.Controllers
             var extensions = ExtensionService.GetAll().ToList();
             var viewFiles = new List<FileViewModel>();
 
-            var sharedFilesIds = CurrentUser.SharedFiles.Select(ef=>ef.FileId).ToList();
+            var sharedFilesIds = CurrentUser.SharedFiles.Select(ef => ef.FileId).ToList();
 
             foreach (var id in sharedFilesIds)
             {
                 var file = userFiles.First(i => i.Id == id).ToMvcFile();
-               
+
                 viewFiles.Add(file);
             }
 
-
+            if (Request.IsAjaxRequest())
+                return PartialView(viewFiles);
             return View(viewFiles);
         }
 
@@ -95,6 +98,8 @@ namespace PL.WEB.v4.Controllers
                 viewFiles.Add(file);
             }
 
+            if (Request.IsAjaxRequest())
+                return PartialView(viewFiles);
 
             return View(viewFiles);
         }
@@ -153,7 +158,7 @@ namespace PL.WEB.v4.Controllers
 
                     string name = up.FileName.Substring(0, s);
                     string extension = up.FileName.Substring(s + 1);
-                    var exts = ExtensionService?.GetAll()?.FirstOrDefault(e=>e.ExtensionName == extension)?.Id;
+                    var exts = ExtensionService?.GetAll()?.FirstOrDefault(e => e.ExtensionName == extension)?.Id;
                     FileService.Create(new BllFile()
                     {
                         Name = name,
@@ -166,7 +171,6 @@ namespace PL.WEB.v4.Controllers
                         UserId = CurrentUser.Id
                     });
                 }
-                
             }
             return Redirect("/Home/Index");
         }
