@@ -15,8 +15,10 @@ namespace PL.WEB.v4.Controllers
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
         string Name = Membership.GetUser()?.UserName ?? "Anon";
         private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
+
         public IFriendService FriendService
             => (IFriendService) DependencyResolver.Current.GetService(typeof(IFriendService));
+
         public IFriendInvitationService FriendInviteService
             => (IFriendInvitationService) DependencyResolver.Current.GetService(typeof(IFriendInvitationService));
 
@@ -125,37 +127,23 @@ namespace PL.WEB.v4.Controllers
         public ActionResult Invites()
         {
             var user = UserService.Get(CurrentUser.Email);
-            var toUserOffers = FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).Select(r => r.ToUserId).ToList();
+            var toUserOffers =
+                FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).Select(r => r.ToUserId).ToList();
             var users = new List<BllUser>();
-
-            foreach (var toUserOffer in toUserOffers)
-            {
-                users.Add(UserService.Get(toUserOffer));
-            }
-
-            if (Request.IsAjaxRequest())
-                return PartialView(users);
-            return View(users);
+            return FriendInviteSorter(Request.IsAjaxRequest(), users, toUserOffers);
         }
 
         public ActionResult Offers()
         {
             var user = UserService.Get(CurrentUser.Email);
-            var fromUserRequests = FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).Select(r=>r.FromUserId).ToList();
+            var fromUserRequests =
+                FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).Select(r => r.FromUserId).ToList();
             var users = new List<BllUser>();
-            return c(Request.IsAjaxRequest(), users, fromUserRequests);
-            //foreach (var fromUserRequest in fromUserRequests)
-            //{
-            //    users.Add(UserService.Get(fromUserRequest));
-            //}
-
-            //if (Request.IsAjaxRequest())
-            //    return PartialView(users);
-            //return View(users);
+            return FriendInviteSorter(Request.IsAjaxRequest(), users, fromUserRequests);
         }
 
         [ChildActionOnly]
-        private ActionResult c(bool ajax, List<BllUser> users, List<int> ids)
+        private ActionResult FriendInviteSorter(bool ajax, List<BllUser> users, List<int> ids)
         {
             foreach (var id in ids)
             {

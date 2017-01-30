@@ -54,7 +54,7 @@ namespace RFoundation.PL.WEB.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Landing", "Account");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Register()

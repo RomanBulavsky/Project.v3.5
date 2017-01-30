@@ -1,32 +1,13 @@
 ﻿@model List<RFoundation.BLL.Interfaces.Entities.BllUser>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Invites";
 }
-
-<div class="container jumbotron" style="background: white">
-
-    <ul>
-        @if (Model != null)
-        {
-            foreach (var friend in Model)
-            {
-                <li>
-                    Inviter:
-                    @friend.FromUserId
-
-                </li>
-            }
-        }
-
-    </ul>
-</div>
-
 <div class="container jumbotron" style="background: white">
     @if (Model.Count < 1)
     {
         <div class="text-center">
-            <h2>You do not have any Friend Offers</h2>
+            <h2>You do not have any Friend Invites</h2>
         </div>
     }
     else
@@ -37,12 +18,9 @@
                 {
                     foreach (var item in Model)
                     {
-                        <li>
-                            @item.Email
-                            <p>ID</p>
-                            @item.Id
-                            @Ajax.ActionLink("Add", "AddToFriends", new { friendId = item.Id }, new AjaxOptions { HttpMethod = "POST" })
-                        </li>
+                        <li class="list-group-item">
+                            @item.Login
+                           </li>
                     }
                 }
             </ul>
@@ -50,19 +28,3 @@
     }
 </div>
 
-<div class="container jumbotron" style="background: white">
-
-    <div class="list-group">
-        @if (Model != null)
-        {
-            foreach (var friend in Model)
-            {
-                @Html.ActionLink(@friend.Login, "ShareFile2", "File", new { friendId = friend.Id, fileid = ViewBag.fileId, smth = "xxx" }, new { id = @friend.Id, @class = "list-group-item" })
-
-            }
-        }
-
-
-
-    </div>
-</div>
