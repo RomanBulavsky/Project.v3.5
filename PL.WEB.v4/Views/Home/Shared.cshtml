@@ -53,7 +53,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center">@file.Extension</td>
-                                                <td class="text-center">@file.UploadDate.Date</td>
+                                                <td class="text-center">@file.UploadDate.ToString("g")</td>
                                                 <td class="text-center">
                                                     @{ double fileSizeMb = file.Size / 1000.0; }
                                                     @Math.Round(fileSizeMb, 3) Mb
