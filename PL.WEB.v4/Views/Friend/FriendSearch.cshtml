@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<RFoundation.BLL.Interfaces.Entities.BllUser>
 
 
-<ul>
+
     @if (Model != null)
     {
         <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">
@@ -24,7 +24,7 @@
                                 @*@Ajax.ActionLink("", "AddToFriend", "Friend", new { friendId = friend.Id }, new AjaxOptions { HttpMethod = "POST" })*@
 
 
-                                @Html.ActionLink(" ", "Index", "Home", new { id = friend.Id }, new { @class = "glyphicon glyphicon-plus", style = "color: green;" })
+                                @Html.ActionLink(" ", "AddToFriends", "Friend", new { friendid = friend.Id }, new { @class = "glyphicon glyphicon-plus", style = "color: green;" })
 
                             </div>
                         </td>
@@ -48,4 +48,4 @@
             </tbody>
         </table>
     }
-</ul>
+

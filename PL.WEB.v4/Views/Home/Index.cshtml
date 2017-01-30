@@ -35,8 +35,8 @@
                             <td class="text-center">@file.Extension</td>
                             <td class="text-center">@file.UploadDate.Date</td>
                             <td class="text-center">
-                                @{ double fileSizeMb = file.Size / 1000.0; }
-                                @Math.Round(fileSizeMb, 3) Mb
+                                @{ double fileSizeMb = file.Size /1000.0; }
+                                @Math.Round(fileSizeMb, 3) Kb
                             </td>
                         </tr>
                     }
@@ -54,7 +54,7 @@
                             <td class="text-center">@file.UploadDate.Date</td>
                             <td class="text-center">
                                 @{ double fileSizeMb = file.Size / 1000.0; }
-                                @Math.Round(fileSizeMb, 3) Mb
+                                @Math.Round(fileSizeMb, 3) Kb
                             </td>
                         </tr>
                     }
@@ -84,7 +84,9 @@
 
 </div>
 
-<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+@section scripts
+{
+    <script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
 <script>
     $(document)
         .ready(function() {
@@ -133,3 +135,4 @@
         }
     });
 </script>
+}

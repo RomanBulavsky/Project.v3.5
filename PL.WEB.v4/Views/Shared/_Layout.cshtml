@@ -58,11 +58,7 @@
                         <li>
                             @Html.ActionLink("Signup", "Register", "Account")
                             @*@Ajax.ActionLink("Signup", "Register", "Account", new AjaxOptions
-                            {
-                                UpdateTargetId = "results",
-                                LoadingElementId = "loading",
-                                LoadingElementDuration = 1000,
-                            })*@
+                            {UpdateTargetId = "results", LoadingElementId = "loading",LoadingElementDuration = 1000,})*@
                         </li>
 
                         <li>@Html.ActionLink("Login", "Login", "Account")</li>
@@ -71,7 +67,17 @@
                 </li>
 
             </ul>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="color: red">
+                        @{string Name = Session["Login"]?.ToString() ?? "Anon";}
+
+                        @Html.ActionLink(Name, "LogOff", "Account")
+                    </li>
+                </ul>
+            </div>
         </div>
+        
     </div>
 </div>
 

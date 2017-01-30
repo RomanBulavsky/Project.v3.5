@@ -15,10 +15,13 @@ namespace PL.WEB.v4.Controllers
         string Name = Membership.GetUser()?.UserName ?? "Anon";
         private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
         private BllUser User => UserService.GetAll().FirstOrDefault(u => u.Login == Name);
+
         public IFriendService FriendService
             => (IFriendService) DependencyResolver.Current.GetService(typeof(IFriendService));
+
         public IFriendInvitationService FriendInviteService
-            => (IFriendInvitationService)DependencyResolver.Current.GetService(typeof(IFriendInvitationService));
+            => (IFriendInvitationService) DependencyResolver.Current.GetService(typeof(IFriendInvitationService));
+
         private BllUser CurrentUser => UserService?.Get(Membership.GetUser()?.Email);
 
         public ActionResult FriendList()
@@ -41,8 +44,9 @@ namespace PL.WEB.v4.Controllers
 
             return View(User.FriendRequests);
         }
+
         //TODO:POST
-        public void AddToFriend(int friendId)
+        public ActionResult AddToFriends(int friendId)
         {
             var friend = UserService.Get(friendId);
             if (friend.Friends == null)
@@ -54,39 +58,63 @@ namespace PL.WEB.v4.Controllers
                 FriendService.Create(new BllFriend() {FriendId = friendId, UserId = User.Id});
                 FriendService.Create(new BllFriend() {FriendId = User.Id, UserId = friend.Id});
             }
+
+            return RedirectToAction("FriendList", "Friend");
         }
 
-       
-
-        [HttpPost]
-        public void OfferFriendship(int id)
+        //TODO:POST
+        public ActionResult DeleteFromFriends(int friendId)
         {
-//TODO:
-            //var u = Membership.GetUser();
-            //var user = UserService.GetEntity(u.UserName);
-            //FriendService.OfferFriendship(user.Id, id);
+            var friends = CurrentUser.Friends.ToList();
+            var friend = friends.FirstOrDefault(f => f.UserId == friendId);
+
+            if (friend != null)
+            {
+                FriendService.Delete(friend.Id);
+            }
+
+            return
+                RedirectToAction("FriendList", "Friend");
         }
+
+        [HttpGet]
+        public ActionResult OfferFriendship(int id)
+        {
+            //TODO:Checks!!!!
+            var userId = CurrentUser.Id;
+            var friendRequest = new BllFriendRequest()
+            {
+                FromUserId = userId,
+                ToUserId = id
+            };
+            FriendInviteService.Create(friendRequest);
+            return RedirectToAction("Offers", "Friend");
+        }
+
 
         [HttpPost]
         public ActionResult FriendSearch(string name)
         {
             //TODO: I Enumerable -> bad
             var users =
-                    UserService.GetAll()
-                        .Where(u => u.Email.Contains(name) || u.Login.Contains(name) || u.LastName.Contains(name))
-                ;
+                UserService.GetAll()
+                    .Where(u => u.Email.Contains(name) || u.Login.Contains(name) || u.LastName.Contains(name)).ToList();
+            var friendIds = CurrentUser.Friends.Select(f => f.UserId).ToList();
+            var resultUsers = new List<BllUser>();
+
+            var us = users.Select(u => u.Id);
+            var resultIds = us.Except(friendIds);
+
+            foreach (var resultId in resultIds)
+            {
+                resultUsers.Add(UserService.Get(resultId));
+            }
             if (!users.Any())
                 return HttpNotFound();
 
-            return PartialView(users);
+            return PartialView(resultUsers);
         }
 
-        public void ShareFile(int friendId, int fileId)
-        {
-            //var u = Membership.GetUser();
-            //var user = UserService.GetEntity(u.UserName);
-            //FileService.(user.Id, friendId, fileId);
-        }
 
         public ActionResult Search()
         {

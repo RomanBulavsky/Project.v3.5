@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using PL.WEB.v4.Infrastructure;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 
@@ -24,20 +26,34 @@ namespace PL.WEB.v4.Controllers
         [HttpGet]
         public ActionResult ShareFile(int fileId)
         {
+            //TempData["fileId"] = fileId;
             ViewBag.fileId = fileId;
-            return View(CurrentUser.Friends);
+            var friendIds = CurrentUser?.Friends.Select(f=>f.UserId);
+            if (friendIds == null) return View();
+            
+            var users = new List<BllUser>();
+
+            foreach (var id in friendIds)
+            {
+                var user = UserService.Get(id);
+                users.Add(user);
+            }
+
+            return View(users);
         }
 
-        [HttpPost]
-        public ActionResult ShareFile(int fileId, int friendId)
+        //TODO: POST
+        [HttpGet]
+        public ActionResult ShareFile2(int friendId, int fileId)
         {
+            var x = ViewBag.fileId;
             FileSharingService.Create(new BllSharedFile()
             {
-                FileId = fileId,
-                OwnerId = User.Id,
+                FileId = fileId,//(int)TempData["fileId"],
+                OwnerId = CurrentUser.Id,
                 RecipientId = friendId
             });
-            return View(User.Friends);
+            return RedirectToAction("Index","Home");
         }
     }
 }

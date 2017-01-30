@@ -11,7 +11,7 @@
                     @item.Email
                     <p>ID</p>
                     @item.Id
-                    @Ajax.ActionLink("Add", "AddToFriend", new { friendId = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+                    @Ajax.ActionLink("Add", "AddToFriends", new { friendId = item.Id }, new AjaxOptions { HttpMethod = "POST" })
                 </li>
             }
         }

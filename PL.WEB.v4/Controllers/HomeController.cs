@@ -27,6 +27,7 @@ namespace PL.WEB.v4.Controllers
         public ActionResult Index()
         {
             var name = CurrentUser?.Login ?? "anonymous";
+            Session["Login"] = name;
             ViewBag.User = name;
             var userFiles = CurrentUser?.Files;
             if (userFiles == null) return View();

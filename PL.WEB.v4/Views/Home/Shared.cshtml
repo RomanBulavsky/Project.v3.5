@@ -68,25 +68,10 @@
 
         </tbody>
     </table>
-
-    @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
-    *@
-
-    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <label class="btn btn-default btn-file upload">
-            Browse <input type="file" name="upload" style="display: none;" id="upload1">
-        </label>
-        <div class="upload-text"></div>
-
-        <label class="btn btn-default btn-file">
-            Download<input id="submit2" type="submit" value="Загрузить" style="display: none;" />
-        </label>
-    }
-
 </div>
-
-<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+@section scripts
+{
+    <script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
 <script>
     $(document)
         .ready(function() {
@@ -135,3 +120,5 @@
         }
     });
 </script>
+}
+

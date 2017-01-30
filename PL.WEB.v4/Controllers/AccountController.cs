@@ -51,6 +51,7 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult LogOff()
         {
+            Session["Login"] =  null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }

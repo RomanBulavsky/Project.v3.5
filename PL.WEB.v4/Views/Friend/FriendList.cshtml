@@ -21,7 +21,7 @@
                             @friend.Login
                             <div class="menu ">
 
-                                @Html.ActionLink(" ", "Index", "Home", new {id = friend.Id}, new {@class = "glyphicon glyphicon-remove", style = "color: red;"})
+                                @Html.ActionLink(" ", "DeleteFromFriends", "Friend", new {friendId = friend.Id}, new {@class = "glyphicon glyphicon-remove", style = "color: red;"})
 
                             </div>
                         </td>
