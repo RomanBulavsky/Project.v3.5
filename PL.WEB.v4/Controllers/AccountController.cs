@@ -118,5 +118,10 @@ namespace PL.WEB.v4.Controllers
             var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
             return Json(user != null, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ProfileCustomization()
+        {
+            return View();
+        }
     }
 }

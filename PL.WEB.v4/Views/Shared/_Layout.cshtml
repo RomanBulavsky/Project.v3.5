@@ -29,18 +29,21 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li>@Ajax.ActionLink("Files", "Index", "Home", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })</li>
-                        <li>@Ajax.ActionLink("Shared Files", "Shared", "Home", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })</li>
-                        <li>@Ajax.ActionLink("Recieved Files", "Recieved", "Home", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })</li>
+                        <li>
+                            @Ajax.ActionLink("Files", "Index", "Home", new AjaxOptions()
+                            {
+                                UpdateTargetId = "results"
+                            })</li>
+                        <li>
+                            @Ajax.ActionLink("Shared Files", "Shared", "Home", new AjaxOptions()
+                            {
+                                UpdateTargetId = "results"
+                            })</li>
+                        <li>
+                            @Ajax.ActionLink("Recieved Files", "Recieved", "Home", new AjaxOptions()
+                            {
+                                UpdateTargetId = "results"
+                            })</li>
                     </ul>
                 </li>
 
@@ -82,21 +85,23 @@
                     <ul class="dropdown-menu">
                         <li>
                             @Ajax.ActionLink("Signup", "Register", "Account", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })
+                            {
+                                UpdateTargetId = "results"
+                            })
                             @*@Ajax.ActionLink("Signup", "Register", "Account", new AjaxOptions
                             {UpdateTargetId = "results", LoadingElementId = "loading",LoadingElementDuration = 1000,})*@
                         </li>
 
-                        <li>@Ajax.ActionLink("Login", "Login", "Account", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })</li>
-                        <li>@Ajax.ActionLink("Logoff", "LogOff", "Account", new AjaxOptions()
-                       {
-                           UpdateTargetId = "results"
-                       })</li>
+                        <li>
+                            @Ajax.ActionLink("Login", "Login", "Account", new AjaxOptions()
+                            {
+                                UpdateTargetId = "results"
+                            })</li>
+                        <li>
+                            @Ajax.ActionLink("Logoff", "LogOff", "Account", new AjaxOptions()
+                            {
+                                UpdateTargetId = "results"
+                            })</li>
                     </ul>
                 </li>
 
@@ -106,10 +111,15 @@
                     <li style="color: red">
                         @{ string Name = Session["Login"]?.ToString() ?? "Anon"; }
 
-                        @Ajax.ActionLink(Name, "LogOff", "Account", new AjaxOptions()
-                   {
-                       UpdateTargetId = "results"
-                   })
+
+                        @Ajax.ActionLink(Name, "ProfileCustomization", "Account", new AjaxOptions()
+                        {
+                            UpdateTargetId = "results"
+                        })
+                        @Ajax.ActionLink("", "Logoff", "Account", new AjaxOptions()
+                  {
+                      UpdateTargetId = "results"
+                  }, new {@class= "glyphicon glyphicon-log-out" })
                     </li>
                 </ul>
             </div>
@@ -134,7 +144,7 @@
     </footer>
 </div>
 
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/unobtrusive")
 @RenderSection("scripts", required: false)
