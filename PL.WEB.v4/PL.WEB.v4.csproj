@@ -179,6 +179,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tableSorter\jquery.tablesorter.js" />
     <Content Include="Scripts\test\JavaScript.js" />
+    <Content Include="Scripts\test\SmartButton.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -203,6 +204,9 @@
     <Content Include="Views\Friend\Offers.cshtml" />
     <Content Include="Views\Friend\Search.cshtml" />
     <Content Include="Views\File\ShareFile.cshtml" />
+    <Content Include="Views\Home\Upload3.cshtml" />
+    <Content Include="Views\Home\Upload4.cshtml" />
+    <Content Include="Views\Home\IndexBuckUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

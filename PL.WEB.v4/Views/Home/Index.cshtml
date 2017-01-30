@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "title";
 }
-
-<div class="container jumbotron" style="background: white">
+<div class="container jumbotron" id="index" style="background: white">
     <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">
         <thead class="thead-default">
         <tr>
@@ -66,40 +65,72 @@
 
         </tbody>
     </table>
-
-    @*@using (Ajax.BeginForm("Upload","Home",FormMethod.Post, new AjaxOptions() { UpdateTargetId = "results" }, new {enctype = "multipart/form-data" }))
-    *@
-
-    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
-    {
-        <label class="btn btn-default btn-file upload">
-            Browse <input type="file" name="upload" style="display: none;" id="upload1" multiple>
-        </label>
-        <div class="upload-text"></div>
-
-        <label class="btn btn-default btn-file">
-            Download<input id="submit2" type="submit" value="Загрузить" style="display: none;"/>
-        </label>
-    }
     
-    @using (Html.BeginForm("Upload2", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <label class="btn btn-default btn-file upload">
-            Browse Multi<input type="file" name="upload" style="display: none;" id="upload1" multiple>
-        </label>
+ @using (Ajax.BeginForm("Upload2", "Home", FormMethod.Post,new AjaxOptions()
+ {
+     UpdateTargetId = "results"
+ }, new { enctype = "multipart/form-data" }))
+ {
+     <label class="btn btn-default btn-file upload">
+         Browse<input type="file" name="upload" style="display: none;" id="uploadFile" multiple>
+     </label>
+    <label class="btn btn-default btn-file">
+        Download Multi<input id="submit" type="submit" value="Загрузить" style="display: none;" />
+    </label>
         <div class="upload-text"></div>
 
-        <label class="btn btn-default btn-file">
-            Download Multi<input id="submit2" type="submit" value="Загрузить" style="display: none;" />
-        </label>
-    }
+        
+ }
+
 
 </div>
+<script type="text/javascript">
 
-@section scripts
-{
-    <script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
-    <script>
+    $("#uploadFile").on("change",
+               function (e) {
+                   var files = document.getElementById('uploadFile').files;
+                   if (files.length > 0) {
+                       for (var i = 0; i < files.length; i++)
+                           $(".upload-text").append(" " + files[i].name + " ");
+                   }
+               });
+
+
+
+    $('#submit').on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('uploadFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Upload", "Home")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                       $('#results').load('@Url.Action("Index", "Home")');
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+
+                });
+            } else {
+                alert("Браузер не поддерживает загрузку файлов HTML5!");
+            }
+        }
+    });
+</script>
+
+<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+<script>
+
         (function() {
             $(document)
                 .ready(function() {
@@ -116,40 +147,11 @@
                         });
                 });
 
-            $('#submit').on('click',
-                function(e) {
-                    e.preventDefault();
-                    var files = document.getElementById('upload1').files;
-                    if (files.length > 0) {
-                        if (window.FormData !== undefined) {
-                            var data = new FormData();
-                            for (var x = 0; x < files.length; x++) {
-                                data.append("file" + x, files[x]);
-                            }
-
-                            $.ajax({
-                                type: "POST",
-                                url: '@Url.Action("Upload", "Home",new{})',
-                                contentType: false,
-                                processData: false,
-                                data: files[0],
-                                error: function(xhr, status, p3) {
-                                    alert(xhr.responseText);
-                                }
-                            });
-                        }
-                    }
-                });
-
-            $("#upload1").on("change",
-                function(e) {
-                    var files = document.getElementById('upload1').files;
-                    if (files.length > 0) {
-                        for (var i = 0; i < files.length; i++)
-                            $(".upload-text").append(" +" + files[i].name + "+ ");
-                    }
-                });
+           
         })();
-        
-    </script>
+
+</script>
+@section scripts
+{
+
 }

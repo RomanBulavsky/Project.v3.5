@@ -22,7 +22,7 @@
     }
 });
 
-$("#upload1").on("change",function (e) {
+$("#uploadFile").on("change", function (e) {
     var files = document.getElementById('upload1').files;
     if (files.length > 0) {
         for(var i = 0; i <files.length;i++ )

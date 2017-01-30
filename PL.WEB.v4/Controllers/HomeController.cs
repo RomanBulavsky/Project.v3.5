@@ -172,7 +172,7 @@ namespace PL.WEB.v4.Controllers
                     });
                 }
             }
-            return Redirect("/Home/Index");
+            return PartialView("Index");
         }
 
         public ActionResult Upload(HttpPostedFileBase upload)
@@ -203,13 +203,66 @@ namespace PL.WEB.v4.Controllers
                     UserId = CurrentUser.Id
                 });
             }
-            return Redirect("/Home/Index");
+            return PartialView("Index");
         }
 
         public ActionResult DeleteFile(int id)
         {
             FileService.Delete(id);
             return Redirect("/Home/Index");
+        }
+        [HttpGet]
+        public ActionResult Upload3()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload4(string s)
+        {
+            var filex = Request.Files;
+            var x = filex.AllKeys;
+            var v = filex[x[0]];
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload()
+        {
+            foreach (string file in Request.Files)
+            {
+                var upload = Request.Files[file];
+                if (upload != null)
+                {
+                    // получаем имя файла
+                    string fileName = System.IO.Path.GetFileName(upload.FileName);
+                    // сохраняем файл в папку Files в проекте
+                    //  upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+                    BinaryReader reader = new BinaryReader(upload.InputStream);
+                    byte[] data = reader.ReadBytes(upload.ContentLength);
+
+                    var s = upload.FileName.IndexOf(".", StringComparison.Ordinal);
+
+
+                    string name = upload.FileName.Substring(0, s);
+                    string extension = upload.FileName.Substring(s + 1);
+                    var exts = ExtensionService?.GetAll()?.FirstOrDefault(e => e.ExtensionName == extension)?.Id;
+                    FileService.Create(new BllFile()
+                    {
+                        Name = name,
+                        IsProfileImage = false,
+                        Banned = false,
+                        UploadDate = DateTime.Now,
+                        ExtensionId = exts ?? 1,
+                        Data = data,
+                        Size = upload.ContentLength,
+                        UserId = CurrentUser.Id
+                    });
+                    
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }
