@@ -54,6 +54,19 @@ namespace RFoundation.PL.WEB.Models
 
     public class FileViewModel
     {
+        public int Id { get; set; }
+
+        public int UserId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Extension { get; set; }
+
+        public int Size { get; set; }
+
+        public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        public bool Received { get; set; }
 
     }
     public class UserViewModel

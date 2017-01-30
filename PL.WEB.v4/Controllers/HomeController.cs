@@ -5,98 +5,110 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using PL.WEB.v4.Infrastructure;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
+using RFoundation.PL.WEB.Models;
 using WebGrease.Css.Extensions;
 
 namespace PL.WEB.v4.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
 
-        public IExtensionService ExtensionService => (IExtensionService)DependencyResolver.Current.GetService(typeof(IExtensionService));
-        string Name = Membership.GetUser()?.UserName ?? "Anon";
-        private int? Id => UserService?.GetAll()?.FirstOrDefault(u => u.Login == Name)?.Id;
+        public IExtensionService ExtensionService
+            => (IExtensionService) DependencyResolver.Current.GetService(typeof(IExtensionService));
+
+        private BllUser CurrentUser => UserService?.Get(Membership.GetUser()?.Email);
 
         public ActionResult Index()
         {
-            BllUser user = null;
-            if (!Name.Equals("Anon"))
-             user = UserService.Get(Membership.GetUser().Email);
-            
-            IEnumerable<BllFile> files = user?.Files;
-            if (files == null) return View();
-            List<BllFile> viewFiles = new List<BllFile>();
+            var name = CurrentUser?.Login ?? "anonymous";
+            ViewBag.User = name;
+            var userFiles = CurrentUser?.Files;
+            if (userFiles == null) return View();
+
             var extensions = ExtensionService.GetAll().ToList();
-            foreach (var fileEntity in files)
+            var viewFiles = new List<FileViewModel>();
+            foreach (var userFile in userFiles)
             {
-                fileEntity.Extension = extensions.FirstOrDefault(e => e.Id == fileEntity.ExtensionId);
-                viewFiles.Add(fileEntity);
+                userFile.Extension = extensions.FirstOrDefault(e => e.Id == userFile.ExtensionId);
+                viewFiles.Add(userFile.ToMvcFile());
             }
-            //ViewBag.Files = viewFiles;
-            ViewBag.User = Name;
-            return View(viewFiles.ToList());
+
+            var recivedFilesIds = CurrentUser.ReceivedFiles.Select(ef=>ef.FileId).ToList();
+
+            foreach (var id in recivedFilesIds)
+            {
+                var file = FileService.Get(id).ToMvcFile();
+                file.Received = true;
+                viewFiles.Add(file);
+            }
+
+
+            return View(viewFiles);
         }
 
         public ActionResult Shared()
         {
-            BllUser user = null;
-            if (!Name.Equals("Anon"))
-                user = UserService.Get(Membership.GetUser().Email);
+            var name = CurrentUser?.Login ?? "anonymous";
+            ViewBag.User = name;
+            var userFiles = CurrentUser?.Files;
+            if (userFiles == null) return View();
 
-            IEnumerable<BllSharedFile> sfiles = user?.SharedFiles;
-            ICollection<BllFile> files = user?.Files;
-
-            if (files == null) return View();
-            List<BllFile> viewFiles = new List<BllFile>();
             var extensions = ExtensionService.GetAll().ToList();
+            var viewFiles = new List<FileViewModel>();
 
-            foreach (var fileEntity in files)
+            var sharedFilesIds = CurrentUser.SharedFiles.Select(ef=>ef.FileId).ToList();
+
+            foreach (var id in sharedFilesIds)
             {
-                fileEntity.Extension = extensions.FirstOrDefault(e => e.Id == fileEntity.ExtensionId);
-                viewFiles.Add(fileEntity);
+                var file = userFiles.First(i => i.Id == id).ToMvcFile();
+               
+                viewFiles.Add(file);
             }
-            //ViewBag.Files = viewFiles;
-            ViewBag.User = Name;
-            return View(viewFiles.ToList());
+
+
+            return View(viewFiles);
         }
 
         public ActionResult Recieved()
         {
-            BllUser user = null;
-            if (!Name.Equals("Anon"))
-                user = UserService.Get(Membership.GetUser().Email);
+            var name = CurrentUser?.Login ?? "anonymous";
+            ViewBag.User = name;
+            var userFiles = CurrentUser?.Files;
+            if (userFiles == null) return View();
 
-            IEnumerable<BllSharedFile> rfiles = user?.ReceivedFiles;
-            ICollection<BllFile> files = user?.Files;
-
-            if (files == null) return View();
-            List<BllFile> viewFiles = new List<BllFile>();
             var extensions = ExtensionService.GetAll().ToList();
+            var viewFiles = new List<FileViewModel>();
 
-            foreach (var fileEntity in files)
+            var recivedFilesIds = CurrentUser.ReceivedFiles.Select(ef => ef.FileId).ToList();
+
+            foreach (var id in recivedFilesIds)
             {
-                fileEntity.Extension = extensions.FirstOrDefault(e => e.Id == fileEntity.ExtensionId);
-                viewFiles.Add(fileEntity);
+                var file = FileService.Get(id).ToMvcFile();
+                file.Received = true;
+                viewFiles.Add(file);
             }
-            //ViewBag.Files = viewFiles;
-            ViewBag.User = Name;
-            return View(viewFiles.ToList());
+
+
+            return View(viewFiles);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-            ViewBag.User = Name;
+            ViewBag.User = CurrentUser.Login;
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-            ViewBag.User = Name;
+            ViewBag.User = CurrentUser.Login;
             return View();
         }
 
@@ -118,7 +130,8 @@ namespace PL.WEB.v4.Controllers
             byte[] mas = file.Data;
             string file_type = "text/plain";
             var extensions = ExtensionService.GetAll().ToList();
-            string file_name = file.Name + "." + extensions?.FirstOrDefault(e=>e.Id == file.ExtensionId)?.ExtensionName;
+            string file_name = file.Name + "." +
+                               extensions?.FirstOrDefault(e => e.Id == file.ExtensionId)?.ExtensionName;
             return File(mas, file_type, file_name);
         }
 
@@ -141,16 +154,13 @@ namespace PL.WEB.v4.Controllers
                 {
                     Name = name,
                     IsProfileImage = false,
-
                     Banned = false,
                     UploadDate = DateTime.Now,
-                    
                     ExtensionId = 1,
                     Data = data,
                     Size = upload.ContentLength,
-                    UserId = (int)Id//(int)Session["UserId"]//TODO:!~!~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    UserId = CurrentUser.Id
                 });
-                //upload.SaveAs(Server.MapPath("~/Files/" + fileName));
             }
             return Redirect("/Home/Index");
         }

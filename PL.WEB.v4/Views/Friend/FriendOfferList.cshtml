@@ -1,0 +1,20 @@
+﻿@model System.Collections.Generic.IEnumerable<RFoundation.BLL.Interfaces.Entities.BllUser>
+<div class="container jumbotron" style="background: white">
+<div id="offerers">
+    <ul>
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+                <li>
+                    @item.Email
+                    <p>ID</p>
+                    @item.Id
+                    @Ajax.ActionLink("Add", "AddToFriend", new { friendId = item.Id }, new AjaxOptions { HttpMethod = "POST" })
+                </li>
+            }
+        }
+    </ul>
+</div>
+    </div>

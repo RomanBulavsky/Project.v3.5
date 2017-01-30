@@ -1,0 +1,49 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+<div class="container jumbotron" style="background: white">
+    <div class="">
+        @using (Ajax.BeginForm("FriendSearch", new AjaxOptions {UpdateTargetId = "searchresults"}))
+        {
+            <div class="row">
+
+                <div class="col-md-offset-4 col-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-default" type="submit">Go!</button>
+                        </span>
+                        <input type="text" name="name" class="form-control" placeholder="Search for...">
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div id="searchresults"></div>
+
+</div>
+
+
+@section scripts{
+    @*@Scripts.Render("~/Scripts/jquery-1.10.2.min.js");*@
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js");
+}
+<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+<script>
+    $(document)
+        .ready(function() {
+            $("#myTable").tablesorter();
+        });
+    $(document)
+        .ready(function() {
+            $("#myTable")
+                .tablesorter({
+                    sortList: [
+                        [0, 0],
+                        [1, 0]
+                    ]
+                });
+        });
+</script>

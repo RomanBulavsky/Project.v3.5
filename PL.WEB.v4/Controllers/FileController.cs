@@ -19,13 +19,13 @@ namespace PL.WEB.v4.Controllers
             => (IFileSharingService) DependencyResolver.Current.GetService(typeof(IFileSharingService));
 
         string Name = Membership.GetUser()?.UserName ?? "Anon";
-        private BllUser User => UserService.GetAll().FirstOrDefault(u => u.Login == Name);
+        private BllUser CurrentUser => UserService?.Get(Membership.GetUser()?.Email);
 
         [HttpGet]
-        public ActionResult ShareFile(int id)
+        public ActionResult ShareFile(int fileId)
         {
-            ViewBag.fileId = id;
-            return View(User.Friends);
+            ViewBag.fileId = fileId;
+            return View(CurrentUser.Friends);
         }
 
         [HttpPost]

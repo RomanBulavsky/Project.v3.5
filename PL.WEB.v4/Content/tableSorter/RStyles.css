@@ -35,3 +35,11 @@ input[type="checkbox"].input-validation-error { border: 0 none; }
 .validation-summary-errors { color: #b94a48; }
 
 .validation-summary-valid { display: none; }
+
+  .menu {
+        display: none;
+    }
+
+    tr:hover .menu {
+        display: inline;
+    }

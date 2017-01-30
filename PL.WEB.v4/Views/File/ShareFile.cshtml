@@ -1,0 +1,35 @@
+﻿@model ICollection<RFoundation.BLL.Interfaces.Entities.BllFriend>
+
+<div class="container jumbotron" style="background: white">
+
+    <div class="list-group">
+        @if (Model != null)
+        {
+            foreach(var friend in Model)
+            {
+                @Html.ActionLink(" ", "Index", "Home", new {id = friend.Id}, new {@class = "list-group-item glyphicon glyphicon-remove", style = "color: red;"})
+
+             }
+        }
+
+
+
+    </div>
+</div>
+<script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
+<script>
+    $(document)
+        .ready(function() {
+            $("#myTable").tablesorter();
+        });
+    $(document)
+        .ready(function() {
+            $("#myTable")
+                .tablesorter({
+                    sortList: [
+                        [0, 0],
+                        [1, 0]
+                    ]
+                });
+        });
+</script>

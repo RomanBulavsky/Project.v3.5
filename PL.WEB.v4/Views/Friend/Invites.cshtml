@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RFoundation.BLL.Interfaces.Entities.BllFriendRequest>
+
+@{
+    ViewBag.Title = "title";
+}
+
+<div class="container jumbotron" style="background: white">
+
+    <ul>
+        @if (Model != null)
+        {
+            foreach (var friend in Model)
+            {
+                <li>
+                    Inviter:
+                    @friend.FromUserId
+
+                </li>
+            }
+        }
+
+    </ul>
+    </div>

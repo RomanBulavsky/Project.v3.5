@@ -7,6 +7,7 @@ using RFoundation.BLL.Interfaces.Services;
 
 namespace PL.WEB.v4.Controllers
 {
+    [Authorize]
     public class FriendController : Controller
     {
         public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
@@ -14,22 +15,31 @@ namespace PL.WEB.v4.Controllers
         string Name = Membership.GetUser()?.UserName ?? "Anon";
         private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
         private BllUser User => UserService.GetAll().FirstOrDefault(u => u.Login == Name);
-
         public IFriendService FriendService
             => (IFriendService) DependencyResolver.Current.GetService(typeof(IFriendService));
+        public IFriendInvitationService FriendInviteService
+            => (IFriendInvitationService)DependencyResolver.Current.GetService(typeof(IFriendInvitationService));
+        private BllUser CurrentUser => UserService?.Get(Membership.GetUser()?.Email);
 
         public ActionResult FriendList()
         {
-            var u = Membership.GetUser();
+            var friendIds = CurrentUser.Friends.Select(f => f.UserId);
+            var friends = new List<BllUser>();
 
-            return View(User.Friends);
+            foreach (var id in friendIds)
+            {
+                var user = UserService.Get(id);
+                friends.Add(user);
+            }
+
+            return View(friends);
         }
 
         public ActionResult FriendOfferList()
         {
             var u = Membership.GetUser();
 
-            return PartialView(User.FriendRequests);
+            return View(User.FriendRequests);
         }
         //TODO:POST
         public void AddToFriend(int friendId)
@@ -45,6 +55,8 @@ namespace PL.WEB.v4.Controllers
                 FriendService.Create(new BllFriend() {FriendId = User.Id, UserId = friend.Id});
             }
         }
+
+       
 
         [HttpPost]
         public void OfferFriendship(int id)
@@ -79,6 +91,22 @@ namespace PL.WEB.v4.Controllers
         public ActionResult Search()
         {
             return View();
+        }
+
+        public ActionResult Invites()
+        {
+            var u = Membership.GetUser();
+            var user = UserService.Get(u.Email);
+            var offers = FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).ToList();
+            return View(offers);
+        }
+
+        public ActionResult Offers()
+        {
+            var u = Membership.GetUser();
+            var user = UserService.Get(u.Email);
+            var requests = FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).ToList();
+            return View(requests);
         }
     }
 }
