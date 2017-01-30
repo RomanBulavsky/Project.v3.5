@@ -34,6 +34,8 @@ namespace PL.WEB.v4.Controllers
                 var user = UserService.Get(id);
                 friends.Add(user);
             }
+            if (Request.IsAjaxRequest())
+                return PartialView(friends);
 
             return View(friends);
         }
@@ -118,6 +120,8 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult Search()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -126,6 +130,8 @@ namespace PL.WEB.v4.Controllers
             var u = Membership.GetUser();
             var user = UserService.Get(u.Email);
             var offers = FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).ToList();
+            if (Request.IsAjaxRequest())
+                return PartialView(offers);
             return View(offers);
         }
 
@@ -134,6 +140,8 @@ namespace PL.WEB.v4.Controllers
             var u = Membership.GetUser();
             var user = UserService.Get(u.Email);
             var requests = FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).ToList();
+            if (Request.IsAjaxRequest())
+                return PartialView(requests);
             return View(requests);
         }
     }

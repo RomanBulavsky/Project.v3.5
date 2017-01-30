@@ -17,6 +17,8 @@ namespace PL.WEB.v4.Controllers
         }
         public ActionResult Login()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -46,6 +48,8 @@ namespace PL.WEB.v4.Controllers
                     ModelState.AddModelError("", "Wrong password");
                 }
             }
+            if (Request.IsAjaxRequest())
+                return PartialView(model);
             return View(model);
         }
 
@@ -53,11 +57,13 @@ namespace PL.WEB.v4.Controllers
         {
             Session["Login"] =  null;
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Register()
         {
+            if (Request.IsAjaxRequest())
+                return PartialView();
             return View();
         }
 
@@ -82,7 +88,8 @@ namespace PL.WEB.v4.Controllers
                     ModelState.AddModelError("", "Registration Error");
                 }
             }
-
+            if (Request.IsAjaxRequest())
+                return PartialView(model);
             return View(model);
         }
 
