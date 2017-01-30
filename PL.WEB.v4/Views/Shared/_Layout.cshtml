@@ -8,8 +8,6 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
 
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,6 +30,8 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Shared Files", "Shared", "Home")</li>
+                        <li>@Html.ActionLink("Recieved Files", "Recieved", "Home")</li>
                     </ul>
                 </li>
 
