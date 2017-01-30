@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<RFoundation.BLL.Interfaces.Entities.BllUser>
 
 
-
+@if (Model == null)
+{
+    <div class="text-center"><h2>Can't find anybody:(</h2></div>
+}
     @if (Model != null)
     {
         <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">

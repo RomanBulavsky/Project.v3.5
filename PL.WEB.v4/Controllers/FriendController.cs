@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -14,11 +15,8 @@ namespace PL.WEB.v4.Controllers
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
         string Name = Membership.GetUser()?.UserName ?? "Anon";
         private int Id => UserService.GetAll().FirstOrDefault(u => u.Login == Name).Id;
-        private BllUser User => UserService.GetAll().FirstOrDefault(u => u.Login == Name);
-
         public IFriendService FriendService
             => (IFriendService) DependencyResolver.Current.GetService(typeof(IFriendService));
-
         public IFriendInvitationService FriendInviteService
             => (IFriendInvitationService) DependencyResolver.Current.GetService(typeof(IFriendInvitationService));
 
@@ -42,9 +40,7 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult FriendOfferList()
         {
-            var u = Membership.GetUser();
-
-            return View(User.FriendRequests);
+            return View(CurrentUser.FriendRequests.ToList());
         }
 
         //TODO:POST
@@ -53,12 +49,12 @@ namespace PL.WEB.v4.Controllers
             var friend = UserService.Get(friendId);
             if (friend.Friends == null)
                 friend.Friends = new List<BllFriend>();
-            if (User.Friends == null)
-                User.Friends = new List<BllFriend>();
-            if (User.Friends != null && friend.Friends != null)
+            if (CurrentUser.Friends == null)
+                CurrentUser.Friends = new List<BllFriend>();
+            if (CurrentUser.Friends != null && friend.Friends != null)
             {
-                FriendService.Create(new BllFriend() {FriendId = friendId, UserId = User.Id});
-                FriendService.Create(new BllFriend() {FriendId = User.Id, UserId = friend.Id});
+                FriendService.Create(new BllFriend() {FriendId = friendId, UserId = CurrentUser.Id});
+                FriendService.Create(new BllFriend() {FriendId = CurrentUser.Id, UserId = friend.Id});
             }
 
             return RedirectToAction("FriendList", "Friend");
@@ -101,6 +97,7 @@ namespace PL.WEB.v4.Controllers
             var users =
                 UserService.GetAll()
                     .Where(u => u.Email.Contains(name) || u.Login.Contains(name) || u.LastName.Contains(name)).ToList();
+            if (users.Count == 0) return PartialView();
             var friendIds = CurrentUser.Friends.Select(f => f.UserId).ToList();
             var resultUsers = new List<BllUser>();
 
@@ -127,22 +124,47 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult Invites()
         {
-            var u = Membership.GetUser();
-            var user = UserService.Get(u.Email);
-            var offers = FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).ToList();
+            var user = UserService.Get(CurrentUser.Email);
+            var toUserOffers = FriendInviteService.GetAll().Where(fo => fo.ToUserId == user.Id).Select(r => r.ToUserId).ToList();
+            var users = new List<BllUser>();
+
+            foreach (var toUserOffer in toUserOffers)
+            {
+                users.Add(UserService.Get(toUserOffer));
+            }
+
             if (Request.IsAjaxRequest())
-                return PartialView(offers);
-            return View(offers);
+                return PartialView(users);
+            return View(users);
         }
 
         public ActionResult Offers()
         {
-            var u = Membership.GetUser();
-            var user = UserService.Get(u.Email);
-            var requests = FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).ToList();
-            if (Request.IsAjaxRequest())
-                return PartialView(requests);
-            return View(requests);
+            var user = UserService.Get(CurrentUser.Email);
+            var fromUserRequests = FriendInviteService.GetAll().Where(fo => fo.FromUserId == user.Id).Select(r=>r.FromUserId).ToList();
+            var users = new List<BllUser>();
+            return c(Request.IsAjaxRequest(), users, fromUserRequests);
+            //foreach (var fromUserRequest in fromUserRequests)
+            //{
+            //    users.Add(UserService.Get(fromUserRequest));
+            //}
+
+            //if (Request.IsAjaxRequest())
+            //    return PartialView(users);
+            //return View(users);
+        }
+
+        [ChildActionOnly]
+        private ActionResult c(bool ajax, List<BllUser> users, List<int> ids)
+        {
+            foreach (var id in ids)
+            {
+                users.Add(UserService.Get(id));
+            }
+
+            if (ajax)
+                return PartialView(users);
+            return View(users);
         }
     }
 }

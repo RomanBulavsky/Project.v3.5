@@ -18,7 +18,6 @@ namespace PL.WEB.v4.Controllers
     {
         public IFileService FileService => (IFileService) DependencyResolver.Current.GetService(typeof(IFileService));
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
-
         public IExtensionService ExtensionService
             => (IExtensionService) DependencyResolver.Current.GetService(typeof(IExtensionService));
 
