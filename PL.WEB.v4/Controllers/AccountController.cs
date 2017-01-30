@@ -30,6 +30,7 @@ namespace PL.WEB.v4.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                     Session["UserId"] = UserService.GetAll()?.FirstOrDefault(u => u.Email == model.Email)?.Id;
+                    Session["Auth"] = 0;
                     ViewBag.User = model.Email;
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -37,12 +38,12 @@ namespace PL.WEB.v4.Controllers
                     }
                     else
                     {
-                        return Redirect("/Home/Index");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный пароль или логин");
+                    ModelState.AddModelError("", "Wrong password");
                 }
             }
             return View(model);
@@ -51,12 +52,12 @@ namespace PL.WEB.v4.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return Redirect("/Home/Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
         {
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
@@ -81,7 +82,7 @@ namespace PL.WEB.v4.Controllers
                 }
             }
 
-            return PartialView(model);
+            return View(model);
         }
 
         [HttpGet]

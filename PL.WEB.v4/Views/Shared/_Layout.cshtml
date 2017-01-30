@@ -24,7 +24,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         Home
@@ -36,7 +36,6 @@
                 </li>
 
 
-
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         Account
@@ -44,12 +43,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            @Ajax.ActionLink("Signup", "Register", "Account", new AjaxOptions
+                            @Html.ActionLink("Signup", "Register", "Account")
+                            @*@Ajax.ActionLink("Signup", "Register", "Account", new AjaxOptions
                             {
                                 UpdateTargetId = "results",
                                 LoadingElementId = "loading",
                                 LoadingElementDuration = 1000,
-                            })
+                            })*@
                         </li>
 
                         <li>@Html.ActionLink("Login", "Login", "Account")</li>
@@ -61,12 +61,13 @@
         </div>
     </div>
 </div>
-    
+
+
+<div id="results">
     @RenderBody()
+</div>
 <div class="container body-content">
-    <div id="results">
-        
-    </div>
+
 
     <hr/>
     <footer>

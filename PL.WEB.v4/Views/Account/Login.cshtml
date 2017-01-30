@@ -19,8 +19,8 @@
                         <h2 class="text-center form-signin-heading">Sign In</h2>
                     </div>
                     <div class="panel-body">
-
-                        @using (Ajax.BeginForm("Login", new AjaxOptions { UpdateTargetId = "results" }))
+                        <!--Ajax.BeginForm("Login", new AjaxOptions { UpdateTargetId = "results" })-->
+                        @using (Html.BeginForm("Login"))
                         {
                             <div class="form-horizontal myform">
                                 @Html.ValidationSummary(true)

@@ -18,8 +18,8 @@
                         <h2 class="text-center form-signin-heading">Registration</h2>
                     </div>
                     <div class="panel-body">
-
-                        @using (Ajax.BeginForm("Register", new AjaxOptions { UpdateTargetId = "results" }))
+                        <!--Ajax.BeginForm("Register", new AjaxOptions { UpdateTargetId = "results" })-->
+                        @using (Html.BeginForm("Register"))
                         {
                             <div class="form-horizontal myform">
                                 @Html.ValidationSummary(true)
