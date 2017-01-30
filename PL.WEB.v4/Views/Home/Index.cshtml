@@ -82,26 +82,6 @@
     </table>
 
 
-
-
-
-    @*@using (Ajax.BeginForm("Upload2", "Home", FormMethod.Post,new AjaxOptions()
-    {
-        UpdateTargetId = "results"
-    }, new { enctype = "multipart/form-data" }))
-    {
-        <label class="btn btn-default btn-file upload">
-            Browse<input type="file" name="upload" style="display: none;" id="uploadFile" multiple>
-        </label>
-        <label class="btn btn-default btn-file">
-            Download Multi<input id="submit" type="submit" value="Загрузить" style="display: none;" />
-        </label>
-        
-
-        
-    }*@
-
-
 </div>
 <script>
     $("#uploadFile").on("change",

@@ -69,8 +69,9 @@ namespace PL.WEB.v4.Controllers
 
             foreach (var id in sharedFilesIds)
             {
-                var file = userFiles.First(i => i.Id == id).ToMvcFile();
-
+                var bllFile = userFiles.FirstOrDefault(i => i.Id == id);
+                bllFile.Extension = extensions.FirstOrDefault(e => e.Id == bllFile.ExtensionId);
+                var file = bllFile.ToMvcFile();
                 viewFiles.Add(file);
             }
 
@@ -93,7 +94,9 @@ namespace PL.WEB.v4.Controllers
 
             foreach (var id in recivedFilesIds)
             {
-                var file = FileService.Get(id).ToMvcFile();
+                var bllFile = FileService.Get(id);
+                bllFile.Extension = extensions.FirstOrDefault(e => e.Id == bllFile.ExtensionId);
+                var file = bllFile.ToMvcFile();
                 file.Received = true;
                 viewFiles.Add(file);
             }
@@ -106,15 +109,11 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-            ViewBag.User = CurrentUser.Login;
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-            ViewBag.User = CurrentUser.Login;
             return View();
         }
 
@@ -140,91 +139,12 @@ namespace PL.WEB.v4.Controllers
                                extensions?.FirstOrDefault(e => e.Id == file.ExtensionId)?.ExtensionName;
             return File(mas, file_type, file_name);
         }
-
-        public ActionResult Upload2(IEnumerable<HttpPostedFileBase> upload)
-        {
-            if (upload != null)
-            {
-                foreach (var up in upload)
-                {
-                    // получаем имя файла
-                    string fileName = System.IO.Path.GetFileName(up.FileName);
-                    // сохраняем файл в папку Files в проекте
-                    BinaryReader reader = new BinaryReader(up.InputStream);
-                    byte[] data = reader.ReadBytes(up.ContentLength);
-
-                    var s = up.FileName.IndexOf(".", StringComparison.Ordinal);
-
-
-                    string name = up.FileName.Substring(0, s);
-                    string extension = up.FileName.Substring(s + 1);
-                    var exts = ExtensionService?.GetAll()?.FirstOrDefault(e => e.ExtensionName == extension)?.Id;
-                    FileService.Create(new BllFile()
-                    {
-                        Name = name,
-                        IsProfileImage = false,
-                        Banned = false,
-                        UploadDate = DateTime.Now,
-                        ExtensionId = exts ?? 1,
-                        Data = data,
-                        Size = up.ContentLength,
-                        UserId = CurrentUser.Id
-                    });
-                }
-            }
-            return PartialView("Index");
-        }
-
-        public ActionResult Upload(HttpPostedFileBase upload)
-        {
-            if (upload != null)
-            {
-                // получаем имя файла
-                string fileName = System.IO.Path.GetFileName(upload.FileName);
-                // сохраняем файл в папку Files в проекте
-                BinaryReader reader = new BinaryReader(upload.InputStream);
-                byte[] data = reader.ReadBytes(upload.ContentLength);
-
-                var s = upload.FileName.IndexOf(".", StringComparison.Ordinal);
-
-
-                string name = upload.FileName.Substring(0, s);
-                string extension = upload.FileName.Substring(s + 1);
-                var exts = ExtensionService?.GetAll()?.FirstOrDefault(e => e.ExtensionName == extension)?.Id;
-                FileService.Create(new BllFile()
-                {
-                    Name = name,
-                    IsProfileImage = false,
-                    Banned = false,
-                    UploadDate = DateTime.Now,
-                    ExtensionId = exts ?? 1,
-                    Data = data,
-                    Size = upload.ContentLength,
-                    UserId = CurrentUser.Id
-                });
-            }
-            return PartialView("Index");
-        }
+        
 
         public ActionResult DeleteFile(int id)
         {
             FileService.Delete(id);
             return Redirect("/Home/Index");
-        }
-        [HttpGet]
-        public ActionResult Upload3()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Upload4(string s)
-        {
-            var filex = Request.Files;
-            var x = filex.AllKeys;
-            var v = filex[x[0]];
-
-            return View();
         }
 
         [HttpPost]

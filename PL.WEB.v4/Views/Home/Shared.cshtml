@@ -3,18 +3,25 @@
 @{
     ViewBag.Title = "title";
 }
-
 <div class="container jumbotron" style="background: white">
-    <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">
-        <thead class="thead-default">
+    @if (Model.Count < 1)
+    {
+        <div class="text-center">
+            <h2>You do not have any Shared Files</h2>
+        </div>
+    }
+    else
+    {
+        <table id="myTable" class="col-md-8 table table-striped tablesorter table-hover">
+            <thead class="thead-default">
             <tr>
                 <th class="header text-center">File Name</th>
                 <th class="header text-center">Extension</th>
                 <th class="header text-center">Uploading Date</th>
                 <th class="header text-center">Size</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @{
                 if (Model != null && Model.FirstOrDefault() != null)
                 {
@@ -26,9 +33,9 @@
                                 <td class="container text-center col-sm-6">
                                     @file.Name
                                     <div class="menu ">
-                                        @Html.ActionLink(" ", "GetFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-download" })
-                                        @Html.ActionLink(" ", "DeleteFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-remove-circle" })
-                                        @Html.ActionLink(" ", "ShareFile", "File", new { id = file.Id }, new { @class = "glyphicon glyphicon-share" })
+                                        @Html.ActionLink(" ", "GetFile", "Home", new {id = file.Id}, new {@class = "glyphicon glyphicon-download"})
+                                        @Html.ActionLink(" ", "DeleteFile", "Home", new {id = file.Id}, new {@class = "glyphicon glyphicon-remove-circle"})
+                                        @Html.ActionLink(" ", "ShareFile", "File", new {id = file.Id}, new {@class = "glyphicon glyphicon-share"})
 
                                     </div>
                                 </td>
@@ -39,86 +46,87 @@
                                     @Math.Round(fileSizeMb, 3) Mb
                                 </td>
                             </tr>
-                                        }
-                                        if (file != null && file.Received == true)
-                                        {
-                                            <tr>
-                                                <td class="container text-center col-sm-6" style="color: GrayText">
-                                                    @file.Name
-                                                    <div class="menu">
-                                                        @Html.ActionLink(" ", "GetFile", "Home", new { id = file.Id }, new { @class = "glyphicon glyphicon-download" })
+                        }
+                        if (file != null && file.Received == true)
+                        {
+                            <tr>
+                                <td class="container text-center col-sm-6" style="color: GrayText">
+                                    @file.Name
+                                    <div class="menu">
+                                        @Html.ActionLink(" ", "GetFile", "Home", new {id = file.Id}, new {@class = "glyphicon glyphicon-download"})
 
-                                                        @Html.ActionLink(" ", "ShareFile", "File", new { id = file.Id }, new { @class = "glyphicon glyphicon-share" })
+                                        @Html.ActionLink(" ", "ShareFile", "File", new {id = file.Id}, new {@class = "glyphicon glyphicon-share"})
 
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">@file.Extension</td>
-                                                <td class="text-center">@file.UploadDate.ToString("g")</td>
-                                                <td class="text-center">
-                                                    @{ double fileSizeMb = file.Size / 1000.0; }
-                                                    @Math.Round(fileSizeMb, 3) Mb
-                                                </td>
-                                            </tr>
-                                                                }
-                                                            }
-
-                                                        }
+                                    </div>
+                                </td>
+                                <td class="text-center">@file.Extension</td>
+                                <td class="text-center">@file.UploadDate.ToString("g")</td>
+                                <td class="text-center">
+                                    @{ double fileSizeMb = file.Size / 1000.0; }
+                                    @Math.Round(fileSizeMb, 3) Mb
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
             }
 
 
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    }</div>
+
 @section scripts
 {
     <script src="~/Scripts/tableSorter/jquery.tablesorter.js"></script>
-<script>
-    $(document)
-        .ready(function() {
-            $("#myTable").tablesorter();
-        });
-    $(document)
-        .ready(function() {
-            $("#myTable")
-                .tablesorter({
-                    sortList: [
-                        [0, 0],
-                        [1, 0]
-                    ]
-                });
-        });
+    <script>
+        $(document)
+            .ready(function() {
+                $("#myTable").tablesorter();
+            });
+        $(document)
+            .ready(function() {
+                $("#myTable")
+                    .tablesorter({
+                        sortList: [
+                            [0, 0],
+                            [1, 0]
+                        ]
+                    });
+            });
 
-    $('#submit').on('click', function (e) {
-        e.preventDefault();
-        var files = document.getElementById('upload1').files;
-        if (files.length > 0) {
-            if (window.FormData !== undefined) {
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
+        $('#submit').on('click',
+            function(e) {
+                e.preventDefault();
+                var files = document.getElementById('upload1').files;
+                if (files.length > 0) {
+                    if (window.FormData !== undefined) {
+                        var data = new FormData();
+                        for (var x = 0; x < files.length; x++) {
+                            data.append("file" + x, files[x]);
+                        }
 
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Upload", "Home",new{})',
-                    contentType: false,
-                    processData: false,
-                    data: files[0],
-                    error: function (xhr, status, p3) {
-                        alert(xhr.responseText);
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("Upload", "Home", new {})',
+                            contentType: false,
+                            processData: false,
+                            data: files[0],
+                            error: function(xhr, status, p3) {
+                                alert(xhr.responseText);
+                            }
+                        });
                     }
-                });
-            }
-        }
-    });
+                }
+            });
 
-    $("#upload1").on("change", function (e) {
-        var files = document.getElementById('upload1').files;
-        if (files.length > 0) {
-            for (var i = 0; i < files.length; i++)
-                $(".upload-text").append(" +" + files[i].name + "+ ");
-        }
-    });
-</script>
+        $("#upload1").on("change",
+            function(e) {
+                var files = document.getElementById('upload1').files;
+                if (files.length > 0) {
+                    for (var i = 0; i < files.length; i++)
+                        $(".upload-text").append(" +" + files[i].name + "+ ");
+                }
+            });
+    </script>
 }
-
