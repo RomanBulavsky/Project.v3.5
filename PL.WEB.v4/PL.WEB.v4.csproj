@@ -209,6 +209,7 @@
     <Content Include="Views\File\ShareFile.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Account\ProfileCustomization.cshtml" />
+    <Content Include="Views\Home\FileSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

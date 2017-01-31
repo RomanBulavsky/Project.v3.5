@@ -183,5 +183,25 @@ namespace PL.WEB.v4.Controllers
             }
             
         }
+
+        public ActionResult FileSearch()
+        {
+            if (Request.IsAjaxRequest())
+                return PartialView();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult FileSearch(string name)
+        {
+            var currentUserFiles = CurrentUser.Files.ToList();
+            var files =
+                currentUserFiles
+                    .Where(u => u.Name.Contains(name)).Select(f=>f.ToMvcFile()).ToList();
+            if (files.Count == 0) return PartialView();
+
+            if (Request.IsAjaxRequest())
+                return PartialView(files);
+            return View(files);
+        }
     }
 }

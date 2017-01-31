@@ -28,6 +28,7 @@ namespace PL.WEB.v4.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LogOnModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -73,6 +74,7 @@ namespace PL.WEB.v4.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
@@ -99,6 +101,7 @@ namespace PL.WEB.v4.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ProfileCustomization(UserViewModel viewUser)
         {
             var user = UserService.Get(CurrentUser.Id);

@@ -16,6 +16,7 @@
                             <!--Ajax.BeginForm("Register", new AjaxOptions { UpdateTargetId = "results" })-->
                             @using (Html.BeginForm("C"))
                             {
+                                @Html.AntiForgeryToken()
                                 <div class="form-horizontal myform">
                                     @Html.ValidationSummary(true)
 
