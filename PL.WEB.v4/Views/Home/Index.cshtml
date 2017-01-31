@@ -69,11 +69,11 @@
         </tbody>
     </table>
 
-    <form action="#">
+    <form action="#" class="xxxform">
         <label class="btn btn-default btn-file upload">
             Browse<input type="file" name="upload" style="display: none;" id="uploadFile" multiple>
         </label>
-        <button class="btn btn-default upload" type="submit" id="submit">Upload</button>
+        <button class="btn btn-default upload x" type="submit" id="submit">Upload</button>
 
         <button type="button" class="btn btn-default cancel" style=""> Cancel </button>
         <div class="upload-text"></div>
@@ -95,14 +95,23 @@
           }
       });
 
-    $(document).on('submit', 'form', function (e) {
+    $('.xxxform').submit(function (e) {
         e.preventDefault();
-
-        $form = $(this);
+            //alert("stop");
+            $form = $(this);
 
         uploadImage($form);
-
+       
     });
+
+    //$(document).on('submit', 'form', function (e) {
+    //    e.preventDefault();
+
+    //    $form = $(this);
+
+    //    uploadImage($form);
+
+    //});
 
     function uploadImage($form) {
         $form.find('.progress-bar').removeClass('progress-bar-success')

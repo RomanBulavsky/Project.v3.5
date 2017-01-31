@@ -147,7 +147,7 @@ namespace PL.WEB.v4.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload()
+        public void Upload()
         {
             foreach (string file in Request.Files)
             {
@@ -181,7 +181,7 @@ namespace PL.WEB.v4.Controllers
                     
                 }
             }
-            return PartialView("Index");
+            
         }
     }
 }
