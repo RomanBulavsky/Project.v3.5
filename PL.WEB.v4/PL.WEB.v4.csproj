@@ -207,10 +207,8 @@
     <Content Include="Views\Friend\Offers.cshtml" />
     <Content Include="Views\Friend\Search.cshtml" />
     <Content Include="Views\File\ShareFile.cshtml" />
-    <Content Include="Views\Home\Upload3.cshtml" />
-    <Content Include="Views\Home\Upload4.cshtml" />
-    <Content Include="Views\Home\IndexBuckUp.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Account\ProfileCustomization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

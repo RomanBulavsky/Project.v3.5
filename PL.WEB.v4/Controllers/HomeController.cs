@@ -181,7 +181,7 @@ namespace PL.WEB.v4.Controllers
                     
                 }
             }
-            return RedirectToAction("Index");
+            return PartialView("Index");
         }
     }
 }

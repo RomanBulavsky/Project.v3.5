@@ -113,7 +113,10 @@ namespace PL.WEB.v4.Controllers
             if (!users.Any())
                 return HttpNotFound();
 
+            if(Request.IsAjaxRequest())
             return PartialView(resultUsers);
+
+            return View(resultUsers);
         }
 
 

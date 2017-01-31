@@ -1,0 +1,83 @@
+﻿@model RFoundation.PL.WEB.Models.UserViewModel
+@{
+    ViewBag.Title = "ProfileCustomization";
+}
+
+    <div class="container container-table signin col-md-12 col-lg-12">
+        <div class="row vertical-center-row">
+            <div class="form-horizontal text-center col-xs-12  col-sm-12  col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+
+                <div class="container col-md-12" style="margin-top: 10%; margin-bottom: 10%;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h2 class="text-center form-signin-heading">Registration</h2>
+                        </div>
+                        <div class="panel-body">
+                            <!--Ajax.BeginForm("Register", new AjaxOptions { UpdateTargetId = "results" })-->
+                            @using (Html.BeginForm("C"))
+                            {
+                                <div class="form-horizontal myform">
+                                    @Html.ValidationSummary(true)
+
+                                    <fieldset class="lol">
+                                        <div class="form-horizontal col-sm-12 col-md-12 col-lg-12">
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FirstName, new { @class = "col-md-2 mylabel myPadding labelPadding" })
+                                                <div class="editor-field col-md-8">
+                                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "myblock form-control", placeholder = "Your FirstName" })
+
+                                                    @Html.ValidationMessageFor(model => model.FirstName)
+
+                                                </div>
+                                                <div class="glyphicon  targetEmail col-md-1 hidden myPadding"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.LastName, new { @class = "col-md-2 mylabel myPadding labelPadding" })
+                                                <div class="editor-field col-md-8">
+                                                    @Html.TextBoxFor(model => model.LastName, new { @class = "myblock form-control", placeholder = "Your LastName" })
+
+                                                    @Html.ValidationMessageFor(model => model.LastName)
+
+                                                </div>
+                                                <div class="glyphicon  targetEmail col-md-1 hidden myPadding"></div>
+                                            </div>
+                                            
+                                            
+
+                                            <div class="form-group">
+                                                
+                                                @Html.LabelFor(model => model.Birthdate, new {@class = "col-md-2 mylabel myPadding labelPadding"})
+                                                <div class="editor-field col-md-8">
+                                                    @Html.EditorFor(model => model.Birthdate, new {@class = "form-control datepicker", placeholder = "Enter Drop-off date here..."})
+
+                                                    @Html.ValidationMessageFor(model => model.Birthdate)
+
+                                                </div>
+                                                <div class="glyphicon  targetEmail col-md-1 hidden myPadding"></div>
+                                            </div>
+
+                                            
+
+                                          
+                                            <div class="form-group ">
+                                                <p>
+                                                    <input class="btn btn-lg btn-primary " type="submit" value="Save" />
+                                                </p>
+                                            </div>
+                                           
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+

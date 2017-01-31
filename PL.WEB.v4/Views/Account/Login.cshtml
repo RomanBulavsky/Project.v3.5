@@ -63,7 +63,12 @@
                                             <p>
                                                 <input class="btn btn-lg btn-primary " type="submit" value="Sign In" />
                                             </p>
+                                          
                                         </div>
+                                        <p>
+                                            Don't have an account?
+                                            @Ajax.ActionLink("Sign Un;)", "Register", "Account", new AjaxOptions() { UpdateTargetId = "results" })
+                                        </p>
                                     </div>
                                 </fieldset>
                             </div>

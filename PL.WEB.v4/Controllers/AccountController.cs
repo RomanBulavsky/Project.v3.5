@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.PL.WEB.Models;
 
@@ -11,10 +13,13 @@ namespace PL.WEB.v4.Controllers
     {
         public IUserService UserService => (IUserService) DependencyResolver.Current.GetService(typeof(IUserService));
 
+        private BllUser CurrentUser => UserService?.Get(Membership.GetUser()?.Email);
+
         public ActionResult Landing()
         {
             return View();
         }
+
         public ActionResult Login()
         {
             if (Request.IsAjaxRequest())
@@ -93,6 +98,33 @@ namespace PL.WEB.v4.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult ProfileCustomization(UserViewModel viewUser)
+        {
+            var user = UserService.Get(CurrentUser.Id);
+            user.Birthdate = viewUser.Birthdate;
+            user.FirstName = viewUser.FirstName;
+            user.LastName = viewUser.LastName;
+            user.LastUpdateDate = DateTime.Now;
+            UserService.Update(user);
+            user = UserService.Get(CurrentUser.Id);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ProfileCustomization()
+        {
+            var viewProfile = new UserViewModel()
+            {
+                Birthdate = CurrentUser.Birthdate,
+                LastName = CurrentUser.LastName,
+                FirstName = CurrentUser.FirstName
+            };
+            if (Request.IsAjaxRequest())
+                return PartialView(viewProfile);
+            return View(viewProfile);
+        }
+
+
         [HttpGet]
         [AllowAnonymous]
         public JsonResult CheckLogin(string login)
@@ -117,11 +149,6 @@ namespace PL.WEB.v4.Controllers
         {
             var user = UserService.GetAll()?.FirstOrDefault(u => u.Email == email);
             return Json(user != null, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult ProfileCustomization()
-        {
-            return View();
         }
     }
 }

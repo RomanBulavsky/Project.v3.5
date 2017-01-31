@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -71,6 +72,12 @@ namespace RFoundation.PL.WEB.Models
     }
     public class UserViewModel
     {
+        public string FirstName { get; set; } = "Bll_Plug";
 
+        public string LastName { get; set; } = "Bll_Plug";
+
+        [DisplayName("Date of Birth")]
+        [DataType(DataType.Date)]
+        public DateTime? Birthdate { get; set; }
     }
 }

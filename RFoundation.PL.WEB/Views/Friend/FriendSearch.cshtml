@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<RFoundation.BLL.Interfaces.Entities.BllUser>
-
+<div>
+    @using (Ajax.BeginForm("FriendSearch", new AjaxOptions { UpdateTargetId = "results" }))
+    {
+        <input type="text" name="name" />
+        <input type="submit" value="Search" />
+    }
+    <div id="results"></div>
+</div>
 
     <ul>
         @if (Model != null)
