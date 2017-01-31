@@ -72,8 +72,12 @@ namespace RFoundation.PL.WEB.Models
     }
     public class UserViewModel
     {
+        [Required(ErrorMessage = "The field can not be empty!")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+", ErrorMessage = "Incorrect Name")]
         public string FirstName { get; set; } = "Bll_Plug";
 
+        [Required(ErrorMessage = "The field can not be empty!")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+", ErrorMessage = "Incorrect Last Name")]
         public string LastName { get; set; } = "Bll_Plug";
 
         [DisplayName("Date of Birth")]

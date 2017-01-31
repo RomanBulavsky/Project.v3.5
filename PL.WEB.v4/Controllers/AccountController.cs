@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using PL.WEB.v4.Infrastructure;
 using RFoundation.BLL.Interfaces.Entities;
 using RFoundation.BLL.Interfaces.Services;
 using RFoundation.PL.WEB.Models;
@@ -116,12 +117,7 @@ namespace PL.WEB.v4.Controllers
 
         public ActionResult ProfileCustomization()
         {
-            var viewProfile = new UserViewModel()
-            {
-                Birthdate = CurrentUser.Birthdate,
-                LastName = CurrentUser.LastName,
-                FirstName = CurrentUser.FirstName
-            };
+            var viewProfile = CurrentUser.ToMvcUser();
             if (Request.IsAjaxRequest())
                 return PartialView(viewProfile);
             return View(viewProfile);

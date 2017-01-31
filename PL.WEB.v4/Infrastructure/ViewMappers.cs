@@ -22,5 +22,16 @@ namespace PL.WEB.v4.Infrastructure
                 UploadDate = fileEntity.UploadDate
             };
         }
+        public static UserViewModel ToMvcUser(this BllUser userEntity)
+        {
+            return new UserViewModel()
+            {
+                Birthdate = userEntity.Birthdate,
+                LastName = userEntity.LastName,
+                FirstName = userEntity.FirstName
+            };
+        }
+        
+        
     }
 }
