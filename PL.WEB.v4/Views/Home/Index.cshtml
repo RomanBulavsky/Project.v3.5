@@ -48,9 +48,9 @@
                                         @file.Name
                                         <div class="menu ">
                                             <!--TODO: Action links-->
-                                            @Html.ActionLink(" ", "GetFile", "Home", new {id = file.Id}, new {@class = "glyphicon glyphicon-download"})
-                                            @Html.ActionLink(" ", "DeleteFile", "Home", new {id = file.Id}, new {@class = "glyphicon glyphicon-remove-circle"})
-                                            @Html.ActionLink(" ", "ShareFile", "File", new {fileId = file.Id}, new {@class = "glyphicon glyphicon-share"})
+                                            @Ajax.ActionLink(" ", "GetFile", "Home", new {id = file.Id}, new AjaxOptions() {UpdateTargetId = "filesearchresults" }, new {@class = "glyphicon glyphicon-download"})
+                                            @Ajax.ActionLink(" ", "DeleteFile", "Home", new {id = file.Id}, new AjaxOptions() { UpdateTargetId = "filesearchresults" }, new {@class = "glyphicon glyphicon-remove-circle"})
+                                            @Ajax.ActionLink(" ", "ShareFile", "File", new {fileId = file.Id}, new AjaxOptions() { UpdateTargetId = "filesearchresults" }, new {@class = "glyphicon glyphicon-share"})
 
                                         </div>
                                     </td>
